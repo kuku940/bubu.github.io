@@ -1,0 +1,779 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.5.1"/>
+
+
+    <meta name="description" content="不卜个人博客，是一个记录博主学习和成长的个人博客站点。" />
+
+
+
+  <meta name="keywords" content="git,入门教程," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1" />
+
+
+<meta name="description" content="git安装windows安装下载msysgit，安装&apos;Git Bash here&apos;和&apos;Git GUI here&apos;,使用Git Bash即可
+linux安装sudo apt-get install git (ubuntu)
+yum install git (centOS)
+安装完成的时候进入git命令行配置自己名称和邮箱：
+git config --global user.name &quot;xiaoyu&quot;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="git常用命令">
+<meta property="og:url" content="http://kuku940.github.io/2015/09/06/git常用命令/index.html">
+<meta property="og:site_name" content="不卜博客 - 不卜的个人博客站点">
+<meta property="og:description" content="git安装windows安装下载msysgit，安装&apos;Git Bash here&apos;和&apos;Git GUI here&apos;,使用Git Bash即可
+linux安装sudo apt-get install git (ubuntu)
+yum install git (centOS)
+安装完成的时候进入git命令行配置自己名称和邮箱：
+git config --global user.name &quot;xiaoyu&quot;">
+<meta property="og:updated_time" content="2015-09-07T14:36:22.134Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="git常用命令">
+<meta name="twitter:description" content="git安装windows安装下载msysgit，安装&apos;Git Bash here&apos;和&apos;Git GUI here&apos;,使用Git Bash即可
+linux安装sudo apt-get install git (ubuntu)
+yum install git (centOS)
+安装完成的时候进入git命令行配置自己名称和邮箱：
+git config --global user.name &quot;xiaoyu&quot;">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'post'
+  };
+</script>
+
+  <title> git常用命令 | 不卜博客 - 不卜的个人博客站点 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+  
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?a1718d105ac5c566eeca9ca427859200";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-next-logo"></i>
+      </span>
+      <span class="site-title">不卜</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu menu-left">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-next-home"></i> <br />
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            <i class="menu-item-icon icon-next-categories"></i> <br />
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            <i class="menu-item-icon icon-next-about"></i> <br />
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-next-archives"></i> <br />
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon icon-next-tags"></i> <br />
+            标签
+          </a>
+        </li>
+      
+
+      
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <form class="site-search-form">
+    <input type="text" id="st-search-input" class="st-search-input st-default-search-input" />
+  </form>
+
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', 'szZeQCByKssqztmey91S','2.0.0');
+</script>
+
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content"> 
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              git常用命令
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2015-09-06T15:14:22+08:00" content="2015-09-06">
+            2015-09-06
+          </time>
+        </span>
+
+        
+          <span class="post-category" >
+            &nbsp; | &nbsp; 分类于
+            
+              <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                <a href="/categories/入门教程/" itemprop="url" rel="index">
+                  <span itemprop="name">入门教程</span>
+                </a>
+              </span>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+              &nbsp; | &nbsp;
+              <a href="/2015/09/06/git常用命令/#comments" itemprop="discussionUrl">
+                <span class="post-comments-count ds-thread-count" data-thread-key="2015/09/06/git常用命令/" itemprop="commentsCount"></span>
+              </a>
+            </span>
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><h1 id="git安装">git安装</h1><h2 id="windows安装">windows安装</h2><pre><code>下载msysgit，安装<span class="symbol">'Git</span> <span class="type">Bash</span> here'和<span class="symbol">'Git</span> <span class="type">GUI</span> here',使用<span class="type">Git</span> <span class="type">Bash</span>即可
+</code></pre><h2 id="linux安装">linux安装</h2><pre><code>sudo apt-get install git <span class="list">(<span class="keyword">ubuntu</span>)</span>
+yum install git <span class="list">(<span class="keyword">centOS</span>)</span>
+</code></pre><p>安装完成的时候进入git命令行配置自己名称和邮箱：</p>
+<pre><code>git config --global user<span class="class">.name</span> <span class="string">"xiaoyu"</span>
+git config --global user<span class="class">.email</span> <span class="string">"zxy9312@gmail.com"</span>
+</code></pre><a id="more"></a>
+<hr>
+<h1 id="本地仓库操作">本地仓库操作</h1><h2 id="创建一个版本库">创建一个版本库</h2><pre><code><span class="keyword">mkdir</span> learngit
+<span class="keyword">cd</span> learngit
+<span class="keyword">pwd</span>
+</code></pre><h2 id="初始化一个Git仓库，使用git_init命令:">初始化一个Git仓库，使用git init命令:</h2><p><code>git init</code>  </p>
+<h2 id="创建一个readme-txt文件，使用命令添加一个文件到git仓库">创建一个readme.txt文件，使用命令添加一个文件到git仓库</h2><p>  <code>git add</code> 是将工作区的内容添加到缓存区<br>  <code>git commit</code> 是将缓存区的内容提交上去<br>  <code>git diff</code> 是查看工作区和缓存区的内容的区别  </p>
+<pre><code><span class="label">git</span> <span class="keyword">add </span>readme.txt
+<span class="label">git</span> <span class="keyword">add </span>file1.txt file2.txt
+<span class="label">git</span> <span class="keyword">add </span>*
+<span class="label">git</span> commit -m <span class="string">"wrote a readme file!"</span>
+</code></pre><h2 id="查看工作区状态">查看工作区状态</h2><p><code>git status</code></p>
+<h2 id="查看修改的内容(比较缓存区和工作区之间的区别)">查看修改的内容(比较缓存区和工作区之间的区别)</h2><p><code>git diff</code></p>
+<h2 id="查看最近到最远提交的日志文件">查看最近到最远提交的日志文件</h2><pre><code>git <span class="command">log</span>
+git <span class="command">log</span> <span class="comment">--pretty=oneline   //这儿看到的是commit id</span>
+</code></pre><h2 id="记录你的每一次命令，查看head">记录你的每一次命令，查看head</h2><pre><code>git reflog  <span class="comment">//查询每次提交的commit信息，从而重回未来</span>
+</code></pre><h2 id="回滚到上一个版本">回滚到上一个版本</h2><pre><code>git <span class="operator"><span class="keyword">reset</span> <span class="comment">--hard HEAD^  //向上回滚一个版本</span>
+git <span class="keyword">reset</span> <span class="comment">--hard HEAD^^  //向上回滚两个版本</span>
+git <span class="keyword">reset</span> <span class="comment">--hard HEAD~100  //向上回滚100个版本</span></span>
+</code></pre><h2 id="查看readme-txt_文件">查看readme.txt 文件</h2><p><code>cat readme.txt</code></p>
+<h2 id="工作区修改全部撤销">工作区修改全部撤销</h2><p>可以在你还没有将文件添加缓存区之前，即没有git add之前  </p>
+<pre><code>git checkout -- readme<span class="class">.txt</span>  <span class="comment">// --很重要，没有表示切换到另一个分支</span>
+</code></pre><p>两种情况可以被修改：</p>
+<ol>
+<li>自然修改还没有放置到缓存区，现在撤销回到版本库一模一样的状态</li>
+<li>已经添加到缓存区，做了修改，现在回到添加到缓存区后的状态</li>
+</ol>
+<h2 id="把缓存区的修改回退到工作区">把缓存区的修改回退到工作区</h2><p>使用了git add,但没有git commit</p>
+<pre><code>git reset HEAD readme<span class="class">.txt</span>  <span class="comment">//撤销缓存区修改</span>
+git checkout -- readme<span class="class">.txt</span> <span class="comment">//撤销工作区修改</span>
+</code></pre><p>如果使用git commit的话，就是用版本回滚，前提是你没有提交的远程库，<br>不然的话这条记录无法销毁</p>
+<h2 id="删除一个文件">删除一个文件</h2><pre><code>git <span class="keyword">rm</span> <span class="keyword">test</span>.<span class="literal">log</span>
+git commit -<span class="keyword">m</span> <span class="string">"delete test.log"</span>
+</code></pre><p>#远程库操作</p>
+<h2 id="设置远程秘钥">设置远程秘钥</h2><ol>
+<li>查看是否已经有了ssh密钥：<code>cd ~/.ssh</code><br>设置远程仓库：  <code>ssh-keygen -t rsa -C &quot;zxy9312@gmail.com&quot;</code><br>一路回车，生成id_rsa和id_rsa.pub两个文件  </li>
+<li>登陆GitHub，打开’setting’ -&gt; ‘SSH Keys’，粘贴id_rsa.pub的内容</li>
+</ol>
+<h2 id="推送到github上">推送到github上</h2><pre><code>git remote add origin git@github<span class="class">.com</span>:RoinZhang/learngit<span class="class">.git</span>
+git push -u origin master 第一次推送到master分支的所有内容
+git push origin master 推送最新的修改
+</code></pre><h2 id="远程分支比本地更新，需要首先git_pull">远程分支比本地更新，需要首先git pull</h2><pre><code><span class="title">git</span> pull origin master
+</code></pre><h2 id="从git上面克隆">从git上面克隆</h2><pre><code>git clone git<span class="annotation">@github</span>.<span class="string">com:</span>RoinZhang/learngit.git
+</code></pre><h2 id="查看远程库信息">查看远程库信息</h2><pre><code><span class="title">git</span> remote
+git remote -v
+</code></pre><h1 id="分支管理">分支管理</h1><pre><code>git checkout -b <span class="built_in">dev</span>  <span class="comment">//创建并切换到dev分支</span>
+
+git branch  <span class="comment">//查看所有分支</span>
+git branch <span class="built_in">dev</span>  <span class="comment">//创建dev分支</span>
+git checkout <span class="built_in">dev</span>  <span class="comment">//切换到dev分支</span>
+git merge <span class="built_in">dev</span> <span class="comment">//使用[fast forword]合并dev分支到当前分支上</span>
+git branch -d <span class="built_in">dev</span>  <span class="comment">//删除dev分支</span>
+</code></pre><h2 id="普通分支合并">普通分支合并</h2><pre><code>git <span class="keyword">merge</span> --<span class="keyword">no</span>--ff -<span class="keyword">m</span> <span class="string">"merge with no-ff"</span> dev  
+<span class="comment">// 使用普通模式合并dev到当前分支上，并提交一个新版本  </span>
+<span class="comment">// --no--ff 表示普通模式合并  </span>
+<span class="comment">// -m "merge with no-ff" 表示commit一个新版本  </span>
+</code></pre><h3 id="【注意】：">【注意】：</h3><pre><code>合并分支时，加上<span class="comment">--no-ff参数就可以用普通模式合并，</span>
+合并后的历史有分支，能看出来曾经做过合并，
+而fast forward合并就看不出来曾经做过合并。
+</code></pre><h2 id="查看分支合并图">查看分支合并图</h2><pre><code>git <span class="command">log</span> <span class="comment">--graph --pretty=oneline --abbrev-commit</span>
+</code></pre><h1 id="BUG分支">BUG分支</h1><pre><code>git stash  <span class="comment">//在当前分支上把当前工作现场'储藏起来'，等以后恢复现场</span>
+git stash <span class="built_in">list</span>  <span class="comment">//查看储藏的工作现场</span>
+git stash apply <span class="comment">//恢复stash内容并不删除工作现场</span>
+git stash drop  <span class="comment">//删除statsh内容</span>
+git stash pop   <span class="comment">//恢复工作现场并删除stash内容</span>
+git stash stash@{<span class="number">0</span>}  <span class="comment">//恢复指定的stash</span>
+</code></pre><h2 id="Feature分支">Feature分支</h2><pre><code>git branch -D <span class="built_in">dev</span>  <span class="comment">//强行删除没有被合并过的dev分支</span>
+</code></pre><h1 id="标签管理">标签管理</h1><pre><code>git <span class="keyword">tag</span> <span class="variable">&lt;name&gt;</span>  <span class="comment">#用于新建一个标签，默认为HEAD，也可以指定一个commit id；</span>
+git <span class="keyword">tag</span> -a <span class="variable">&lt;tagname&gt;</span> -m <span class="string">"blablabla..."</span>  <span class="comment">#可以指定标签信息；</span>
+git <span class="keyword">tag</span> -s <span class="variable">&lt;tagname&gt;</span> -m <span class="string">"blablabla..."</span>  <span class="comment">#可以用PGP签名标签；</span>
+git <span class="keyword">tag</span> <span class="comment">#可以查看所有标签</span>
+
+git push origin <span class="variable">&lt;tagname&gt;</span>  <span class="comment">#可以推送一个本地标签；</span>
+git push origin --tags  <span class="comment">#可以推送全部未推送过的本地标签</span>
+git <span class="keyword">tag</span> -d <span class="variable">&lt;tagname&gt;</span>  <span class="comment">#可以删除一个本地标签；</span>
+git push origin :refs/tags/<span class="variable">&lt;tagname&gt;</span>  <span class="comment">#可以删除一个远程标签。</span>
+</code></pre></span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/git/" rel="tag">#git</a>
+          
+            <a href="/tags/入门教程/" rel="tag">#入门教程</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/09/07/MarkDown语法规则/" rel="prev">MarkDown语法规则</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+ </div>
+
+        
+
+        
+          <div class="comments" id="comments">
+            
+              <div class="ds-thread" data-thread-key="2015/09/06/git常用命令/"
+                   data-title="git常用命令" data-url="http://kuku940.github.io/2015/09/06/git常用命令/">
+              </div>
+            
+          </div>
+        
+      </div>
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点简介
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="http://7xljab.com1.z0.glb.clouddn.com/博客|个人博客|不卜个人博客|不卜" alt="不卜" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">不卜</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description">善易者不卜</p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">2</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            <a href="/categories">
+              <span class="site-state-item-count">1</span>
+              <span class="site-state-item-name">分类</span>
+              </a>
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">3</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/kuku940" target="_blank">GitHub</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.zhihu.com/people/roingeek" target="_blank">ZhiHu</a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+            <p class="site-author-name">友情链接</p>
+            
+              <span class="links-of-author-item">
+              <a href="http://zhumang.top/" target="_blank">竹芒</a>
+              </span>
+            
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#git安装"><span class="nav-number">1.</span> <span class="nav-text">git安装</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#windows安装"><span class="nav-number">1.1.</span> <span class="nav-text">windows安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#linux安装"><span class="nav-number">1.2.</span> <span class="nav-text">linux安装</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#本地仓库操作"><span class="nav-number">2.</span> <span class="nav-text">本地仓库操作</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#创建一个版本库"><span class="nav-number">2.1.</span> <span class="nav-text">创建一个版本库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#初始化一个Git仓库，使用git_init命令:"><span class="nav-number">2.2.</span> <span class="nav-text">初始化一个Git仓库，使用git init命令:</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#创建一个readme-txt文件，使用命令添加一个文件到git仓库"><span class="nav-number">2.3.</span> <span class="nav-text">创建一个readme.txt文件，使用命令添加一个文件到git仓库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#查看工作区状态"><span class="nav-number">2.4.</span> <span class="nav-text">查看工作区状态</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#查看修改的内容(比较缓存区和工作区之间的区别)"><span class="nav-number">2.5.</span> <span class="nav-text">查看修改的内容(比较缓存区和工作区之间的区别)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#查看最近到最远提交的日志文件"><span class="nav-number">2.6.</span> <span class="nav-text">查看最近到最远提交的日志文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#记录你的每一次命令，查看head"><span class="nav-number">2.7.</span> <span class="nav-text">记录你的每一次命令，查看head</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#回滚到上一个版本"><span class="nav-number">2.8.</span> <span class="nav-text">回滚到上一个版本</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#查看readme-txt_文件"><span class="nav-number">2.9.</span> <span class="nav-text">查看readme.txt 文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#工作区修改全部撤销"><span class="nav-number">2.10.</span> <span class="nav-text">工作区修改全部撤销</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#把缓存区的修改回退到工作区"><span class="nav-number">2.11.</span> <span class="nav-text">把缓存区的修改回退到工作区</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#删除一个文件"><span class="nav-number">2.12.</span> <span class="nav-text">删除一个文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#设置远程秘钥"><span class="nav-number">2.13.</span> <span class="nav-text">设置远程秘钥</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#推送到github上"><span class="nav-number">2.14.</span> <span class="nav-text">推送到github上</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#远程分支比本地更新，需要首先git_pull"><span class="nav-number">2.15.</span> <span class="nav-text">远程分支比本地更新，需要首先git pull</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#从git上面克隆"><span class="nav-number">2.16.</span> <span class="nav-text">从git上面克隆</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#查看远程库信息"><span class="nav-number">2.17.</span> <span class="nav-text">查看远程库信息</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#分支管理"><span class="nav-number">3.</span> <span class="nav-text">分支管理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#普通分支合并"><span class="nav-number">3.1.</span> <span class="nav-text">普通分支合并</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#【注意】："><span class="nav-number">3.1.1.</span> <span class="nav-text">【注意】：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#查看分支合并图"><span class="nav-number">3.2.</span> <span class="nav-text">查看分支合并图</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#BUG分支"><span class="nav-number">4.</span> <span class="nav-text">BUG分支</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Feature分支"><span class="nav-number">4.1.</span> <span class="nav-text">Feature分支</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#标签管理"><span class="nav-number">5.</span> <span class="nav-text">标签管理</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner"> <div class="copyright" >
+  
+  &copy; &nbsp; 
+  <span itemprop="copyrightYear">2015</span>
+  <span class="with-love">
+    <i class="icon-next-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">不卜</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 搭建
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+ </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"roingeek"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+    
+     
+
+    
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.5.1"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.5.1"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.5.1" id="motion.global"></script>
+
+
+
+
+  <script type="text/javascript" src="/js/nav-toggle.js?v=0.4.5.1"></script>
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.5.1" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      var $indicator = $(indicator);
+      var opacity = action === 'show' ? 0.4 : 0;
+      $indicator.velocity ?
+        $indicator.velocity('stop').velocity({
+          opacity: opacity
+        }, { duration: 100 }) :
+        $indicator.stop().animate({
+          opacity: opacity
+        }, 100);
+    }
+
+  });
+</script>
+
+<script type="text/javascript" id="sidebar.nav">
+  $(document).ready(function () {
+    var html = $('html');
+    var TAB_ANIMATE_DURATION = 200;
+    var hasVelocity = $.isFunction(html.velocity);
+
+    $('.sidebar-nav li').on('click', function () {
+      var item = $(this);
+      var activeTabClassName = 'sidebar-nav-active';
+      var activePanelClassName = 'sidebar-panel-active';
+      if (item.hasClass(activeTabClassName)) {
+        return;
+      }
+
+      var currentTarget = $('.' + activePanelClassName);
+      var target = $('.' + item.data('target'));
+
+      hasVelocity ?
+        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
+            .addClass(activePanelClassName);
+        }) :
+        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
+          currentTarget.hide();
+          target
+            .stop()
+            .css({'opacity': 0, 'display': 'block'})
+            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
+              currentTarget.removeClass(activePanelClassName);
+              target.addClass(activePanelClassName);
+            });
+        });
+
+      item.siblings().removeClass(activeTabClassName);
+      item.addClass(activeTabClassName);
+    });
+
+    $('.post-toc a').on('click', function (e) {
+      e.preventDefault();
+      var targetSelector = escapeSelector(this.getAttribute('href'));
+      var offset = $(targetSelector).offset().top;
+      hasVelocity ?
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        }) :
+        $('html, body').stop().animate({
+          scrollTop: offset
+        }, 500);
+    });
+
+    // Expand sidebar on post detail page by default, when post has a toc.
+    var $tocContent = $('.post-toc-content');
+    if (isDesktop() && CONFIG.sidebar === 'post') {
+      if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+        displaySidebar();
+      }
+    }
+  });
+</script>
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+      if (isMobile()) {
+        FastClick.attach(document.body);
+      }
+    });
+  </script>
+
+  
+
+  
+  
+
+<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"1","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"16"},"slide":{"type":"slide","bdImg":"3","bdPos":"left","bdTop":"250"}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+
+
+
+  
+  <script type="text/javascript" src="/js/lazyload.js"></script>
+  <script type="text/javascript">
+    $(function () {
+      $("#posts").find('img').lazyload({
+        placeholder: "/images/loading.gif",
+        effect: "fadeIn"
+      });
+    });
+  </script>
+</body>
+</html>
