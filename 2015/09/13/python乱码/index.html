@@ -51,7 +51,7 @@ no encoding declared; see http://python.org/dev/p">
 File &quot;BeautifulSoup.py&quot;, line 21
 SyntaxError: Non-ASCII character &apos;\xe6&apos; in file BeautifulSoup.py on line 21, but
 no encoding declared; see http://python.org/dev/p">
-<meta property="og:updated_time" content="2015-09-13T05:15:20.736Z">
+<meta property="og:updated_time" content="2015-09-13T05:17:18.075Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="python乱码">
 <meta name="twitter:description" content="问题一描述：在python编写代码时，可能在运行时出现些中文字符解析不了
@@ -267,7 +267,8 @@ no encoding declared; see http://python.org/dev/p">
 <pre><code>File <span class="string">"BeautifulSoup.py"</span>, <span class="built_in">line</span> <span class="number">21</span>
 SyntaxError: Non-ASCII <span class="keyword">character</span> <span class="string">'\xe6'</span> <span class="operator">in</span> <span class="built_in">file</span> BeautifulSoup.py <span class="command"><span class="keyword">on</span> <span class="title">line</span> <span class="title">21</span>, <span class="title">but</span></span>
 no encoding declared; see <span class="keyword">http</span>://python.org/dev/peps/pep-<span class="number">0263</span>/ <span class="keyword">for</span> details
-</code></pre><p><strong>解决方案：</strong><br>在编写python文件开始部分添加上：</p>
+</code></pre><a id="more"></a>
+<p><strong>解决方案：</strong><br>在编写python文件开始部分添加上：</p>
 <pre><code><span class="preprocessor"># !/usr/bin/python</span>
 <span class="preprocessor"># -*- coding: utf-8 -*-</span>
 </code></pre><p><strong>注意：</strong><br>第二行代码：<code>#coding=utf-8</code>要添加在文件头的第一行或者第二行，否则不起效果</p>
