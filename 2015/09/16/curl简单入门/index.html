@@ -46,7 +46,7 @@
 <meta property="og:site_name" content="不卜博客 - 不卜的个人博客站点">
 <meta property="og:description" content="安装curl从curl官网下载你需要的curl版本，这儿我使用的win64位，解压后，将curl.exe文件放置到C:\Windows\System32路径下，可是使用命令行敲入curl出现以下图片，表示安装成功。">
 <meta property="og:image" content="http://7xljab.com1.z0.glb.clouddn.com/不卜个人博客/image/curl安装完成敲入截图.png">
-<meta property="og:updated_time" content="2015-09-16T15:37:14.731Z">
+<meta property="og:updated_time" content="2015-09-16T15:49:13.859Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="curl简单入门">
 <meta name="twitter:description" content="安装curl从curl官网下载你需要的curl版本，这儿我使用的win64位，解压后，将curl.exe文件放置到C:\Windows\System32路径下，可是使用命令行敲入curl出现以下图片，表示安装成功。">
@@ -258,11 +258,11 @@
         <span itemprop="articleBody"><h1 id="安装curl">安装curl</h1><p>从<a href="http://curl.haxx.se/download.html" target="_blank" rel="external">curl官网</a>下载你需要的curl版本，这儿我使用的<a href="http://pan.baidu.com/s/1pJACQOr" target="_blank" rel="external">win64位</a>，解压后，将curl.exe文件放置到<code>C:\Windows\System32</code>路径下，可是使用命令行敲入curl出现以下图片，表示安装成功。<br><img src="http://7xljab.com1.z0.glb.clouddn.com/不卜个人博客/image/curl安装完成敲入截图.png" alt="curl安装截图" title="curl敲入截图"><br><a id="more"></a></p>
 <h1 id="curl常用参数">curl常用参数</h1><p>-A:随意指定自己这次访问所宣称的自己的浏览器信息</p>
 <p><strong>-b/–cookie <name=string file=""> cookie字符串或文件读取位置:使用option来把上次的cookie信息追加到http request里面去。</name=string></strong></p>
-<p><strong>-c/ –cookie-jar <file> 操作结束后把cookie写入到这个文件中</file></strong></p>
-<p><strong>-C/ –continue-at <offset> 断点续转</offset></strong> </p>
-<p><strong>-d/ –data <data> : HTTP POST方式传送数据</data></strong></p>
-<p><strong>-D/ –dump-header <file> 把header信息写入到该文件中</file></strong></p>
-<p><strong>-F/ –form <name=content> 模拟http表单提交数据</name=content></strong></p>
+<p><strong>-c/–cookie-jar <file> 操作结束后把cookie写入到这个文件中</file></strong></p>
+<p><strong>-C/–continue-at <offset> 断点续转</offset></strong> </p>
+<p><strong>-d/–data <data> : HTTP POST方式传送数据</data></strong></p>
+<p><strong>-D/–dump-header <file> 把header信息写入到该文件中</file></strong></p>
+<p><strong>-F/–form <name=content> 模拟http表单提交数据</name=content></strong></p>
 <p>-v/–verbose 小写的v参数，用于打印更多信息，包括发送的请求信息，这在调试脚本是特别有用。</p>
 <p>-m/–max-time <seconds> 指定处理的最大时长</seconds></p>
 <p>-H/–header <header> 指定请求头参数</header></p>
@@ -280,13 +280,15 @@
 <p><strong>-T/–upload-file <file> 上传文件</file></strong></p>
 <h1 id="curl实现GET/POST请求">curl实现GET/POST请求</h1><ol>
 <li><p><strong>直接访问站点</strong></p>
-<pre><code>curl <span class="string">http:</span><span class="comment">//kuku940.github.io</span>
+<pre><code>curl http:<span class="comment">//kuku940.github.io</span>
+<span class="preprocessor"># https地址可以直接访问    </span>
+curl https:<span class="comment">//kuku940.github.io</span>
 </code></pre></li>
 <li><p><strong>保存访问页面/资源</strong></p>
 <pre><code><span class="preprocessor"># 将网站的首页保存到当前目录index.html文件中</span>
 curl -o index.html http:<span class="comment">//kuku940.github.io</span>
 <span class="preprocessor"># 将网站上面的资源以原来的名称 保存到当前目录</span>
-curl -O http:<span class="comment">//d.hiphotos.baidu.com/image/pic/item/ac6eddc451da81cbc2c46ac45066d0160924319d.jpg</span>
+curl -O http:<span class="comment">//www.<span class="label">XXXX.com/banner.jpg</span></span>
 </code></pre></li>
 </ol>
 <ol>
@@ -307,7 +309,7 @@ curl -D ./cookie_D.txt -F log=aaaa -F pwd=<span class="keyword">*</span><span cl
 curl -b ./cookie_c.txt http://www.XXXX.com/admin.htm
 </code></pre></li>
 <li><p><strong>断点续传 -C（大写）</strong></p>
-<pre><code>curl -<span class="constant">C</span> -<span class="constant">O</span> <span class="symbol">http:</span>/<span class="regexp">/d.hiphotos.baidu.com/image</span><span class="regexp">/pic/item</span><span class="regexp">/ac6eddc451da81cbc2c46ac45066d0160924319d.jpg</span>
+<pre><code>curl -C -O <span class="string">http:</span><span class="comment">//www.<span class="label">XXXX.com/banner.jpg</span></span>
 </code></pre></li>
 <li><p><strong>伪造来源地址，防盗链</strong></p>
 <pre><code>curl -e <span class="symbol">http:</span>/<span class="regexp">/localhost http:/</span><span class="regexp">/www.XXXX.com/login</span>.htm
@@ -337,7 +339,14 @@ curl -O aaa.jpg http:<span class="comment">//www.baidu.com/img/bdlogo.gif</span>
     &lt;input type=submit name=nick value=<span class="string">"go"</span>&gt;
     &lt;/form&gt;
 这样一个HTTP表单，我们要用curl进行模拟，就该是这样的语法：
-curl -F upload=@localfile -F nick=go http://www.xxx.com/uploadImg
+curl -F upload=@localfilename -F nick=go http://www.xxx.com/uploadImg
+</code></pre></li>
+<li><p><strong>引用，某些资源需要经过一个网络地址跳转过去</strong></p>
+<pre><code>curl -e <span class="string">http:</span><span class="comment">//www.xx.com/redict</span>
+</code></pre></li>
+<li><p><strong>上传一个资源到http服务器，最好使用PUT方法</strong></p>
+<pre><code>curl -T uploadfile <span class="string">http:</span><span class="comment">//www.<span class="label">xxx.com</span></span>
+curl --upload-file uploadfile <span class="string">http:</span><span class="comment">//www.<span class="label">xxx.com</span></span>
 </code></pre></li>
 </ol>
 <h1 id="参考">参考</h1><p><a href="http://www.2cto.com/os/201408/323782.html" target="_blank" rel="external">CURL实现HTTP的GET/POST方法</a><br><a href="http://blog.csdn.net/lansesl2008/article/details/14523303" target="_blank" rel="external">CURL详解</a><br><a href="http://curl.haxx.se/docs/" target="_blank" rel="external">curl官网</a></p>
