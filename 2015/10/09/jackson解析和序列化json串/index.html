@@ -47,7 +47,7 @@
 <meta property="og:site_name" content="不卜博客 - 不卜的个人博客站点">
 <meta property="og:description" content="Java下常见的Json类库有Gson、JSON-lib和Jackson等，Jackson相对来说比较高效，在项目中主要使用Jackson进行JSON和Java对象转换，下面给出一些Jackson的JSON操作方法。
 #下载jar包可以在maven上面下载如下的三个jar包：jackson-core-2.2.3.jarjackson-annotations-2.2.3.jarjackson-dat">
-<meta property="og:updated_time" content="2015-10-08T19:23:50.281Z">
+<meta property="og:updated_time" content="2015-10-08T19:36:55.337Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="jackson解析和序列化json串">
 <meta name="twitter:description" content="Java下常见的Json类库有Gson、JSON-lib和Jackson等，Jackson相对来说比较高效，在项目中主要使用Jackson进行JSON和Java对象转换，下面给出一些Jackson的JSON操作方法。
@@ -347,9 +347,18 @@
         System.out.println(bubu);
         System.out.println(bubu.getRoles().size());
 
+        //直接读取json的值
+        JsonNode root = mapper.readTree(jsonStr);
+        JsonNode name = root.path(<span class="string">"name"</span>);
+        JsonNode roles = root.path(<span class="string">"roles"</span>);
+        System.out.println(name.asText());
+        System.out.println(roles.size());
+        System.out.println(roles.get(<span class="number">0</span>));
+
     }
 }
-</code></pre></span>
+</code></pre><h1 id="参考">参考</h1><p><a href="http://wiki.fasterxml.com/JacksonInFiveMinutes" target="_blank" rel="external">http://wiki.fasterxml.com/JacksonInFiveMinutes</a></p>
+</span>
       
     </div>
 
@@ -497,7 +506,7 @@
           <div class="post-toc">
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#User类"><span class="nav-number">1.</span> <span class="nav-text">User类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Demo类"><span class="nav-number">2.</span> <span class="nav-text">Demo类</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#User类"><span class="nav-number">1.</span> <span class="nav-text">User类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Demo类"><span class="nav-number">2.</span> <span class="nav-text">Demo类</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考"><span class="nav-number"></span> <span class="nav-text">参考</span></a></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>
