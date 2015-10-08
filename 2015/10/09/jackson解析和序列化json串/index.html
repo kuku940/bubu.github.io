@@ -47,7 +47,7 @@
 <meta property="og:site_name" content="不卜博客 - 不卜的个人博客站点">
 <meta property="og:description" content="Java下常见的Json类库有Gson、JSON-lib和Jackson等，Jackson相对来说比较高效，在项目中主要使用Jackson进行JSON和Java对象转换，下面给出一些Jackson的JSON操作方法。
 下载jar包可以在maven上面下载如下的三个jar包：jackson-core-2.2.3.jarjackson-annotations-2.2.3.jarjackson-data">
-<meta property="og:updated_time" content="2015-10-08T21:22:07.791Z">
+<meta property="og:updated_time" content="2015-10-08T21:45:58.639Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="jackson解析和序列化json串">
 <meta name="twitter:description" content="Java下常见的Json类库有Gson、JSON-lib和Jackson等，Jackson相对来说比较高效，在项目中主要使用Jackson进行JSON和Java对象转换，下面给出一些Jackson的JSON操作方法。
@@ -259,7 +259,7 @@
       
         <span itemprop="articleBody"><p>Java下常见的Json类库有Gson、JSON-lib和Jackson等，Jackson相对来说比较高效，在项目中主要使用Jackson进行JSON和Java对象转换，下面给出一些Jackson的JSON操作方法。</p>
 <h1 id="下载jar包">下载jar包</h1><p>可以在<a href="http://mvnrepository.com/" target="_blank" rel="external">maven</a>上面下载如下的三个jar包：<br><a href="http://repo1.maven.org/maven2/com/fasterxml/jackson/core/jackson-core/2.2.3/jackson-core-2.2.3.jar" target="_blank" rel="external">jackson-core-2.2.3.jar</a><br><a href="http://repo1.maven.org/maven2/com/fasterxml/jackson/core/jackson-annotations/2.2.3/jackson-annotations-2.2.3.jar" target="_blank" rel="external">jackson-annotations-2.2.3.jar</a><br><a href="http://repo1.maven.org/maven2/com/fasterxml/jackson/core/jackson-databind/2.2.3/jackson-databind-2.2.3.jar" target="_blank" rel="external">jackson-databind-2.2.3.jar</a></p>
-<h1 id="简单Demo">简单Demo</h1><h2 id="User类">User类</h2><p>user类中包含以下基本的类型及集合，其中的注释可以不写直接使用对象序列化：<br>有如下的三种常用注释：<br>@JsonIgnore 序列化时候忽略这个属性<br>@JsonProperty 将这个名称换成指定名称<br>@JsonFormat 格式化日期类型 </p>
+<h1 id="简单Demo">简单Demo</h1><h2 id="User类">User类</h2><p>user类中包含以下基本的类型及集合，其中的注释可以不写直接使用对象序列化：<br>有如下的<strong>三种常用注释</strong>：<br>@JsonIgnore 序列化时候忽略这个属性<br>@JsonProperty 将这个名称换成指定名称<br>@JsonFormat 格式化日期类型 </p>
 <pre><code><span class="keyword">package</span> cn.xiaoyu.jackson.domain;
 
 <span class="keyword">import</span> java.util.ArrayList;
