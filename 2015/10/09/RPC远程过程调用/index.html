@@ -39,20 +39,17 @@
   <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1" />
 
 
-<meta name="description" content="RPC介绍 RPC的全称是Remote Procedure Call，即远程过程调用，实现方式有很多，如RMI，WebService等。RPC的实现包括两方，一方称作服务端(server)，一方称作客户端(client)。客户端发送RPC请求到服务端，服务端通过客户端提供的参数执行对应的请求方法，将执行结果返回给客户端，一次RPC调用结束。
-基于TCP协议实现的RPC基于Java的Socket A">
+<meta name="description" content="RPC介绍 RPC的全称是Remote Procedure Call，即远程过程调用，实现方式有很多，如RMI，WebService等。RPC的实现包括两方，一方称作服务端(server)，一方称作客户端(client)。客户端发送RPC请求到服务端，服务端通过客户端提供的参数执行对应的请求方法，将执行结果返回给客户端，一次RPC调用结束。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="RPC远程过程调用">
 <meta property="og:url" content="http://kuku940.github.io/2015/10/09/RPC远程过程调用/index.html">
 <meta property="og:site_name" content="不卜博客 - 不卜的个人博客站点">
-<meta property="og:description" content="RPC介绍 RPC的全称是Remote Procedure Call，即远程过程调用，实现方式有很多，如RMI，WebService等。RPC的实现包括两方，一方称作服务端(server)，一方称作客户端(client)。客户端发送RPC请求到服务端，服务端通过客户端提供的参数执行对应的请求方法，将执行结果返回给客户端，一次RPC调用结束。
-基于TCP协议实现的RPC基于Java的Socket A">
+<meta property="og:description" content="RPC介绍 RPC的全称是Remote Procedure Call，即远程过程调用，实现方式有很多，如RMI，WebService等。RPC的实现包括两方，一方称作服务端(server)，一方称作客户端(client)。客户端发送RPC请求到服务端，服务端通过客户端提供的参数执行对应的请求方法，将执行结果返回给客户端，一次RPC调用结束。">
 <meta property="og:image" content="http://7xljab.com1.z0.glb.clouddn.com/不卜个人博客/image/tcp-rpc.png">
-<meta property="og:updated_time" content="2015-10-08T18:23:24.968Z">
+<meta property="og:updated_time" content="2015-10-08T21:46:40.850Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="RPC远程过程调用">
-<meta name="twitter:description" content="RPC介绍 RPC的全称是Remote Procedure Call，即远程过程调用，实现方式有很多，如RMI，WebService等。RPC的实现包括两方，一方称作服务端(server)，一方称作客户端(client)。客户端发送RPC请求到服务端，服务端通过客户端提供的参数执行对应的请求方法，将执行结果返回给客户端，一次RPC调用结束。
-基于TCP协议实现的RPC基于Java的Socket A">
+<meta name="twitter:description" content="RPC介绍 RPC的全称是Remote Procedure Call，即远程过程调用，实现方式有很多，如RMI，WebService等。RPC的实现包括两方，一方称作服务端(server)，一方称作客户端(client)。客户端发送RPC请求到服务端，服务端通过客户端提供的参数执行对应的请求方法，将执行结果返回给客户端，一次RPC调用结束。">
 
 
 <script type="text/javascript" id="hexo.configuration">
@@ -258,7 +255,7 @@
       
 
       
-        <span itemprop="articleBody"><h1 id="RPC介绍">RPC介绍</h1><p> RPC的全称是Remote Procedure Call，即远程过程调用，实现方式有很多，如RMI，WebService等。<br>RPC的实现包括两方，一方称作服务端(server)，一方称作客户端(client)。客户端发送RPC请求到服务端，服务端通过客户端提供的参数执行对应的请求方法，将执行结果返回给客户端，一次RPC调用结束。</p>
+        <span itemprop="articleBody"><h1 id="RPC介绍">RPC介绍</h1><p> RPC的全称是Remote Procedure Call，即远程过程调用，实现方式有很多，如RMI，WebService等。<br>RPC的实现包括两方，一方称作服务端(server)，一方称作客户端(client)。客户端发送RPC请求到服务端，服务端通过客户端提供的参数执行对应的请求方法，将执行结果返回给客户端，一次RPC调用结束。<br><a id="more"></a></p>
 <h1 id="基于TCP协议实现的RPC">基于TCP协议实现的RPC</h1><p>基于Java的Socket API,我们能够实现一个简单的RPC调用，具体示例如下：包括服务端接口及接口的实现，客户端接口以及远程调用。</p>
 <h2 id="代码实现结构图">代码实现结构图</h2><p><img src="http://7xljab.com1.z0.glb.clouddn.com/不卜个人博客/image/tcp-rpc.png" alt="基于TCP协议实现的RPC的结构图"></p>
 <h2 id="客户端和服务端接口HelloService">客户端和服务端接口HelloService</h2><pre><code><span class="keyword">package</span> cn.xiaoyu.rpc.service;
