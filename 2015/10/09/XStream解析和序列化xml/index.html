@@ -30,7 +30,7 @@
 
 
 
-  <meta name="keywords" content="curl,入门教程," />
+  <meta name="keywords" content="XStream,xml,入门教程," />
 
 
 
@@ -39,17 +39,34 @@
   <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1" />
 
 
-<meta name="description" content="安装curl从curl官网下载你需要的curl版本，这儿我使用的win64位，解压后，将curl.exe文件放置到C:\Windows\System32路径下，可是使用命令行敲入curl出现以下图片，表示安装成功。">
+<meta name="description" content="XStream简介xStream不仅对XML的转换非常友好，而且提供annotation注解，可以在JavaBean中完成对xml节点、属性的描述。
+隐式集合当我们使用集合类时不想显示集合,只显示里面的元素即可.使用隐式集合前: 
+&amp;lt;list&amp;gt; 
+    &amp;lt;element /&amp;gt; 
+    &amp;lt;element /&amp;gt; 
+&amp;lt;list&amp;gt; 
+使用隐式集合:">
 <meta property="og:type" content="article">
-<meta property="og:title" content="curl简单入门">
-<meta property="og:url" content="http://kuku940.github.io/2015/09/16/curl简单入门/index.html">
+<meta property="og:title" content="XStream解析和序列化xml">
+<meta property="og:url" content="http://kuku940.github.io/2015/10/09/XStream解析和序列化xml/index.html">
 <meta property="og:site_name" content="不卜博客 - 不卜的个人博客站点">
-<meta property="og:description" content="安装curl从curl官网下载你需要的curl版本，这儿我使用的win64位，解压后，将curl.exe文件放置到C:\Windows\System32路径下，可是使用命令行敲入curl出现以下图片，表示安装成功。">
-<meta property="og:image" content="http://7xljab.com1.z0.glb.clouddn.com/不卜个人博客/image/curl安装完成敲入截图.png">
-<meta property="og:updated_time" content="2015-09-16T15:49:13.859Z">
+<meta property="og:description" content="XStream简介xStream不仅对XML的转换非常友好，而且提供annotation注解，可以在JavaBean中完成对xml节点、属性的描述。
+隐式集合当我们使用集合类时不想显示集合,只显示里面的元素即可.使用隐式集合前: 
+&amp;lt;list&amp;gt; 
+    &amp;lt;element /&amp;gt; 
+    &amp;lt;element /&amp;gt; 
+&amp;lt;list&amp;gt; 
+使用隐式集合:">
+<meta property="og:updated_time" content="2015-10-08T21:37:01.998Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="curl简单入门">
-<meta name="twitter:description" content="安装curl从curl官网下载你需要的curl版本，这儿我使用的win64位，解压后，将curl.exe文件放置到C:\Windows\System32路径下，可是使用命令行敲入curl出现以下图片，表示安装成功。">
+<meta name="twitter:title" content="XStream解析和序列化xml">
+<meta name="twitter:description" content="XStream简介xStream不仅对XML的转换非常友好，而且提供annotation注解，可以在JavaBean中完成对xml节点、属性的描述。
+隐式集合当我们使用集合类时不想显示集合,只显示里面的元素即可.使用隐式集合前: 
+&amp;lt;list&amp;gt; 
+    &amp;lt;element /&amp;gt; 
+    &amp;lt;element /&amp;gt; 
+&amp;lt;list&amp;gt; 
+使用隐式集合:">
 
 
 <script type="text/javascript" id="hexo.configuration">
@@ -59,7 +76,7 @@
   };
 </script>
 
-  <title> curl简单入门 | 不卜博客 - 不卜的个人博客站点 </title>
+  <title> XStream解析和序列化xml | 不卜博客 - 不卜的个人博客站点 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -205,7 +222,7 @@
           
           
             
-              curl简单入门
+              XStream解析和序列化xml
             
           
         </h1>
@@ -214,8 +231,8 @@
       <div class="post-meta">
         <span class="post-time">
           发表于
-          <time itemprop="dateCreated" datetime="2015-09-16T23:33:39+08:00" content="2015-09-16">
-            2015-09-16
+          <time itemprop="dateCreated" datetime="2015-10-09T05:21:29+08:00" content="2015-10-09">
+            2015-10-09
           </time>
         </span>
 
@@ -224,8 +241,8 @@
             &nbsp; | &nbsp; 分类于
             
               <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                <a href="/categories/curl/" itemprop="url" rel="index">
-                  <span itemprop="name">curl</span>
+                <a href="/categories/Java/" itemprop="url" rel="index">
+                  <span itemprop="name">Java</span>
                 </a>
               </span>
 
@@ -240,8 +257,8 @@
           
             <span class="post-comments-count">
               &nbsp; | &nbsp;
-              <a href="/2015/09/16/curl简单入门/#comments" itemprop="discussionUrl">
-                <span class="post-comments-count ds-thread-count" data-thread-key="2015/09/16/curl简单入门/" itemprop="commentsCount"></span>
+              <a href="/2015/10/09/XStream解析和序列化xml/#comments" itemprop="discussionUrl">
+                <span class="post-comments-count ds-thread-count" data-thread-key="2015/10/09/XStream解析和序列化xml/" itemprop="commentsCount"></span>
               </a>
             </span>
           
@@ -255,102 +272,160 @@
       
 
       
-        <span itemprop="articleBody"><h1 id="安装curl">安装curl</h1><p>从<a href="http://curl.haxx.se/download.html" target="_blank" rel="external">curl官网</a>下载你需要的curl版本，这儿我使用的<a href="http://pan.baidu.com/s/1pJACQOr" target="_blank" rel="external">win64位</a>，解压后，将curl.exe文件放置到<code>C:\Windows\System32</code>路径下，可是使用命令行敲入curl出现以下图片，表示安装成功。<br><img src="http://7xljab.com1.z0.glb.clouddn.com/不卜个人博客/image/curl安装完成敲入截图.png" alt="curl安装截图" title="curl敲入截图"><br><a id="more"></a></p>
-<h1 id="curl常用参数">curl常用参数</h1><p>-A:随意指定自己这次访问所宣称的自己的浏览器信息</p>
-<p><strong>-b/–cookie <name=string file=""> cookie字符串或文件读取位置:使用option来把上次的cookie信息追加到http request里面去。</name=string></strong></p>
-<p><strong>-c/–cookie-jar <file> 操作结束后把cookie写入到这个文件中</file></strong></p>
-<p><strong>-C/–continue-at <offset> 断点续转</offset></strong> </p>
-<p><strong>-d/–data <data> : HTTP POST方式传送数据</data></strong></p>
-<p><strong>-D/–dump-header <file> 把header信息写入到该文件中</file></strong></p>
-<p><strong>-F/–form <name=content> 模拟http表单提交数据</name=content></strong></p>
-<p>-v/–verbose 小写的v参数，用于打印更多信息，包括发送的请求信息，这在调试脚本是特别有用。</p>
-<p>-m/–max-time <seconds> 指定处理的最大时长</seconds></p>
-<p>-H/–header <header> 指定请求头参数</header></p>
-<p><strong>-s/–slient</strong> 减少输出的信息，比如进度</p>
-<p>–connect-timeout <seconds> 指定尝试连接的最大时长</seconds></p>
-<p>-x/–proxy <proxyhost[:port]> 指定代理服务器地址和端口，端口默认为1080</proxyhost[:port]></p>
-<p>-T/–upload-file <file> 指定上传文件路径</file></p>
-<p><strong>-o/–output <file> 指定输出文件名称</file></strong></p>
-<p>–retry <num> 指定重试次数</num></p>
-<p>-e/–referer <url> 指定引用地址</url></p>
-<p><strong>-I/–head 仅返回头部信息，使用HEAD请求</strong></p>
-<p>-u/–user <user[:password]>设置服务器的用户和密码</user[:password]></p>
-<p><strong>-O:按照服务器上的文件名，自动存在本地</strong></p>
-<p>-r/–range <range>检索来自HTTP/1.1或FTP服务器字节范围</range></p>
-<p><strong>-T/–upload-file <file> 上传文件</file></strong></p>
-<h1 id="curl实现GET/POST请求">curl实现GET/POST请求</h1><ol>
-<li><p><strong>直接访问站点</strong></p>
-<pre><code>curl http:<span class="comment">//kuku940.github.io</span>
-<span class="preprocessor"># https地址可以直接访问    </span>
-curl https:<span class="comment">//kuku940.github.io</span>
-</code></pre></li>
-<li><p><strong>保存访问页面/资源</strong></p>
-<pre><code><span class="preprocessor"># 将网站的首页保存到当前目录index.html文件中</span>
-curl -o index.html http:<span class="comment">//kuku940.github.io</span>
-<span class="preprocessor"># 将网站上面的资源以原来的名称 保存到当前目录</span>
-curl -O http:<span class="comment">//www.<span class="label">XXXX.com/banner.jpg</span></span>
-</code></pre></li>
-</ol>
-<ol>
-<li><p><strong>GET方式请求</strong></p>
-<pre><code>curl http:<span class="comment">//www.example.com?username=kuku&amp;passwd=123456</span>
-<span class="preprocessor"># A/<span class="number">001.</span>JPG -&gt; 下载后： <span class="number">001</span>-A.JPG 原来： B/<span class="number">001.</span>JPG -&gt; 下载后： <span class="number">001</span>-B.JPG</span>
-curl -o <span class="preprocessor">#<span class="number">2</span>_#<span class="number">1.</span>jpg http:<span class="comment">//www.<span class="label">XXXX.com/~{A,B}/[001-201].JPG</span></span></span>
-</code></pre></li>
-<li><p><strong>Post方式请求</strong></p>
-<pre><code>curl -d <span class="string">"username=kuku&amp;passwd=123456"</span> <span class="string">http:</span><span class="comment">//www.example.com</span>
-</code></pre></li>
-<li><p><strong>模拟表单信息，模拟登录</strong>  </p>
-<pre><code><span class="comment"># 保存cookie信息</span>
-curl -c ./cookie_c.txt -F log=aaaa -F pwd=<span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span> http://www.XXXX.com/login.htm
-<span class="comment"># 保存header信息</span>
-curl -D ./cookie_D.txt -F log=aaaa -F pwd=<span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span> http://www.XXXX.com/login.htm
-<span class="comment"># 使用cookie文件</span>
-curl -b ./cookie_c.txt http://www.XXXX.com/admin.htm
-</code></pre></li>
-<li><p><strong>断点续传 -C（大写）</strong></p>
-<pre><code>curl -C -O <span class="string">http:</span><span class="comment">//www.<span class="label">XXXX.com/banner.jpg</span></span>
-</code></pre></li>
-<li><p><strong>伪造来源地址，防盗链</strong></p>
-<pre><code>curl -e <span class="symbol">http:</span>/<span class="regexp">/localhost http:/</span><span class="regexp">/www.XXXX.com/login</span>.htm
-</code></pre></li>
-<li><p><strong>代理IP</strong></p>
-<pre><code>curl -x xx<span class="class">.xx</span><span class="class">.xx</span><span class="class">.xx</span>:xxxxx -o index<span class="class">.html</span> http:<span class="comment">//www.<span class="label">XXXX.com</span></span>
-</code></pre></li>
-<li><p><strong>分段下载</strong></p>
-<pre><code>curl -r <span class="number">0</span>-<span class="number">100</span> -o img.part1 http:<span class="comment">//www.<span class="label">XXXX.com/banner.jpg</span></span>
-curl -r <span class="number">100</span>-<span class="number">200</span> -o img.part2 http:<span class="comment">//www.<span class="label">XXXX.com/banner.jpg</span></span>
-curl -r <span class="number">200</span>- -o img.part3 http:<span class="comment">//www.<span class="label">XXXX.com/banner.jpg</span></span>
-cat img.part* &gt; img.jpg
-</code></pre></li>
-<li><p><strong>显示/隐藏下载进度条</strong></p>
-<pre><code><span class="preprocessor"># 隐藏进度条</span>
-curl -s -o aaa.jpg http:<span class="comment">//www.baidu.com/img/bdlogo.gif</span>
-<span class="preprocessor"># 显示进度条</span>
-curl -O aaa.jpg http:<span class="comment">//www.baidu.com/img/bdlogo.gif</span>
-</code></pre></li>
-<li><p><strong>模拟浏览器头</strong></p>
-<pre><code>curl -A <span class="string">"Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0)"</span> -x <span class="number">123.45</span><span class="number">.67</span><span class="number">.89</span>:<span class="number">1080</span> -o index.html -D cookie0001.txt http:<span class="comment">//www.baidu.com</span>
-</code></pre></li>
-<li><p><strong>文件上传</strong></p>
-<pre><code>一点需要注意的是，POST模式下的文件上的文件上传，比如
-    &lt;form method=<span class="string">"<span class="keyword">POST</span>"</span> enctype=<span class="string">"multipar/form-data"</span> action=<span class="string">"http://www.xxx.com/uploadImg"</span>&gt;
-    &lt;input type=file name=upload&gt;
-    &lt;input type=submit name=nick value=<span class="string">"go"</span>&gt;
-    &lt;/form&gt;
-这样一个HTTP表单，我们要用curl进行模拟，就该是这样的语法：
-curl -F upload=@localfilename -F nick=go http://www.xxx.com/uploadImg
-</code></pre></li>
-<li><p><strong>引用，某些资源需要经过一个网络地址跳转过去</strong></p>
-<pre><code>curl -e <span class="string">http:</span><span class="comment">//www.xx.com/redict</span>
-</code></pre></li>
-<li><p><strong>上传一个资源到http服务器，最好使用PUT方法</strong></p>
-<pre><code>curl -T uploadfile <span class="string">http:</span><span class="comment">//www.<span class="label">xxx.com</span></span>
-curl --upload-file uploadfile <span class="string">http:</span><span class="comment">//www.<span class="label">xxx.com</span></span>
-</code></pre></li>
-</ol>
-<h1 id="参考">参考</h1><p><a href="http://www.2cto.com/os/201408/323782.html" target="_blank" rel="external">CURL实现HTTP的GET/POST方法</a><br><a href="http://blog.csdn.net/lansesl2008/article/details/14523303" target="_blank" rel="external">CURL详解</a><br><a href="http://curl.haxx.se/docs/" target="_blank" rel="external">curl官网</a></p>
-</span>
+        <span itemprop="articleBody"><h1 id="XStream简介">XStream简介</h1><p>xStream不仅对XML的转换非常友好，而且提供annotation注解，可以在JavaBean中完成对xml节点、属性的描述。</p>
+<h2 id="隐式集合">隐式集合</h2><p>当我们使用集合类时不想显示集合,只显示里面的元素即可.<br>使用隐式集合前: </p>
+<pre><code><span class="tag">&lt;list&gt;</span> 
+    <span class="tag">&lt;element /&gt;</span> 
+    <span class="tag">&lt;element /&gt;</span> 
+<span class="tag">&lt;list&gt;</span> 
+</code></pre><p>使用隐式集合:   <code>xstream.addImplicitCollection(Person.class, &quot;list&quot;);</code><br>使用隐式集合后:</p>
+<pre><code><span class="tag">&lt;element /&gt;</span> 
+<span class="tag">&lt;element /&gt;</span>
+</code></pre><h1 id="下载jar包">下载jar包</h1><p>可以在<a href="http://mvnrepository.com/" target="_blank" rel="external">maven</a>上面下载如下jar包：<br><a href="http://central.maven.org/maven2/com/thoughtworks/xstream/xstream/1.3.1/xstream-1.3.1.jar" target="_blank" rel="external">xstream-1.3.1.jar</a><br><a href="http://central.maven.org/maven2/xpp3/xpp3/1.1.3.3/xpp3-1.1.3.3.jar" target="_blank" rel="external">xpp3-1.1.3.3.jar</a>  </p>
+<h1 id="XStream常用注释">XStream常用注释</h1><blockquote>
+<p>@XStreamAlias(“message”) 别名注解<br>作用目标: 类,字段<br>@XStreamImplicit 隐式集合  是指在集合中不显示集合的名称<br>@XStreamImplicit(itemFieldName=”part”)<br>作用目标: 集合字段<br>@XStreamConverter(SingleValueCalendarConverter.class) 注入转换器<br>作用目标: 对象<br>@XStreamAsAttribute 转换成属性<br>作用目标: 字段<br>@XStreamOmitField 忽略字段<br>作用目标: 字段</p>
+</blockquote>
+<h1 id="简单Demo">简单Demo</h1><h2 id="User类">User类</h2><pre><code><span class="keyword">package</span> cn.xiaoyu.xstream.domain;
+
+<span class="keyword">import</span> java.util.ArrayList;
+<span class="keyword">import</span> java.util.Date;
+<span class="keyword">import</span> java.util.List;
+
+<span class="keyword">import</span> com.thoughtworks.xstream.annotations.XStreamAlias;
+<span class="keyword">import</span> com.thoughtworks.xstream.annotations.XStreamAsAttribute;
+<span class="keyword">import</span> com.thoughtworks.xstream.annotations.XStreamImplicit;
+
+<span class="annotation">@XStreamAlias</span>(<span class="string">"user"</span>)  <span class="comment">// 设置User类在xml中的别名</span>
+<span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">User</span> </span>{
+    <span class="keyword">private</span> Integer id;
+    <span class="annotation">@XStreamAsAttribute</span>()  <span class="comment">// 将name设置为XML user元素的attribute</span>
+    <span class="keyword">private</span> String name;
+    <span class="keyword">private</span> Date birth;
+    <span class="annotation">@XStreamImplicit</span>(itemFieldName=<span class="string">"role"</span>)  <span class="comment">// 将这个字段从xml中去掉</span>
+    <span class="keyword">private</span> List&lt;String&gt; roles = <span class="keyword">new</span> ArrayList&lt;String&gt;();
+<span class="comment">//    @XStreamImplicit(itemFieldName="address")  // 这儿和在Address.java上面添加@XStreamAlias("address")效果一样  </span>
+    <span class="keyword">private</span> List&lt;Address&gt; addresses = <span class="keyword">new</span> ArrayList&lt;&gt;();
+    <span class="function"><span class="keyword">public</span> Integer <span class="title">getId</span><span class="params">()</span> </span>{
+        <span class="keyword">return</span> id;
+    }
+    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setId</span><span class="params">(Integer id)</span> </span>{
+        <span class="keyword">this</span>.id = id;
+    }
+    <span class="function"><span class="keyword">public</span> String <span class="title">getName</span><span class="params">()</span> </span>{
+        <span class="keyword">return</span> name;
+    }
+    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setName</span><span class="params">(String name)</span> </span>{
+        <span class="keyword">this</span>.name = name;
+    }
+    <span class="function"><span class="keyword">public</span> Date <span class="title">getBirth</span><span class="params">()</span> </span>{
+        <span class="keyword">return</span> birth;
+    }
+    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setBirth</span><span class="params">(Date birth)</span> </span>{
+        <span class="keyword">this</span>.birth = birth;
+    }
+    <span class="function"><span class="keyword">public</span> List&lt;String&gt; <span class="title">getRoles</span><span class="params">()</span> </span>{
+        <span class="keyword">return</span> roles;
+    }
+    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setRoles</span><span class="params">(List&lt;String&gt; roles)</span> </span>{
+        <span class="keyword">this</span>.roles = roles;
+    }
+
+
+    <span class="function"><span class="keyword">public</span> List&lt;Address&gt; <span class="title">getAddresses</span><span class="params">()</span> </span>{
+        <span class="keyword">return</span> addresses;
+    }
+    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setAddresses</span><span class="params">(List&lt;Address&gt; addresses)</span> </span>{
+        <span class="keyword">this</span>.addresses = addresses;
+    }
+    <span class="function"><span class="keyword">public</span> <span class="title">User</span><span class="params">()</span></span>{}
+    <span class="function"><span class="keyword">public</span> <span class="title">User</span><span class="params">(<span class="keyword">int</span> id, String name, Date birth)</span> </span>{
+        <span class="keyword">super</span>();
+        <span class="keyword">this</span>.id = id;
+        <span class="keyword">this</span>.name = name;
+        <span class="keyword">this</span>.birth = birth;
+    }
+
+}
+</code></pre><h2 id="Address类">Address类</h2><pre><code><span class="keyword">package</span> cn.xiaoyu.xstream.domain;
+
+<span class="keyword">import</span> com.thoughtworks.xstream.annotations.XStreamAlias;
+
+<span class="annotation">@XStreamAlias</span>(<span class="string">"address"</span>) 
+<span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Address</span> </span>{
+    <span class="keyword">private</span> String addr;
+    <span class="keyword">private</span> <span class="keyword">int</span> number;
+    <span class="function"><span class="keyword">public</span> String <span class="title">getAddr</span><span class="params">()</span> </span>{
+        <span class="keyword">return</span> addr;
+    }
+    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setAddr</span><span class="params">(String addr)</span> </span>{
+        <span class="keyword">this</span>.addr = addr;
+    }
+    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getNumber</span><span class="params">()</span> </span>{
+        <span class="keyword">return</span> number;
+    }
+    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setNumber</span><span class="params">(<span class="keyword">int</span> number)</span> </span>{
+        <span class="keyword">this</span>.number = number;
+    }
+
+    <span class="function"><span class="keyword">public</span> <span class="title">Address</span><span class="params">()</span> </span>{}
+    <span class="function"><span class="keyword">public</span> <span class="title">Address</span><span class="params">(String addr, <span class="keyword">int</span> number)</span> </span>{
+        <span class="keyword">super</span>();
+        <span class="keyword">this</span>.addr = addr;
+        <span class="keyword">this</span>.number = number;
+    }
+
+}
+</code></pre><h2 id="Demo类">Demo类</h2><pre><code><span class="keyword">package</span> cn.xiaoyu.xstream.demo;
+
+<span class="keyword">import</span> java.util.Date;
+
+<span class="keyword">import</span> com.thoughtworks.xstream.XStream;
+
+<span class="keyword">import</span> cn.xiaoyu.xstream.domain.Address;
+<span class="keyword">import</span> cn.xiaoyu.xstream.domain.User;
+
+<span class="keyword">public</span> <span class="keyword">class</span> Demo {
+    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> main(String[] args) {
+        <span class="comment">// 初始化user对象</span>
+        User user = <span class="keyword">new</span> User(<span class="number">1</span>,<span class="string">"bubu"</span>,<span class="keyword">new</span> Date());
+        user.getRoles().add(<span class="string">"coder"</span>);        
+        user.getRoles().add(<span class="string">"student"</span>);
+
+        user.getAddresses().add(<span class="keyword">new</span> Address(<span class="string">"shenzhen"</span>,<span class="number">1234</span>));
+        user.getAddresses().add(<span class="keyword">new</span> Address(<span class="string">"anqing"</span>,<span class="number">5678</span>));
+
+        <span class="comment">// 将对象转换成xml</span>
+        XStream xStream = <span class="keyword">new</span> XStream();
+<span class="comment">//      这句和@XStreamAlias("user")等效</span>
+<span class="comment">//        xStream.alias("user",User.class);</span>
+<span class="comment">//        xStream.alias("address",Address.class);</span>
+        xStream.setMode(XStream.NO_REFERENCES);
+<span class="comment">//      这句和@XStreamImplicit()等效 </span>
+<span class="comment">//      xStream.addImplicitCollection(User.class, "addresses"); </span>
+<span class="comment">//      这句和@XStreamAsAttribute()         </span>
+<span class="comment">//      xStream.useAttributeFor(User.class,"name");</span>
+        <span class="comment">//注册使用了注解的VO </span>
+        xStream.processAnnotations(<span class="keyword">new</span> <span class="keyword">Class</span>[]{User.<span class="keyword">class</span>,Address.<span class="keyword">class</span>});
+        String xml = xStream.toXML(user);
+        System.out.<span class="keyword">println</span>(xml);
+
+
+        <span class="comment">// 将xml转换为User对象</span>
+        XStream xs = <span class="keyword">new</span> XStream();
+<span class="comment">//      这句和@XStreamAlias("user")等效</span>
+<span class="comment">//        xs.alias("user",User.class);</span>
+<span class="comment">//        xs.alias("address",Address.class);</span>
+        xs.setMode(XStream.NO_REFERENCES);
+<span class="comment">//      这句和@XStreamImplicit()等效 </span>
+<span class="comment">//      xs.addImplicitCollection(User.class, "addresses"); </span>
+<span class="comment">//      这句和@XStreamAsAttribute()         </span>
+<span class="comment">//      xs.useAttributeFor(User.class,"name");</span>
+        xs.processAnnotations(<span class="keyword">new</span> <span class="keyword">Class</span>[]{User.<span class="keyword">class</span>,Address.<span class="keyword">class</span>});
+        User bubu = (User) xs.fromXML(xml);
+        System.out.<span class="keyword">println</span>(bubu.getAddresses().get(<span class="number">0</span>).getNumber()+<span class="string">"---"</span>+bubu.getName());
+    }
+}
+</code></pre></span>
       
     </div>
 
@@ -358,7 +433,9 @@ curl --upload-file uploadfile <span class="string">http:</span><span class="comm
       
         <div class="post-tags">
           
-            <a href="/tags/curl/" rel="tag">#curl</a>
+            <a href="/tags/XStream/" rel="tag">#XStream</a>
+          
+            <a href="/tags/xml/" rel="tag">#xml</a>
           
             <a href="/tags/入门教程/" rel="tag">#入门教程</a>
           
@@ -369,13 +446,11 @@ curl --upload-file uploadfile <span class="string">http:</span><span class="comm
         <div class="post-nav">
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2015/09/20/Ajax请求的几种类型/" rel="prev">Ajax请求的几种类型</a>
-            
           </div>
 
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2015/09/14/用python爬虫抓站的一些技巧总结--转载/" rel="next">用python爬虫抓站的一些技巧总结--转载</a>
+              <a href="/2015/10/09/jackson解析和序列化json串/" rel="next">jackson解析和序列化json串</a>
             
           </div>
         </div>
@@ -400,8 +475,8 @@ curl --upload-file uploadfile <span class="string">http:</span><span class="comm
         
           <div class="comments" id="comments">
             
-              <div class="ds-thread" data-thread-key="2015/09/16/curl简单入门/"
-                   data-title="curl简单入门" data-url="http://kuku940.github.io/2015/09/16/curl简单入门/">
+              <div class="ds-thread" data-thread-key="2015/10/09/XStream解析和序列化xml/"
+                   data-title="XStream解析和序列化xml" data-url="http://kuku940.github.io/2015/10/09/XStream解析和序列化xml/">
               </div>
             
           </div>
@@ -500,7 +575,7 @@ curl --upload-file uploadfile <span class="string">http:</span><span class="comm
           <div class="post-toc">
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#安装curl"><span class="nav-number">1.</span> <span class="nav-text">安装curl</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#curl常用参数"><span class="nav-number">2.</span> <span class="nav-text">curl常用参数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#curl实现GET/POST请求"><span class="nav-number">3.</span> <span class="nav-text">curl实现GET/POST请求</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考"><span class="nav-number">4.</span> <span class="nav-text">参考</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#XStream简介"><span class="nav-number">1.</span> <span class="nav-text">XStream简介</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#隐式集合"><span class="nav-number">1.1.</span> <span class="nav-text">隐式集合</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#下载jar包"><span class="nav-number">2.</span> <span class="nav-text">下载jar包</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#XStream常用注释"><span class="nav-number">3.</span> <span class="nav-text">XStream常用注释</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#简单Demo"><span class="nav-number">4.</span> <span class="nav-text">简单Demo</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#User类"><span class="nav-number">4.1.</span> <span class="nav-text">User类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Address类"><span class="nav-number">4.2.</span> <span class="nav-text">Address类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Demo类"><span class="nav-number">4.3.</span> <span class="nav-text">Demo类</span></a></li></ol></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>
