@@ -39,14 +39,12 @@
   <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1" />
 
 
-<meta name="description" content="概述与介绍ActiveMQ 是Apache所提供的一个开源消息系统，完全采用Java实现，能够很好的支持J2EE提出的JMS（Java Message Service）规范。JMS即Java消息服务，是一组Java应用程序接口，他提供消息的创建、发送、接收、读取等一系列服务。JMS定义一组公共应用程序接口和相应语法，类似Java的数据库的统一访问接口JDBC。
-特性1、 多种语言和协议编写客户端。">
+<meta name="description" content="概述与介绍ActiveMQ 是Apache所提供的一个开源消息系统，完全采用Java实现，能够很好的支持J2EE提出的JMS（Java Message Service）规范。JMS即Java消息服务，是一组Java应用程序接口，他提供消息的创建、发送、接收、读取等一系列服务。JMS定义一组公共应用程序接口和相应语法，类似Java的数据库的统一访问接口JDBC。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="ActiveMQ消息系统">
 <meta property="og:url" content="http://kuku940.github.io/2015/10/10/ActiveMQ消息系统/index.html">
 <meta property="og:site_name" content="不卜博客 - 不卜的个人博客站点">
-<meta property="og:description" content="概述与介绍ActiveMQ 是Apache所提供的一个开源消息系统，完全采用Java实现，能够很好的支持J2EE提出的JMS（Java Message Service）规范。JMS即Java消息服务，是一组Java应用程序接口，他提供消息的创建、发送、接收、读取等一系列服务。JMS定义一组公共应用程序接口和相应语法，类似Java的数据库的统一访问接口JDBC。
-特性1、 多种语言和协议编写客户端。">
+<meta property="og:description" content="概述与介绍ActiveMQ 是Apache所提供的一个开源消息系统，完全采用Java实现，能够很好的支持J2EE提出的JMS（Java Message Service）规范。JMS即Java消息服务，是一组Java应用程序接口，他提供消息的创建、发送、接收、读取等一系列服务。JMS定义一组公共应用程序接口和相应语法，类似Java的数据库的统一访问接口JDBC。">
 <meta property="og:image" content="http://7xljab.com1.z0.glb.clouddn.com/不卜个人博客/image/ActiveMQ_dic.png">
 <meta property="og:image" content="http://7xljab.com1.z0.glb.clouddn.com/不卜个人博客/image/ActiveMQ_startSuccess.png">
 <meta property="og:image" content="http://7xljab.com1.z0.glb.clouddn.com/不卜个人博客/image/ActiveMQ_admin_page.png">
@@ -55,11 +53,10 @@
 <meta property="og:image" content="http://7xljab.com1.z0.glb.clouddn.com/不卜个人博客/image/ActiveMQ_pubsub.jpg">
 <meta property="og:image" content="http://7xljab.com1.z0.glb.clouddn.com/不卜个人博客/image/ActiveMQ_msg_publish.png">
 <meta property="og:image" content="http://7xljab.com1.z0.glb.clouddn.com/不卜个人博客/image/ActiveMQ_spring_jar.png">
-<meta property="og:updated_time" content="2015-10-09T18:27:30.511Z">
+<meta property="og:updated_time" content="2015-10-09T18:29:10.614Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ActiveMQ消息系统">
-<meta name="twitter:description" content="概述与介绍ActiveMQ 是Apache所提供的一个开源消息系统，完全采用Java实现，能够很好的支持J2EE提出的JMS（Java Message Service）规范。JMS即Java消息服务，是一组Java应用程序接口，他提供消息的创建、发送、接收、读取等一系列服务。JMS定义一组公共应用程序接口和相应语法，类似Java的数据库的统一访问接口JDBC。
-特性1、 多种语言和协议编写客户端。">
+<meta name="twitter:description" content="概述与介绍ActiveMQ 是Apache所提供的一个开源消息系统，完全采用Java实现，能够很好的支持J2EE提出的JMS（Java Message Service）规范。JMS即Java消息服务，是一组Java应用程序接口，他提供消息的创建、发送、接收、读取等一系列服务。JMS定义一组公共应用程序接口和相应语法，类似Java的数据库的统一访问接口JDBC。">
 
 
 <script type="text/javascript" id="hexo.configuration">
@@ -265,7 +262,7 @@
       
 
       
-        <span itemprop="articleBody"><h1 id="概述与介绍">概述与介绍</h1><p>ActiveMQ 是Apache所提供的一个开源消息系统，完全采用Java实现，能够很好的支持J2EE提出的JMS（Java Message Service）规范。JMS即Java消息服务，是一组Java应用程序接口，他提供消息的创建、发送、接收、读取等一系列服务。JMS定义一组公共应用程序接口和相应语法，类似Java的数据库的统一访问接口JDBC。</p>
+        <span itemprop="articleBody"><h1 id="概述与介绍">概述与介绍</h1><p>ActiveMQ 是Apache所提供的一个开源消息系统，完全采用Java实现，能够很好的支持J2EE提出的JMS（Java Message Service）规范。JMS即Java消息服务，是一组Java应用程序接口，他提供消息的创建、发送、接收、读取等一系列服务。JMS定义一组公共应用程序接口和相应语法，类似Java的数据库的统一访问接口JDBC。<br><a id="more"></a></p>
 <h1 id="特性">特性</h1><p>1、 多种语言和协议编写客户端。语言： Java、C、C++、C#、Ruby、Perl、Python、PHP。应用协议：OpenWire、Stomp REST、WS Notification、XMPP、AMQP<br>2、完全支持JMS1.1和J2EE 1.4规范 （持久化，XA消息，事务)<br>3、对Spring的支持，ActiveMQ可以很容易内嵌到使用Spring的系统里面去，而且也支持Spring2.0的特性<br>4、通过了常见J2EE服务器（如 Geronimo、JBoss 4、GlassFish、WebLogic)的测试，其中通过JCA 1.5 resource adaptors的配置，可以让ActiveMQ可以自动的部署到任何兼容J2EE 1.4 商业服务器上<br>5、支持多种传送协议：in-VM、TCP、SSL、NIO、UDP、JGroups、JXTA<br>6、支持通过JDBC和journal提供高速的消息持久化<br>7、从设计上保证了高性能的集群，客户端-服务器，点对点<br>8、支持Ajax<br>9、支持与Axis的整合<br>10、可以很容易得调用内嵌JMS provider，进行测试  </p>
 <h1 id="安装">安装</h1><h2 id="下载安装">下载安装</h2><p>可以在<a href="http://activemq.apache.org/" target="_blank" rel="external">Apache ActiveMQ</a>官网下载,<a href="http://activemq.apache.org/activemq-5120-release.html" target="_blank" rel="external">apache-activemq-5.12.0</a>的<a href="http://www.apache.org/dyn/closer.cgi?path=/activemq/5.12.0/apache-activemq-5.12.0-bin.zip" target="_blank" rel="external">windon版本</a>或者<a href="http://www.apache.org/dyn/closer.cgi?path=/activemq/5.12.0/apache-activemq-5.12.0-bin.tar.gz" target="_blank" rel="external">linux版本</a>,解压缩，目录如下所示：<br><img src="http://7xljab.com1.z0.glb.clouddn.com/不卜个人博客/image/ActiveMQ_dic.png" alt="ActiveMQ目录结构">  </p>
 <h2 id="解压启动">解压启动</h2><p>进入bin目录，使用activemq.bat双击启动（windows用户可以选择系统位数[/bin/win64/activemq.bat]，如果你是linux的话，就用命令行的发送去启动），如果一切顺利，你就会看见类似下面的信息：<br><img src="http://7xljab.com1.z0.glb.clouddn.com/不卜个人博客/image/ActiveMQ_startSuccess.png" alt="ActiveMQ启动成功界面"><br>如果你看到这个，那么恭喜你成功了。如果你启动看到了异常信息：</p>
