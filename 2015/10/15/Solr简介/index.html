@@ -39,33 +39,18 @@
   <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1" />
 
 
-<meta name="description" content="solr的安装环境介绍：tomcat7服务器，solr-4.7.2，IK Analyzer 2012FF_hf1文分词器
-
-将solr解压文件夹下面的example\webapps的solr.war文件添加tomcat7/webapp的下面  
-新建一个solr文件夹作为solr的home文件夹，拷贝example\solr下面的所有文件到solr文件夹  
-启动tomcat解压war包  
-拷贝">
+<meta name="description" content="Solr是一个基于Lucene java库的企业级搜索服务器，包含XML/HTTP，JSON API, 高亮查询结果，faceted search，缓存，复制和一个WEB管理界面。Solr运行在Servlet容器中。所以Solr和Lucene的本质区别有以下三点：搜索服务器，企业级和管理。Lucene本质上是搜索库，不是独立的应用程序，而Solr是。Lucene专注于搜索底层的建设，而Solr专注">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Solr简介">
 <meta property="og:url" content="http://kuku940.github.io/2015/10/15/Solr简介/index.html">
 <meta property="og:site_name" content="不卜博客 - 不卜的个人博客站点">
-<meta property="og:description" content="solr的安装环境介绍：tomcat7服务器，solr-4.7.2，IK Analyzer 2012FF_hf1文分词器
-
-将solr解压文件夹下面的example\webapps的solr.war文件添加tomcat7/webapp的下面  
-新建一个solr文件夹作为solr的home文件夹，拷贝example\solr下面的所有文件到solr文件夹  
-启动tomcat解压war包  
-拷贝">
+<meta property="og:description" content="Solr是一个基于Lucene java库的企业级搜索服务器，包含XML/HTTP，JSON API, 高亮查询结果，faceted search，缓存，复制和一个WEB管理界面。Solr运行在Servlet容器中。所以Solr和Lucene的本质区别有以下三点：搜索服务器，企业级和管理。Lucene本质上是搜索库，不是独立的应用程序，而Solr是。Lucene专注于搜索底层的建设，而Solr专注">
 <meta property="og:image" content="http://7xljab.com1.z0.glb.clouddn.com/不卜个人博客/image/localhostsolr.png">
 <meta property="og:image" content="http://7xljab.com1.z0.glb.clouddn.com/不卜个人博客/image/solrAnalyse.png">
-<meta property="og:updated_time" content="2015-10-15T14:46:01.919Z">
+<meta property="og:updated_time" content="2015-10-15T14:50:21.594Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Solr简介">
-<meta name="twitter:description" content="solr的安装环境介绍：tomcat7服务器，solr-4.7.2，IK Analyzer 2012FF_hf1文分词器
-
-将solr解压文件夹下面的example\webapps的solr.war文件添加tomcat7/webapp的下面  
-新建一个solr文件夹作为solr的home文件夹，拷贝example\solr下面的所有文件到solr文件夹  
-启动tomcat解压war包  
-拷贝">
+<meta name="twitter:description" content="Solr是一个基于Lucene java库的企业级搜索服务器，包含XML/HTTP，JSON API, 高亮查询结果，faceted search，缓存，复制和一个WEB管理界面。Solr运行在Servlet容器中。所以Solr和Lucene的本质区别有以下三点：搜索服务器，企业级和管理。Lucene本质上是搜索库，不是独立的应用程序，而Solr是。Lucene专注于搜索底层的建设，而Solr专注">
 
 
 <script type="text/javascript" id="hexo.configuration">
@@ -271,7 +256,8 @@
       
 
       
-        <span itemprop="articleBody"><h1 id="solr的安装">solr的安装</h1><p><strong>环境介绍</strong>：tomcat7服务器，solr-4.7.2，IK Analyzer 2012FF_hf1文分词器</p>
+        <span itemprop="articleBody"><p>Solr是一个基于Lucene java库的企业级搜索服务器，包含XML/HTTP，JSON API, 高亮查询结果，faceted search，缓存，复制和一个WEB管理界面。Solr运行在Servlet容器中。所以Solr和Lucene的本质区别有以下三点：搜索服务器，企业级和管理。<br>Lucene本质上是搜索库，不是独立的应用程序，而Solr是。Lucene专注于搜索底层的建设，而Solr专注于企业应用。Lucene不负责支撑搜索服务所必须的管理，而Solr负责。<br>所以说，一句话概括:Solr是Lucene面向企业搜索应用的扩展。<br><a id="more"></a></p>
+<h1 id="solr的安装">solr的安装</h1><p><strong>环境介绍</strong>：tomcat7服务器，solr-4.7.2，IK Analyzer 2012FF_hf1文分词器</p>
 <ol>
 <li>将solr解压文件夹下面的example\webapps的solr.war文件添加tomcat7/webapp的下面  </li>
 <li>新建一个solr文件夹作为solr的home文件夹，拷贝example\solr下面的所有文件到solr文件夹  </li>
