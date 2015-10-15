@@ -1,0 +1,1110 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.5.1"/>
+
+
+    <meta name="description" content="不卜个人博客，是一个记录博主学习和成长的个人博客站点。" />
+
+
+
+  <meta name="keywords" content="solr,入门教程," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1" />
+
+
+<meta name="description" content="solr的安装环境介绍：tomcat7服务器，solr-4.7.2，IK Analyzer 2012FF_hf1文分词器
+
+将solr解压文件夹下面的example\webapps的solr.war文件添加tomcat7/webapp的下面  
+新建一个solr文件夹作为solr的home文件夹，拷贝example\solr下面的所有文件到solr文件夹  
+启动tomcat解压war包  
+拷贝">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Solr简介">
+<meta property="og:url" content="http://kuku940.github.io/2015/10/15/Solr简介/index.html">
+<meta property="og:site_name" content="不卜博客 - 不卜的个人博客站点">
+<meta property="og:description" content="solr的安装环境介绍：tomcat7服务器，solr-4.7.2，IK Analyzer 2012FF_hf1文分词器
+
+将solr解压文件夹下面的example\webapps的solr.war文件添加tomcat7/webapp的下面  
+新建一个solr文件夹作为solr的home文件夹，拷贝example\solr下面的所有文件到solr文件夹  
+启动tomcat解压war包  
+拷贝">
+<meta property="og:image" content="http://7xljab.com1.z0.glb.clouddn.com/不卜个人博客/image/localhostsolr.png">
+<meta property="og:image" content="http://7xljab.com1.z0.glb.clouddn.com/不卜个人博客/image/solrAnalyse.png">
+<meta property="og:updated_time" content="2015-10-15T14:46:01.919Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Solr简介">
+<meta name="twitter:description" content="solr的安装环境介绍：tomcat7服务器，solr-4.7.2，IK Analyzer 2012FF_hf1文分词器
+
+将solr解压文件夹下面的example\webapps的solr.war文件添加tomcat7/webapp的下面  
+新建一个solr文件夹作为solr的home文件夹，拷贝example\solr下面的所有文件到solr文件夹  
+启动tomcat解压war包  
+拷贝">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'post'
+  };
+</script>
+
+  <title> Solr简介 | 不卜博客 - 不卜的个人博客站点 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+  
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?a1718d105ac5c566eeca9ca427859200";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-next-logo"></i>
+      </span>
+      <span class="site-title">不卜</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu menu-left">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-next-home"></i> <br />
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            <i class="menu-item-icon icon-next-categories"></i> <br />
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            <i class="menu-item-icon icon-next-about"></i> <br />
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-next-archives"></i> <br />
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon icon-next-tags"></i> <br />
+            标签
+          </a>
+        </li>
+      
+
+      
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <form class="site-search-form">
+    <input type="text" id="st-search-input" class="st-search-input st-default-search-input" />
+  </form>
+
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', 'szZeQCByKssqztmey91S','2.0.0');
+</script>
+
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content"> 
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              Solr简介
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2015-10-15T22:44:05+08:00" content="2015-10-15">
+            2015-10-15
+          </time>
+        </span>
+
+        
+          <span class="post-category" >
+            &nbsp; | &nbsp; 分类于
+            
+              <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                <a href="/categories/Java/" itemprop="url" rel="index">
+                  <span itemprop="name">Java</span>
+                </a>
+              </span>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+              &nbsp; | &nbsp;
+              <a href="/2015/10/15/Solr简介/#comments" itemprop="discussionUrl">
+                <span class="post-comments-count ds-thread-count" data-thread-key="2015/10/15/Solr简介/" itemprop="commentsCount"></span>
+              </a>
+            </span>
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><h1 id="solr的安装">solr的安装</h1><p><strong>环境介绍</strong>：tomcat7服务器，solr-4.7.2，IK Analyzer 2012FF_hf1文分词器</p>
+<ol>
+<li>将solr解压文件夹下面的example\webapps的solr.war文件添加tomcat7/webapp的下面  </li>
+<li>新建一个solr文件夹作为solr的home文件夹，拷贝example\solr下面的所有文件到solr文件夹  </li>
+<li>启动tomcat解压war包  </li>
+<li>拷贝jar包（example\lib\ext下面所有的jar包）到tomcat7\lib目录下面  </li>
+<li><p>进入tomcat7\webapps\solr\WEB-INF文件夹修改web.xml,取消env-entry的注释，将env-entry-value值修改成为步骤2中的solr的路径  </p>
+<pre><code>&lt;env-<span class="built_in">entry</span>&gt;
+   &lt;env-<span class="built_in">entry</span>-<span class="keyword">name</span>&gt;solr/home&lt;/env-<span class="built_in">entry</span>-<span class="keyword">name</span>&gt;
+   &lt;env-<span class="built_in">entry</span>-<span class="keyword">value</span>&gt;D:/develop/tomcat7/solr&lt;/env-<span class="built_in">entry</span>-<span class="keyword">value</span>&gt;
+   &lt;env-<span class="built_in">entry</span>-<span class="keyword">type</span>&gt;java.lang.String&lt;/env-<span class="built_in">entry</span>-<span class="keyword">type</span>&gt;
+&lt;/env-<span class="built_in">entry</span>&gt;
+</code></pre></li>
+<li>重启tomcat服务器，并进入<a href="http://localhost/solr/" target="_blank" rel="external">http://localhost/solr/</a>查看是否能够进去管理页面<br><img src="http://7xljab.com1.z0.glb.clouddn.com/不卜个人博客/image/localhostsolr.png" alt="solr安装成功页面"></li>
+</ol>
+<h1 id="solr中文分词">solr中文分词</h1><ol>
+<li>解压缩IK Analyzer 2012FF_hf1压缩文件</li>
+<li>把IKAnalyzer2012FF_u1.jar拷贝到solr服务的/tomcat7/webapps/solr/WEB-INF/lib下面。</li>
+<li>把IKAnalyzer.cfg.xml、stopword.dic拷贝到需要使用分词器的/tomcat7/solr/collection1/conf下面，和schema.xml文件同一个目录。</li>
+<li><p>修改schema.xml文件，在<types>…</types>之间加入如下配置：</p>
+<pre><code>&lt;fieldType name=<span class="string">"text_ik"</span> <span class="keyword">class</span>=<span class="string">"solr.TextField"</span>&gt;       
+    &lt;analyzer <span class="keyword">class</span>=<span class="string">"org.wltea.analyzer.lucene.IKAnalyzer"</span>/&gt;   
+&lt;/fieldType&gt;
+</code></pre><p>如此，我们的中文分词器就配置好了<br><strong>schema.xml文件中type参数说明:</strong><br><strong>name</strong>:标识<br><strong>class</strong>:和其他属性决定了这个fieldType的实际行为。<br><strong>sortMissingLast</strong>:设置成true没有该field的数据排在有该field的数据之后，而不管请求时的排序规则, 默认是设置成false。<br><strong>sortMissingFirst</strong>:跟上面倒过来呗。 默认是设置成false<br><strong>analyzer</strong>:字段类型指定的分词器<br><strong>type</strong>:当前分词用用于的操作.index代表生成索引时使用的分词器query代码在查询时使用的分词器<br><strong>tokenizer</strong>:分词器类<br><strong>filter</strong>:分词后应用的过滤器  过滤器调用顺序和配置相同  </p>
+</li>
+<li><p>将schema.xml文件中配置的需要field类型中需要使用中的字段替换为text_ik即可<br>如：</p>
+<pre><code>&lt;field name=<span class="string">"title"</span> <span class="class"><span class="keyword">type</span></span>=<span class="string">"text_ik"</span> indexed=<span class="string">"true"</span> stored=<span class="string">"true"</span> multiValued=<span class="string">"true"</span>/&gt;
+</code></pre><p>将之前<code>type=&quot;text_general&quot;</code>替换为<code>type=&quot;text_ik&quot;</code><br><strong>schema.xml文件中field参数说明:</strong><br><strong>name</strong>：字段类型名<br><strong>class</strong>：java类名<br><strong>indexed</strong>：缺省true。 说明这个数据应被搜索和排序，如果数据没有indexed，则stored应是true。<br><strong>stored</strong>：缺省true。说明这个字段被包含在搜索结果中是合适的。如果数据没有stored,则indexed应是true。<br><strong>omitNorms</strong>：字段的长度不影响得分和在索引时不做boost时，设置它为true。一般文本字段不设置为true。<br><strong>termVectors</strong>：如果字段被用来做more like this 和highlight的特性时应设置为true。<br><strong>compressed</strong>：字段是压缩的。这可能导致索引和搜索变慢，但会减少存储空间，只有StrField和TextField是可以压缩，这通常适合字段的长度超过200个字符。<br><strong>multiValued</strong>：字段多于一个值的时候，可设置为true。  </p>
+</li>
+<li><p>最后进入<a href="http://localhost/solr/#/collection1/analysis" target="_blank" rel="external">http://localhost/solr/#/collection1/analysis</a>输入<strong><code>维多利亚之心</code></strong>，选择’<strong>text_ik</strong>‘分词器，点击’分析’，出现下图表示中文分词器配置成功<br><img src="http://7xljab.com1.z0.glb.clouddn.com/不卜个人博客/image/solrAnalyse.png" alt="solr中文分词"></p>
+</li>
+</ol>
+<h1 id="solrJ的使用">solrJ的使用</h1><h2 id="添加jar包">添加jar包</h2><ol>
+<li>添加solr解压文件下面的solr-4.7.2/dist/solrj-lib文件夹下面所有jar文件</li>
+<li>下载<a href="http://central.maven.org/maven2/org/apache/solr/solr-solrj/4.7.2/solr-solrj-4.7.2.jar" target="_blank" rel="external">solr-solrj-4.7.2.jar</a>放置到你的工程lib下面</li>
+</ol>
+<h2 id="普通添加索引和删除索引">普通添加索引和删除索引</h2><pre><code><span class="keyword">package</span> cn.xiaoyu.solr;
+
+<span class="keyword">import</span> java.util.ArrayList;
+<span class="keyword">import</span> java.util.Collection;
+<span class="keyword">import</span> java.util.List;
+
+<span class="keyword">import</span> org.apache.solr.client.solrj.impl.HttpSolrServer;
+<span class="keyword">import</span> org.apache.solr.common.SolrInputDocument;
+
+<span class="keyword">public</span> class AddDocsDemo {
+    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">String</span> SOLR_URL = <span class="string">"http://localhost/solr"</span>;
+
+    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> main(<span class="keyword">String</span>[] args) {
+        AddDocs();
+        <span class="comment">//delDocs();</span>
+    }
+
+    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> AddDocs() {
+        <span class="keyword">String</span>[] words = {<span class="string">"人民"</span>,<span class="string">"人民政府"</span>,<span class="string">"民政"</span>,<span class="string">"劳动人民"</span>,<span class="string">"中华人民共和国"</span>};
+        <span class="keyword">long</span> start = System.currentTimeMillis();
+        Collection&lt;SolrInputDocument&gt; docs = <span class="keyword">new</span> ArrayList&lt;SolrInputDocument&gt;();
+        <span class="keyword">for</span> (<span class="built_in">int</span> i=<span class="number">1</span>;i&lt;<span class="number">100</span>;i++){
+            SolrInputDocument doc = <span class="keyword">new</span> SolrInputDocument();
+            doc.addField(<span class="string">"id"</span>,<span class="string">"id"</span>+i,<span class="number">1.0</span>f);
+            doc.addField(<span class="string">"name"</span>,words[i%<span class="number">5</span>],<span class="number">1.0</span>f);
+            doc.addField(<span class="string">"price"</span>,<span class="number">10</span>*i);
+            docs.<span class="built_in">add</span>(doc);
+        }
+        <span class="keyword">try</span> {
+            <span class="comment">// 链接服务器</span>
+            HttpSolrServer server = <span class="keyword">new</span> HttpSolrServer(SOLR_URL);
+            server.setConnectionTimeout(<span class="number">100</span>);
+            server.setDefaultMaxConnectionsPerHost(<span class="number">100</span>);
+            server.setMaxTotalConnections(<span class="number">100</span>);
+
+            <span class="comment">/**
+             * 可以通过三种方式增加doc,其中server.add(docs.iterator())效率最高
+             */</span>
+<span class="comment">//            第一种提交方式:</span>
+<span class="comment">//            增加后通过执行commit函数commit (936ms)</span>
+            <span class="comment">// server.add(docs);</span>
+            <span class="comment">// server.commit();</span>
+
+<span class="comment">//             第二种提交方式:将提交方法设置为自动提交</span>
+<span class="comment">//            增加doc后立即commit (946ms)</span>
+            <span class="comment">// UpdateRequest req = new UpdateRequest();</span>
+            <span class="comment">// req.setAction(ACTION.COMMIT, false, false);</span>
+            <span class="comment">// req.add(docs);</span>
+            <span class="comment">// UpdateResponse rsp = req.process(server);</span>
+
+<span class="comment">//              第三种提交方式:</span>
+<span class="comment">//            the most optimal way of updating all your docs in one http request(432ms)</span>
+            server.<span class="built_in">add</span>(docs.iterator());
+            server.commit();
+
+        } <span class="keyword">catch</span> (Exception e) {
+            System.out.<span class="built_in">println</span>(e);
+        }
+        System.out.<span class="built_in">println</span>(<span class="string">"time elapsed(ms):"</span> + (System.currentTimeMillis() - start));
+    }
+    <span class="comment">// 删除 索引</span>
+    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> delDocs() {
+        <span class="keyword">long</span> start = System.currentTimeMillis();
+        <span class="keyword">try</span> {
+            HttpSolrServer server = <span class="keyword">new</span> HttpSolrServer(SOLR_URL);
+            <span class="comment">/**
+             * 这儿删除也有三种方式：通过id来删除，通过ids来删除，通过查询来删除
+             */</span>
+            <span class="comment">// 第一种方式： 通过id来删除</span>
+<span class="comment">//            String id = "id1";</span>
+<span class="comment">//            server.deleteById(id);</span>
+<span class="comment">//            server.commit();</span>
+            <span class="comment">// 第二种方式：通过ids来删除 </span>
+            List&lt;<span class="keyword">String</span>&gt; ids = <span class="keyword">new</span> ArrayList&lt;<span class="keyword">String</span>&gt;();
+            <span class="keyword">for</span> (<span class="built_in">int</span> i = <span class="number">1</span>; i &lt; <span class="number">100</span>; i++) {
+                ids.<span class="built_in">add</span>(<span class="string">"id"</span> + i);
+            }
+            server.deleteById(ids);
+            server.commit();
+            <span class="comment">// 第三种方式：通过查询删除全部</span>
+<span class="comment">//            server.deleteByQuery("*:*");</span>
+<span class="comment">//            server.commit();</span>
+        } <span class="keyword">catch</span> (Exception e) {
+            System.out.<span class="built_in">println</span>(e);
+        }
+        System.out.<span class="built_in">println</span>(<span class="string">"time elapsed(ms):"</span> + (System.currentTimeMillis() - start));
+    }
+}
+</code></pre><h2 id="普通查询索引">普通查询索引</h2><pre><code>package cn.xiaoyu.solr;
+
+<span class="keyword">import</span> java.io.IOException;
+
+<span class="keyword">import</span> org.apache.solr.client.solrj.SolrQuery;
+<span class="keyword">import</span> org.apache.solr.client.solrj.SolrQuery.ORDER;
+<span class="keyword">import</span> org.apache.solr.client.solrj.SolrServerException;
+<span class="keyword">import</span> org.apache.solr.client.solrj.impl.BinaryRequestWriter;
+<span class="keyword">import</span> org.apache.solr.client.solrj.impl.HttpSolrServer;
+<span class="keyword">import</span> org.apache.solr.client.solrj.impl.XMLResponseParser;
+<span class="keyword">import</span> org.apache.solr.client.solrj.response.QueryResponse;
+<span class="keyword">import</span> org.apache.solr.common.SolrDocument;
+
+public <span class="class"><span class="keyword">class</span> <span class="title">QueryDocsDemo</span> </span>{
+    public <span class="keyword">static</span> final <span class="type">String</span> <span class="type">SOLR_URL</span> = <span class="string">"http://localhost/solr"</span>;
+
+    public <span class="keyword">static</span> void main(<span class="type">String</span>[] args) throws <span class="type">SolrServerException</span>,
+            <span class="type">IOException</span> {
+        <span class="type">HttpSolrServer</span> server = <span class="keyword">new</span> <span class="type">HttpSolrServer</span>(<span class="type">SOLR_URL</span>);
+        server.setMaxRetries(<span class="number">1</span>); <span class="comment">// defaults to 0. &gt; 1 not recommended.</span>
+        server.setConnectionTimeout(<span class="number">5000</span>); <span class="comment">// 5 seconds to establish TCP</span>
+        <span class="comment">// 正常情况下，以下参数无须设置</span>
+        <span class="comment">// 使用老版本solrj操作新版本的solr时，因为两个版本的javabin incompatible,所以需要设置Parser</span>
+        server.setParser(<span class="keyword">new</span> <span class="type">XMLResponseParser</span>());
+        server.setSoTimeout(<span class="number">1000</span>); <span class="comment">// socket read timeout</span>
+        server.setDefaultMaxConnectionsPerHost(<span class="number">100</span>);
+        server.setMaxTotalConnections(<span class="number">100</span>);
+        server.setFollowRedirects(<span class="literal">false</span>); <span class="comment">// defaults to false</span>
+        <span class="comment">// allowCompression defaults to false.</span>
+        <span class="comment">// Server side must support gzip or deflate for this to have any effect.</span>
+        server.setAllowCompression(<span class="literal">true</span>);
+
+        <span class="comment">// 使用ModifiableSolrParams传递参数</span>
+        <span class="comment">// ModifiableSolrParams params = new ModifiableSolrParams();</span>
+        <span class="comment">// //</span>
+        <span class="comment">// 192.168.230.128:8983/solr/select?q=video&amp;fl=id,name,price&amp;sort=price</span>
+        <span class="comment">// asc&amp;start=0&amp;rows=2&amp;wt=json</span>
+        <span class="comment">// // 设置参数，实现上面URL中的参数配置</span>
+        <span class="comment">// // 查询关键词</span>
+        <span class="comment">// params.set("q", "video");</span>
+        <span class="comment">// // 返回信息</span>
+        <span class="comment">// params.set("fl", "id,name,price,score");</span>
+        <span class="comment">// // 排序</span>
+        <span class="comment">// params.set("sort", "price asc");</span>
+        <span class="comment">// // 分页,start=0就是从0开始,rows=5当前返回5条记录,第二页就是变化start这个值为5就可以了</span>
+        <span class="comment">// params.set("start", 2);</span>
+        <span class="comment">// params.set("rows", 2);</span>
+        <span class="comment">// // 返回格式</span>
+        <span class="comment">// params.set("wt", "javabin");</span>
+        <span class="comment">// QueryResponse response = server.query(params);</span>
+
+        <span class="comment">// 使用SolrQuery传递参数，SolrQuery的封装性更好</span>
+        server.setRequestWriter(<span class="keyword">new</span> <span class="type">BinaryRequestWriter</span>());
+        <span class="type">SolrQuery</span> query = <span class="keyword">new</span> <span class="type">SolrQuery</span>();
+        query.setQuery(<span class="string">"政府"</span>);
+        query.setFields(<span class="string">"id"</span>, <span class="string">"name"</span>, <span class="string">"price"</span>, <span class="string">"score"</span>);
+        <span class="comment">// 根据相关度排序</span>
+<span class="comment">//        query.setSort("score", ORDER.desc);</span>
+        query.setSort(<span class="string">"price"</span>, <span class="type">ORDER</span>.asc);
+        query.setStart(<span class="number">0</span>);
+        query.setRows(<span class="number">10</span>);
+        <span class="comment">//query.setRequestHandler("/select"); //默认就是/select</span>
+        <span class="type">QueryResponse</span> response = server.query(query);
+
+        <span class="comment">// 搜索得到的结果数</span>
+        <span class="type">System</span>.out.<span class="built_in">println</span>(<span class="string">"Find:"</span> + response.getResults().getNumFound());
+        <span class="comment">// 输出结果</span>
+        int iRow = <span class="number">1</span>;
+        <span class="keyword">for</span> (<span class="type">SolrDocument</span> doc : response.getResults()) {
+            <span class="type">System</span>.out.<span class="built_in">println</span>(<span class="string">"----------"</span> + iRow + <span class="string">"------------"</span>);
+            <span class="type">System</span>.out.<span class="built_in">println</span>(<span class="string">"id: "</span> + doc.getFieldValue(<span class="string">"id"</span>).<span class="built_in">toString</span>());
+            <span class="type">System</span>.out.<span class="built_in">println</span>(<span class="string">"name: "</span> + doc.getFieldValue(<span class="string">"name"</span>).<span class="built_in">toString</span>());
+            <span class="type">System</span>.out.<span class="built_in">println</span>(<span class="string">"price: "</span>
+                    + doc.getFieldValue(<span class="string">"price"</span>).<span class="built_in">toString</span>());
+            <span class="type">System</span>.out.<span class="built_in">println</span>(<span class="string">"score: "</span> + doc.getFieldValue(<span class="string">"score"</span>));
+            iRow++;
+        }
+    }
+}
+</code></pre><h2 id="POJO对象">POJO对象</h2><pre><code><span class="keyword">package</span> cn.xiaoyu.solr;
+
+<span class="keyword">import</span> java.util.List;
+
+<span class="keyword">import</span> org.apache.solr.client.solrj.beans.Field;
+
+<span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">NewsBean</span> </span>{
+    <span class="annotation">@Field</span>
+    <span class="keyword">private</span> String id;
+    <span class="annotation">@Field</span>
+    <span class="keyword">private</span> String name;
+    <span class="annotation">@Field</span>
+    <span class="keyword">private</span> String author;
+    <span class="annotation">@Field</span>
+    <span class="keyword">private</span> String description;
+    <span class="annotation">@Field</span>(<span class="string">"links"</span>)
+    <span class="keyword">private</span> List&lt;String&gt; relatedLinks;
+
+    <span class="function"><span class="keyword">public</span> <span class="title">NewsBean</span><span class="params">()</span> </span>{}
+    <span class="function"><span class="keyword">public</span> String <span class="title">getId</span><span class="params">()</span> </span>{
+        <span class="keyword">return</span> id;
+    }
+    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setId</span><span class="params">(String id)</span> </span>{
+        <span class="keyword">this</span>.id = id;
+    }
+    <span class="function"><span class="keyword">public</span> String <span class="title">getName</span><span class="params">()</span> </span>{
+        <span class="keyword">return</span> name;
+    }
+    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setName</span><span class="params">(String name)</span> </span>{
+        <span class="keyword">this</span>.name = name;
+    }
+    <span class="function"><span class="keyword">public</span> String <span class="title">getAuthor</span><span class="params">()</span> </span>{
+        <span class="keyword">return</span> author;
+    }
+    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setAuthor</span><span class="params">(String author)</span> </span>{
+        <span class="keyword">this</span>.author = author;
+    }
+    <span class="function"><span class="keyword">public</span> String <span class="title">getDescription</span><span class="params">()</span> </span>{
+        <span class="keyword">return</span> description;
+    }
+    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setDescription</span><span class="params">(String description)</span> </span>{
+        <span class="keyword">this</span>.description = description;
+    }
+    <span class="function"><span class="keyword">public</span> List&lt;String&gt; <span class="title">getRelatedLinks</span><span class="params">()</span> </span>{
+        <span class="keyword">return</span> relatedLinks;
+    }
+    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setRelatedLinks</span><span class="params">(List&lt;String&gt; relatedLinks)</span> </span>{
+        <span class="keyword">this</span>.relatedLinks = relatedLinks;
+    }
+}
+</code></pre><h2 id="添加POJO对象索引">添加POJO对象索引</h2><pre><code><span class="keyword">package</span> cn.xiaoyu.solr;
+
+<span class="keyword">import</span> java.util.ArrayList;
+<span class="keyword">import</span> java.util.Arrays;
+<span class="keyword">import</span> java.util.Collection;
+<span class="keyword">import</span> java.util.List;
+<span class="keyword">import</span> java.util.Random;
+
+<span class="keyword">import</span> org.apache.solr.client.solrj.impl.BinaryRequestWriter;
+<span class="keyword">import</span> org.apache.solr.client.solrj.impl.HttpSolrServer;
+
+<span class="keyword">public</span> class AddBeansDemo {
+  <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">String</span> SOLR_URL = <span class="string">"http://localhost/solr"</span>;
+
+  <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> main(<span class="keyword">String</span>[] args) {
+    <span class="comment">// 通过浏览器查看结果</span>
+    <span class="comment">// 要保证bean中各属性的名称在conf/schema.xml中存在，如果查询，要保存被索引</span>
+    <span class="comment">// http://172.168.63.233:8983/solr/collection1/select?q=description%3A%E6%94%B9%E9%9D%A9&amp;wt=json&amp;indent=true</span>
+<span class="comment">//    delBeans();</span>
+    AddBeans();
+  }
+
+  <span class="keyword">public</span> <span class="keyword">static</span> Random rand = <span class="keyword">new</span> Random(<span class="number">47</span>);
+  <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">String</span>[] authors = {<span class="string">"张三"</span>, <span class="string">"李四"</span>, <span class="string">"王五"</span>, <span class="string">"赵六"</span>, <span class="string">"张飞"</span>, <span class="string">"刘备"</span>,<span class="string">"关云长"</span>};
+  <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">String</span>[] links = {
+      <span class="string">"http://www.baidu.com"</span>,
+      <span class="string">"http://www.google.com"</span>,
+      <span class="string">"http://www.taobao.com"</span>,
+      <span class="string">"http://www.facebook.com"</span>,
+      <span class="string">"http://www.youtube.com"</span> };
+
+  <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">String</span> getAuthors() {
+    List&lt;<span class="keyword">String</span>&gt; list = Arrays.asList(authors).subList(<span class="number">0</span>, rand.nextInt(<span class="number">6</span>)+<span class="number">1</span>);
+    <span class="keyword">String</span> <span class="built_in">str</span> = <span class="string">""</span>;
+    <span class="keyword">for</span> (<span class="keyword">String</span> tmp : list) {
+      <span class="built_in">str</span> += <span class="string">" "</span> + tmp;
+    }
+    <span class="keyword">return</span> <span class="built_in">str</span>;
+  }
+
+  <span class="keyword">public</span> <span class="keyword">static</span> List&lt;<span class="keyword">String</span>&gt; getLinks() {
+    <span class="keyword">return</span> Arrays.asList(links).subList(<span class="number">0</span>, rand.nextInt(<span class="number">4</span>)+<span class="number">1</span>);
+  }
+
+  <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> AddBeans() {
+    <span class="keyword">String</span>[] words = {<span class="string">"人民"</span>,<span class="string">"人民政府"</span>,<span class="string">"民政"</span>,<span class="string">"世界地图"</span>,<span class="string">"中华人民共和国"</span>};
+    <span class="keyword">long</span> start = System.currentTimeMillis();
+    Collection&lt;NewsBean&gt; docs = <span class="keyword">new</span> ArrayList&lt;NewsBean&gt;();
+<span class="comment">//  DocumentObjectBinder binder = new DocumentObjectBinder();</span>
+    <span class="keyword">for</span> (<span class="built_in">int</span> i = <span class="number">1</span>; i &lt; <span class="number">300</span>; i++) {
+      NewsBean news = <span class="keyword">new</span> NewsBean();
+      news.setId(<span class="string">"id"</span> + i);
+      news.setName(<span class="string">"news"</span> + i);
+      news.setAuthor(getAuthors());
+      news.setDescription(words[i % <span class="number">5</span>]);
+      news.setRelatedLinks(getLinks());
+<span class="comment">//      SolrInputDocument doc = binder.toSolrInputDocument(news);</span>
+      docs.<span class="built_in">add</span>(news);
+    }
+    <span class="keyword">try</span> {
+      HttpSolrServer server = <span class="keyword">new</span> HttpSolrServer(SOLR_URL);
+      server.setRequestWriter(<span class="keyword">new</span> BinaryRequestWriter());
+      <span class="comment">// 可以通过二种方式增加docs,其中server.add(docs.iterator())效率最高</span>
+      <span class="comment">// 增加后通过执行commit函数commit (981ms)</span>
+      <span class="comment">// server.addBeans(docs);</span>
+      <span class="comment">// server.commit();</span>
+
+      <span class="comment">// the most optimal way of updating all your docs</span>
+      <span class="comment">// in one http request(481ms)</span>
+      server.addBeans(docs.iterator());
+      server.commit();
+      server.optimize(); <span class="comment">//优化Lucene 的索引文件以改进搜索性能。</span>
+    } <span class="keyword">catch</span> (Exception e) {
+      System.out.<span class="built_in">println</span>(e);
+    }
+    System.out.<span class="built_in">println</span>(<span class="string">"time elapsed(ms):"</span>
+        + (System.currentTimeMillis() - start));
+  }
+
+  <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> delBeans() {
+    <span class="keyword">long</span> start = System.currentTimeMillis();
+    <span class="keyword">try</span> {
+      HttpSolrServer server = <span class="keyword">new</span> HttpSolrServer(SOLR_URL);
+      server.deleteByQuery(<span class="string">"*:*"</span>);
+      server.commit();
+    } <span class="keyword">catch</span> (Exception e) {
+      System.out.<span class="built_in">println</span>(e);
+    }
+    System.out.<span class="built_in">println</span>(<span class="string">"time elapsed(ms):"</span> + (System.currentTimeMillis() - start));
+  }
+}
+</code></pre><h2 id="查询POJO">查询POJO</h2><pre><code>package cn.xiaoyu.solr;
+
+<span class="keyword">import</span> java.io.IOException;
+<span class="keyword">import</span> java.util.List;
+
+<span class="keyword">import</span> org.apache.solr.client.solrj.SolrQuery;
+<span class="keyword">import</span> org.apache.solr.client.solrj.SolrServerException;
+<span class="keyword">import</span> org.apache.solr.client.solrj.beans.DocumentObjectBinder;
+<span class="keyword">import</span> org.apache.solr.client.solrj.impl.HttpSolrServer;
+<span class="keyword">import</span> org.apache.solr.client.solrj.response.FacetField;
+<span class="keyword">import</span> org.apache.solr.client.solrj.response.QueryResponse;
+<span class="keyword">import</span> org.apache.solr.common.SolrDocument;
+<span class="keyword">import</span> org.apache.solr.common.SolrDocumentList;
+
+public <span class="class"><span class="keyword">class</span> <span class="title">QueryBeanDemo</span> </span>{
+    public <span class="keyword">static</span> final <span class="type">String</span> <span class="type">SOLR_URL</span> = <span class="string">"http://localhost/solr"</span>;
+
+    public <span class="keyword">static</span> void main(<span class="type">String</span>[] args) throws <span class="type">SolrServerException</span>,
+            <span class="type">IOException</span> {
+        <span class="comment">// http://172.168.63.233:8983/solr/collection1/select?q=description%3A%E6%80%BB%E7%9B%AE%E6%A0%87&amp;facet=true&amp;facet.field=author_s</span>
+        <span class="type">HttpSolrServer</span> server = <span class="keyword">new</span> <span class="type">HttpSolrServer</span>(<span class="type">SOLR_URL</span>);
+        server.setMaxRetries(<span class="number">1</span>);
+        server.setMaxRetries(<span class="number">1</span>); <span class="comment">// defaults to 0. &gt; 1 not recommended.</span>
+        server.setConnectionTimeout(<span class="number">5000</span>); <span class="comment">// 5 seconds to establish TCP</span>
+        <span class="comment">// server.setRequestWriter(new BinaryRequestWriter());</span>
+
+        <span class="type">SolrQuery</span> query = <span class="keyword">new</span> <span class="type">SolrQuery</span>();
+        query.setQuery(<span class="string">"description:人民"</span>);
+        query.setStart(<span class="number">0</span>);
+        query.setRows(<span class="number">2</span>);
+        query.setFacet(<span class="literal">true</span>);
+        query.addFacetField(<span class="string">"author_s"</span>);
+
+        <span class="type">QueryResponse</span> response = server.query(query);
+        <span class="comment">// 搜索得到的结果数</span>
+        <span class="type">System</span>.out.<span class="built_in">println</span>(<span class="string">"Find:"</span> + response.getResults().getNumFound());
+        <span class="comment">// 输出结果</span>
+        int iRow = <span class="number">1</span>;
+
+        <span class="comment">// response.getBeans存在BUG,将DocumentObjectBinder引用的Field应该为</span>
+        <span class="comment">// org.apache.solr.client.solrj.beans.Field</span>
+        <span class="type">SolrDocumentList</span> list = response.getResults();
+        <span class="type">DocumentObjectBinder</span> binder = <span class="keyword">new</span> <span class="type">DocumentObjectBinder</span>();
+        <span class="type">List</span>&lt;<span class="type">NewsBean</span>&gt; beanList = binder.getBeans(<span class="type">NewsBean</span>.<span class="keyword">class</span>, list);
+        <span class="keyword">for</span> (<span class="type">NewsBean</span> news : beanList) {
+            <span class="type">System</span>.out.<span class="built_in">println</span>(news.getId());
+            <span class="type">System</span>.out.<span class="built_in">println</span>(news.getAuthor());
+            <span class="type">System</span>.out.<span class="built_in">println</span>(news.getName());
+            <span class="type">System</span>.out.<span class="built_in">println</span>(news.getRelatedLinks());
+        }
+
+        <span class="keyword">for</span> (<span class="type">SolrDocument</span> doc : response.getResults()) {
+            <span class="type">System</span>.out.<span class="built_in">println</span>(<span class="string">"----------"</span> + iRow + <span class="string">"------------"</span>);
+            <span class="type">System</span>.out.<span class="built_in">println</span>(<span class="string">"id: "</span> + doc.getFieldValue(<span class="string">"id"</span>).<span class="built_in">toString</span>());
+            <span class="type">System</span>.out.<span class="built_in">println</span>(<span class="string">"name: "</span> + doc.getFieldValue(<span class="string">"name"</span>).<span class="built_in">toString</span>());
+            iRow++;
+        }
+
+        <span class="keyword">for</span> (<span class="type">FacetField</span> ff : response.getFacetFields()) {
+            <span class="type">System</span>.out.<span class="built_in">println</span>(ff.getName() + <span class="string">","</span> + ff.getValueCount() + <span class="string">","</span> + ff.getValues());
+        }
+    }
+}
+</code></pre><p>#参考<br><a href="http://blog.csdn.net/clj198606061111/article/details/21289897" target="_blank" rel="external">solr4.7中文分词器(ik-analyzer)配置</a><br><a href="http://my.oschina.net/cloudcoder/blog/305024?utm_source=tuicool" target="_blank" rel="external">Solr JAVA客户端SolrJ 4.9使用示例教程</a><br><a href="http://wiki.apache.org/solr/Solrj" target="_blank" rel="external">http://wiki.apache.org/solr/Solrj</a>  </p>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/solr/" rel="tag">#solr</a>
+          
+            <a href="/tags/入门教程/" rel="tag">#入门教程</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/10/11/分布式session--转载/" rel="next">分布式session--转载</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+ </div>
+
+        
+
+        
+          <div class="comments" id="comments">
+            
+              <div class="ds-thread" data-thread-key="2015/10/15/Solr简介/"
+                   data-title="Solr简介" data-url="http://kuku940.github.io/2015/10/15/Solr简介/">
+              </div>
+            
+          </div>
+        
+      </div>
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点简介
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="http://7xljab.com1.z0.glb.clouddn.com/博客|个人博客|不卜个人博客|不卜" alt="不卜" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">不卜</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description">善易者不卜</p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">15</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            <a href="/categories">
+              <span class="site-state-item-count">9</span>
+              <span class="site-state-item-name">分类</span>
+              </a>
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">28</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/kuku940" target="_blank">GitHub</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.zhihu.com/people/roingeek" target="_blank">ZhiHu</a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+            <p class="site-author-name">友情链接</p>
+            
+              <span class="links-of-author-item">
+              <a href="http://zhumang.top/" target="_blank">竹芒</a>
+              </span>
+            
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#solr的安装"><span class="nav-number">1.</span> <span class="nav-text">solr的安装</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#solr中文分词"><span class="nav-number">2.</span> <span class="nav-text">solr中文分词</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#solrJ的使用"><span class="nav-number">3.</span> <span class="nav-text">solrJ的使用</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#添加jar包"><span class="nav-number">3.1.</span> <span class="nav-text">添加jar包</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#普通添加索引和删除索引"><span class="nav-number">3.2.</span> <span class="nav-text">普通添加索引和删除索引</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#普通查询索引"><span class="nav-number">3.3.</span> <span class="nav-text">普通查询索引</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#POJO对象"><span class="nav-number">3.4.</span> <span class="nav-text">POJO对象</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#添加POJO对象索引"><span class="nav-number">3.5.</span> <span class="nav-text">添加POJO对象索引</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#查询POJO"><span class="nav-number">3.6.</span> <span class="nav-text">查询POJO</span></a></li></ol></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner"> <div class="copyright" >
+  
+  &copy; &nbsp; 
+  <span itemprop="copyrightYear">2015</span>
+  <span class="with-love">
+    <i class="icon-next-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">不卜</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 搭建
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+ </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"roingeek"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+    
+     
+
+    
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.5.1"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.5.1"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.5.1" id="motion.global"></script>
+
+
+
+
+  <script type="text/javascript" src="/js/nav-toggle.js?v=0.4.5.1"></script>
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.5.1" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      var $indicator = $(indicator);
+      var opacity = action === 'show' ? 0.4 : 0;
+      $indicator.velocity ?
+        $indicator.velocity('stop').velocity({
+          opacity: opacity
+        }, { duration: 100 }) :
+        $indicator.stop().animate({
+          opacity: opacity
+        }, 100);
+    }
+
+  });
+</script>
+
+<script type="text/javascript" id="sidebar.nav">
+  $(document).ready(function () {
+    var html = $('html');
+    var TAB_ANIMATE_DURATION = 200;
+    var hasVelocity = $.isFunction(html.velocity);
+
+    $('.sidebar-nav li').on('click', function () {
+      var item = $(this);
+      var activeTabClassName = 'sidebar-nav-active';
+      var activePanelClassName = 'sidebar-panel-active';
+      if (item.hasClass(activeTabClassName)) {
+        return;
+      }
+
+      var currentTarget = $('.' + activePanelClassName);
+      var target = $('.' + item.data('target'));
+
+      hasVelocity ?
+        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
+            .addClass(activePanelClassName);
+        }) :
+        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
+          currentTarget.hide();
+          target
+            .stop()
+            .css({'opacity': 0, 'display': 'block'})
+            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
+              currentTarget.removeClass(activePanelClassName);
+              target.addClass(activePanelClassName);
+            });
+        });
+
+      item.siblings().removeClass(activeTabClassName);
+      item.addClass(activeTabClassName);
+    });
+
+    $('.post-toc a').on('click', function (e) {
+      e.preventDefault();
+      var targetSelector = escapeSelector(this.getAttribute('href'));
+      var offset = $(targetSelector).offset().top;
+      hasVelocity ?
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        }) :
+        $('html, body').stop().animate({
+          scrollTop: offset
+        }, 500);
+    });
+
+    // Expand sidebar on post detail page by default, when post has a toc.
+    var $tocContent = $('.post-toc-content');
+    if (isDesktop() && CONFIG.sidebar === 'post') {
+      if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+        displaySidebar();
+      }
+    }
+  });
+</script>
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+      if (isMobile()) {
+        FastClick.attach(document.body);
+      }
+    });
+  </script>
+
+  
+
+  
+  
+
+<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"1","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"16"},"slide":{"type":"slide","bdImg":"3","bdPos":"left","bdTop":"250"}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+
+
+
+  
+  <script type="text/javascript" src="/js/lazyload.js"></script>
+  <script type="text/javascript">
+    $(function () {
+      $("#posts").find('img').lazyload({
+        placeholder: "/images/loading.gif",
+        effect: "fadeIn"
+      });
+    });
+  </script>
+</body>
+</html>
