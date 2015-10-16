@@ -47,7 +47,8 @@
 <meta property="og:description" content="Solr是一个基于Lucene java库的企业级搜索服务器，包含XML/HTTP，JSON API, 高亮查询结果，faceted search，缓存，复制和一个WEB管理界面。Solr运行在Servlet容器中。所以Solr和Lucene的本质区别有以下三点：搜索服务器，企业级和管理。Lucene本质上是搜索库，不是独立的应用程序，而Solr是。Lucene专注于搜索底层的建设，而Solr专注">
 <meta property="og:image" content="http://7xljab.com1.z0.glb.clouddn.com/不卜个人博客/image/localhostsolr.png">
 <meta property="og:image" content="http://7xljab.com1.z0.glb.clouddn.com/不卜个人博客/image/solrAnalyse.png">
-<meta property="og:updated_time" content="2015-10-15T14:51:23.785Z">
+<meta property="og:image" content="http://7xljab.com1.z0.glb.clouddn.com/不卜个人博客/image/solr_analysis_smart.png">
+<meta property="og:updated_time" content="2015-10-16T16:44:29.148Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Solr简介">
 <meta name="twitter:description" content="Solr是一个基于Lucene java库的企业级搜索服务器，包含XML/HTTP，JSON API, 高亮查询结果，faceted search，缓存，复制和一个WEB管理界面。Solr运行在Servlet容器中。所以Solr和Lucene的本质区别有以下三点：搜索服务器，企业级和管理。Lucene本质上是搜索库，不是独立的应用程序，而Solr是。Lucene专注于搜索底层的建设，而Solr专注">
@@ -272,7 +273,7 @@
 </code></pre></li>
 <li>重启tomcat服务器，并进入<a href="http://localhost/solr/" target="_blank" rel="external">http://localhost/solr/</a>查看是否能够进去管理页面<br><img src="http://7xljab.com1.z0.glb.clouddn.com/不卜个人博客/image/localhostsolr.png" alt="solr安装成功页面"></li>
 </ol>
-<h1 id="solr中文分词">solr中文分词</h1><ol>
+<h1 id="solr中文分词">solr中文分词</h1><h2 id="IK_Analyzer分词器">IK Analyzer分词器</h2><ol>
 <li>解压缩IK Analyzer 2012FF_hf1压缩文件</li>
 <li>把IKAnalyzer2012FF_u1.jar拷贝到solr服务的/tomcat7/webapps/solr/WEB-INF/lib下面。</li>
 <li>把IKAnalyzer.cfg.xml、stopword.dic拷贝到需要使用分词器的/tomcat7/solr/collection1/conf下面，和schema.xml文件同一个目录。</li>
@@ -289,9 +290,32 @@
 <li><p>最后进入<a href="http://localhost/solr/#/collection1/analysis" target="_blank" rel="external">http://localhost/solr/#/collection1/analysis</a>输入<strong><code>维多利亚之心</code></strong>，选择’<strong>text_ik</strong>‘分词器，点击’分析’，出现下图表示中文分词器配置成功<br><img src="http://7xljab.com1.z0.glb.clouddn.com/不卜个人博客/image/solrAnalyse.png" alt="solr中文分词"></p>
 </li>
 </ol>
-<h1 id="solrJ的使用">solrJ的使用</h1><h2 id="添加jar包">添加jar包</h2><ol>
+<h2 id="smartcn_分词器">smartcn 分词器</h2><ol>
+<li>将发行包中contrib/analysis-extras/lucene-libs/lucene-analyzers-smartcn-4.7.2.jar中的复制到webapps\solr\WEB-INF\lib文件夹下面</li>
+<li><p>配置schemal.xml文件，注册分词器，如下配置：</p>
+<pre><code>&lt;fieldType name=<span class="string">"text_smart"</span> <span class="class"><span class="keyword">class</span>=</span><span class="string">"solr.TextField"</span> positionIncrementGap=<span class="string">"100"</span>&gt;
+&lt;analyzer <span class="class"><span class="keyword">type</span>=</span><span class="string">"index"</span>&gt;       
+    &lt;tokenizer <span class="class"><span class="keyword">class</span>=</span><span class="string">"solr.SmartChineseSentenceTokenizerFactory"</span>/&gt;              
+    &lt;filter <span class="class"><span class="keyword">class</span>=</span><span class="string">"solr.SmartChineseWordTokenFilterFactory"</span>/&gt;
+&lt;/analyzer&gt;      
+&lt;analyzer <span class="class"><span class="keyword">type</span>=</span><span class="string">"query"</span>&gt;      
+    &lt;tokenizer <span class="class"><span class="keyword">class</span>=</span><span class="string">"solr.SmartChineseSentenceTokenizerFactory"</span>/&gt;                
+    &lt;filter <span class="class"><span class="keyword">class</span>=</span><span class="string">"solr.SmartChineseWordTokenFilterFactory"</span>/&gt;
+&lt;/analyzer&gt;
+</code></pre><p> </p>
+</li>
+<li><p>引用字段类型即可</p>
+<p> <field name="sma" type="text_smart" indexed="true" stored="true" multivalued="true"><br>4.最后进入<a href="http://localhost/solr/#/collection1/analysis" target="_blank" rel="external">http://localhost/solr/#/collection1/analysis</a>输入<strong><code>维多利亚之心</code></strong>，选择’<strong>text_smart</strong>‘分词器，点击’分析’，出现下图表示中文分词器配置成功<br><img src="http://7xljab.com1.z0.glb.clouddn.com/不卜个人博客/image/solr_analysis_smart.png" alt=""></field></p>
+</li>
+</ol>
+<h2 id="两种分词比较">两种分词比较</h2><ol>
+<li>IKAnalyzer分词后的碎片太多</li>
+<li>从自定义词库的角度考虑，因为smartcn在Lucene4.6中的版本，目前不支持自定义词库</li>
+</ol>
+<h1 id="solrJ的使用">solrJ的使用</h1><h2 id="准备工作">准备工作</h2><ol>
 <li>添加solr解压文件下面的solr-4.7.2/dist/solrj-lib文件夹下面所有jar文件</li>
 <li>下载<a href="http://central.maven.org/maven2/org/apache/solr/solr-solrj/4.7.2/solr-solrj-4.7.2.jar" target="_blank" rel="external">solr-solrj-4.7.2.jar</a>放置到你的工程lib下面</li>
+<li>在schema.xml设置好字段信息(名称,类型,索引,存储,分词等信息)</li>
 </ol>
 <h2 id="普通添加索引和删除索引">普通添加索引和删除索引</h2><pre><code><span class="keyword">package</span> cn.xiaoyu.solr;
 
@@ -813,7 +837,7 @@ public <span class="class"><span class="keyword">class</span> <span class="title
           <div class="post-toc">
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#solr的安装"><span class="nav-number">1.</span> <span class="nav-text">solr的安装</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#solr中文分词"><span class="nav-number">2.</span> <span class="nav-text">solr中文分词</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#solrJ的使用"><span class="nav-number">3.</span> <span class="nav-text">solrJ的使用</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#添加jar包"><span class="nav-number">3.1.</span> <span class="nav-text">添加jar包</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#普通添加索引和删除索引"><span class="nav-number">3.2.</span> <span class="nav-text">普通添加索引和删除索引</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#普通查询索引"><span class="nav-number">3.3.</span> <span class="nav-text">普通查询索引</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#POJO对象"><span class="nav-number">3.4.</span> <span class="nav-text">POJO对象</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#添加POJO对象索引"><span class="nav-number">3.5.</span> <span class="nav-text">添加POJO对象索引</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#查询POJO"><span class="nav-number">3.6.</span> <span class="nav-text">查询POJO</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#solr的安装"><span class="nav-number">1.</span> <span class="nav-text">solr的安装</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#solr中文分词"><span class="nav-number">2.</span> <span class="nav-text">solr中文分词</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#IK_Analyzer分词器"><span class="nav-number">2.1.</span> <span class="nav-text">IK Analyzer分词器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#smartcn_分词器"><span class="nav-number">2.2.</span> <span class="nav-text">smartcn 分词器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#两种分词比较"><span class="nav-number">2.3.</span> <span class="nav-text">两种分词比较</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#solrJ的使用"><span class="nav-number">3.</span> <span class="nav-text">solrJ的使用</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#准备工作"><span class="nav-number">3.1.</span> <span class="nav-text">准备工作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#普通添加索引和删除索引"><span class="nav-number">3.2.</span> <span class="nav-text">普通添加索引和删除索引</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#普通查询索引"><span class="nav-number">3.3.</span> <span class="nav-text">普通查询索引</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#POJO对象"><span class="nav-number">3.4.</span> <span class="nav-text">POJO对象</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#添加POJO对象索引"><span class="nav-number">3.5.</span> <span class="nav-text">添加POJO对象索引</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#查询POJO"><span class="nav-number">3.6.</span> <span class="nav-text">查询POJO</span></a></li></ol></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>
