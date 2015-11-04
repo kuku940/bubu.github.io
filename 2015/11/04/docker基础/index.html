@@ -1,0 +1,749 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.5.1"/>
+
+
+    <meta name="description" content="不卜个人博客，是一个记录博主学习和成长的个人博客站点。" />
+
+
+
+  <meta name="keywords" content="docker,入门教程," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1" />
+
+
+<meta name="description" content="Docker基础命令123
+docker version 查看docker版本
+docker info 查看docker是否正确安装
+sudo docker pull busybox 使用预先构建的镜像来创建一个镜像或者是容器
+BusyBox是最小的Linux系统，他提供了该系统的主要功能，不包含一些与GUN的相关功能和选项
+docker run busybox /bin/echo Hello W">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Docker基础命令">
+<meta property="og:url" content="http://kuku940.github.io/2015/11/04/docker基础/index.html">
+<meta property="og:site_name" content="不卜博客 - 不卜的个人博客站点">
+<meta property="og:description" content="Docker基础命令123
+docker version 查看docker版本
+docker info 查看docker是否正确安装
+sudo docker pull busybox 使用预先构建的镜像来创建一个镜像或者是容器
+BusyBox是最小的Linux系统，他提供了该系统的主要功能，不包含一些与GUN的相关功能和选项
+docker run busybox /bin/echo Hello W">
+<meta property="og:image" content="http://www.wenwenyun.com/uploads/allimg/140924/12222025G-3.png">
+<meta property="og:updated_time" content="2015-11-04T14:37:32.052Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Docker基础命令">
+<meta name="twitter:description" content="Docker基础命令123
+docker version 查看docker版本
+docker info 查看docker是否正确安装
+sudo docker pull busybox 使用预先构建的镜像来创建一个镜像或者是容器
+BusyBox是最小的Linux系统，他提供了该系统的主要功能，不包含一些与GUN的相关功能和选项
+docker run busybox /bin/echo Hello W">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'post'
+  };
+</script>
+
+  <title> Docker基础命令 | 不卜博客 - 不卜的个人博客站点 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+  
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?a1718d105ac5c566eeca9ca427859200";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-next-logo"></i>
+      </span>
+      <span class="site-title">不卜</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu menu-left">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-next-home"></i> <br />
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            <i class="menu-item-icon icon-next-categories"></i> <br />
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            <i class="menu-item-icon icon-next-about"></i> <br />
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-next-archives"></i> <br />
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon icon-next-tags"></i> <br />
+            标签
+          </a>
+        </li>
+      
+
+      
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <form class="site-search-form">
+    <input type="text" id="st-search-input" class="st-search-input st-default-search-input" />
+  </form>
+
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', 'szZeQCByKssqztmey91S','2.0.0');
+</script>
+
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content"> 
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              Docker基础命令
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2015-11-04T19:35:31+08:00" content="2015-11-04">
+            2015-11-04
+          </time>
+        </span>
+
+        
+          <span class="post-category" >
+            &nbsp; | &nbsp; 分类于
+            
+              <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                <a href="/categories/docker/" itemprop="url" rel="index">
+                  <span itemprop="name">docker</span>
+                </a>
+              </span>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+              &nbsp; | &nbsp;
+              <a href="/2015/11/04/docker基础/#comments" itemprop="discussionUrl">
+                <span class="post-comments-count ds-thread-count" data-thread-key="2015/11/04/docker基础/" itemprop="commentsCount"></span>
+              </a>
+            </span>
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><h1 id="Docker基础命令">Docker基础命令</h1><h2 id=""><img src="http://www.wenwenyun.com/uploads/allimg/140924/12222025G-3.png" alt="场景示例图"></h2><p><a href="https://docs.docker.com/article-img/architecture.svg" target="_blank" rel="external">123</a></p>
+<p><code>docker version</code> 查看docker版本</p>
+<p><code>docker info</code> 查看docker是否正确安装</p>
+<p><code>sudo docker pull busybox</code> 使用预先构建的镜像来创建一个镜像或者是容器</p>
+<pre><code>BusyBox是最小的Linux系统，他提供了该系统的主要功能，不包含一些与GUN的相关功能和选项
+</code></pre><p><code>docker run busybox /bin/echo Hello World!</code> - linux<br><code>docker run busybox echo hello world!</code> - windows<br>打印Hello world!字样</p>
+<p><code>sample_job=$(docker run -d busybox /bin/sh -c &quot;while true; do echo Docker; sleep 1; done&quot;)</code> 以后台进程的方式运行hello docker<br><code>docker logs $sample_job</code> 查看job的当前状态</p>
+<p><code>docker help</code> 查看docker的所有的命令<br><code>docker stop $sample_job</code> 停止名为sample_job的工作进程<br><code>docker restart $sample_job</code> 重启名为sample_job的工作进程<br><code>docker rm $sample_job</code> 完全移除$sample_job工作进程，要先停止<br><code>docker commit $sample_job job1</code> 将容器状态保存为镜像，镜像名称只能取字符[a-z]和数字[0-9]<br><code>docker images</code> 查看所有镜像列表<br><code>docker search (image-name)</code> 检索名称为image-name的镜像<br><code>docker history (image-name)</code> 查看名称为image-name的镜像历史版本<br><code>docker push (image-name)</code> 将镜像推送到registry上</p>
+<hr>
+<p><code>daemon</code> 用于管理容器的后台进程。一般情况下，守护进程是一个长期运行的用来处理请求的进程服务。-d参数用于运行后台进程 </p>
+<p><code>docker build [options] PATH|URL</code> 可以使用Dockerfile来构建镜像<br>还有一些Docker提供的额外选项，如：<br>–rm=true表示构建成功后，移除所有中间容器<br>–no-cache=false表示在构建过程中不使用缓存</p>
+<p><code>docker attach container</code> 与运行中的容器交互，并且可以随时观察容器內进程的运行状况  </p>
+<p><code>docker diff container</code> 列出容器内发生变化的文件和目录，add/delete/change     </p>
+<p><code>events</code> 打印指定时间内的容器的实时系统事件 </p>
+<p><code>docker import http://example.com/example.tar</code><br><code>docker import - example.tar</code><br> 使用HTTP的URL从远程位置导入，而本地文件或者目录的导入需要使用<code>-</code>参数  </p>
+<p><code>docker export container &gt; image.tar</code> 用于将容器的系统文件打包 </p>
+<p><code>docker cp container:path hostpat</code> 从容器内复制文件到指定的路径上 </p>
+<p><code>docker login [options] [server]</code><br><code>docker login localhost:8080</code><br>使用login登录Docker registry服务器，第二行是登陆到本机的registry  </p>
+<p><code>docker inspect container/image</code> 收集有关容器和镜像的底层信息，包括容器的示例的IP地址，端口绑定列表，特定端口映射的搜索，收集配置的详细信息</p>
+<p><code>docker kill [options] container</code> 发出SIGKILL信号来停止容器的主进程</p>
+<p><code>docker rmi image</code> 移除一个或者多个镜像</p>
+<p><code>docker wait 7su6sdf734</code> 阻塞对指定容器的其他调用方法，知道容器停止后退出阻塞</p>
+<p><code>docker load -t app.tar</code> 从tar文件中载入镜像或仓库到STDIN</p>
+<p><code>docker save image</code> 保存镜像为tar文件并发送给STOUT</p>
+<h1 id="Dockerfile">Dockerfile</h1><p>Dockerfile 包含创建镜像所需要的全部指令。基于在Dockerfile中的指令，我们可以使用<code>Docker build</code>命令来创建镜像。通过减少镜像和容器的创建过程来简化部署。<br>会使用INSTRUCTION argument这样命令格式</p>
+<p><code>FROM &lt;image name&gt;</code> 指定镜像基于哪个镜像创建，接下来的命令也会基于这个基础镜像 </p>
+<p><code>MAINTAINER &lt;author name&gt;</code> 设置镜像的作者  </p>
+<p><code>RUN &lt;command&gt;</code>  在shell或者exec的环境下执行  </p>
+<p><code>ADD &lt;source&gt; &lt;destionation&gt;</code> 复制文件指令。destionation是指容器内的路径。source可以是URL或者启动配置上下文的一个文件  </p>
+<p><code>CMD [&quot;executable&quot;,&quot;param1&quot;,&quot;param2&quot;]</code><br><code>CMD [&quot;param1&quot;,&quot;param2&quot;]</code><br><code>CMD command param1 param2</code><br>CMD是提供了容器默认的执行命令，多个CMD会抵消之前所有的指令，只有最后一个生效 </p>
+<p><code>EXPOSE &lt;port&gt;</code> 指定容器在运行时监听的端口  </p>
+<p><code>ENTRYPOINT [&quot;executable&quot;, &quot;param1&quot;,&quot;param2&quot;</code><br><code>ENTRYPOINT command param1 param2</code><br>ENTRYPOINT：配置给容器一个可执行的命令，这意味着在每次使用镜像创建容器时一个特定的应用程序可以被设置为默认程序。  </p>
+<p><code>WORKDIR /path/to/workdir</code> 指定RUN、CMD与ENTRYPOINT命令的工作目录</p>
+<p><code>ENV &lt;key&gt; &lt;value&gt;</code> 设置环境变量。它们使用键值对，增加运行程序的灵活性</p>
+<p><code>USER &lt;uid&gt;</code> 镜像正在运行时设置一个UID</p>
+<p><code>VOLUME [&quot;/data&quot;]</code> 授权访问从容器内到主机上的目录</p>
+<h1 id="Docker_Registry">Docker Registry</h1><p><a href="http://dockone.io/article/104" target="_blank" rel="external">Docker入门教程（四）Docker Registry</a></p>
+<h1 id="Docker_API">Docker API</h1><h2 id="Docker_Registry_API">Docker Registry API</h2><p>Docker Registry API是Docker Registry的REST API，它简化了镜像和仓库的存储。该API不能访问用户帐户或者获得授权。</p>
+<p><code>GET /v1/images/(image_id)/layer</code> 取出镜像层<br><code>PUT /v1/images/(image_id)/layer</code>  插入镜像层<br><code>GET /v1/images/(image_id)/json</code>   检索镜像<br><code>GET /v1/images/(image_id)/ancestry</code>  检索根镜像<br><code>GET /v1/repositories/(namespace)/(repository)/tags</code><br><code>GET /v1/repositories/(namespace)/(repository)/tags/(tag*)</code><br>获取库里所有的标签或者指定标签<br><code>DELETE /v1/repositories/(namespace)/(repository)/tags/(tag*)</code> 删除标签<br><code>GET /v1/_ping</code>  registry状态检查 </p>
+<h2 id="Docker_Hub_API">Docker Hub API</h2><p>Docker Hub API是Docker Hub的一个简单的REST API。Docker Hub 通过管理校验（checksums）以及公共命名空间（public namespaces）来控制着用户帐户和授权。该API还支持有关用户仓库和library仓库的操作。</p>
+<p><code>PUT /v1/repositories/(repo_name)/</code>  创建一个新的仓库,使用以下命令可以创建新的library仓库<br><code>DELETE /v1/repositories/(repo_name)/</code> 删除已经存在的仓库<br><code>PUT /v1/repositories/(repo_name)/images</code>  更新仓库镜像<br><code>GET /v1/repositories/(repo_name)/images</code>  从仓库中获取镜像<br><code>PUT /v1/repositories/(repo_name)/auth</code>  授权，使用Token获取仓库授权</p>
+<p><code>PUT /v1/repositories/(namespace)/(repo_name)/</code>  创建用户仓库<br><code>DELETE /v1/repositories/(namespace)/(repo_name)/</code>  删除用户仓库<br><code>PUT /v1/repositories/(namespace)/(repo_name)/images</code> 更新用户仓库镜像<br><code>GET /v1/repositories/(namespace)/(repo_name)/images</code> 从仓库中下载镜像<br><code>GET /v1/users</code> 验证用户登录<br><code>POST /v1/users</code>  添加新用户<br><code>PUT /v1/users/(username)/</code> 更新用户信息</p>
+<h2 id="Docker_Remote_API">Docker Remote API</h2><p>Docker Remote API是一个取代远程命令行界面（rcli）的REST API</p>
+<p><code>GET /containers/json</code>  容器列表,获取所有容器的清单<br><code>POST /containers/create</code> 创建新容器<br><code>GET /containers/(id)/json</code>  监控容器,使用容器id获取该容器底层信息<br><code>GET /containers/(id)/top</code> 进程列表,获取容器内进程的清单<br><code>GET /containers/(id)/logs</code> 容器日志,获取容器的标准输出和错误日志<br><code>GET /containers/(id)/export</code> 导出容器,导出容器内容<br><code>POST /containers/(id)/start</code> 启动容器<br><code>POST /containers/(id)/stop</code>  停止容器<br><code>POST /containers/(id)/restart</code> 重启容器<br><code>POST /containers/(id)/kill</code>  终止容器  </p>
+<h2 id="Docker_Image_API">Docker Image API</h2><p><code>POST /images/create</code> 创建镜像<br><code>POST /commit</code> 利用容器创建镜像<br><code>GET /images/json</code> 获取镜像清单<br><code>POST /images/(name)/insert</code> 导入指定的路径文件<br><code>DELETE /images/(name)</code> 删除镜像<br><code>POST /images/(name)/push</code>  推送镜像到Registry<br><code>POST /images/(name)/tag</code> Tag镜像<br><code>GET /images/search</code>搜索镜像<br><code>GET /images/(name)/history</code> 查看镜像历史<br><code>POST /build</code> 构建镜像</p>
+<p>#参考<br><a href="http://www.wenwenyun.com/a/tip/2014/0924/533.html" target="_blank" rel="external">深入浅出Docker（一）：Docker核心技术预览</a><br><a href="http://www.wenwenyun.com/a/tip/2014/0926/552.html" target="_blank" rel="external">Docker源码分析（一）：Docker架构</a><br><a href="http://dockone.io/article/101" target="_blank" rel="external">Docker入门教程（一）介绍</a><br><a href="http://www.csdn.net/article/2014-06-20/2820325-cloud-Docker" target="_blank" rel="external">Docker，从这里做起！</a><br><a href="https://code.csdn.net/u010702509/docker/file/Docker.md" target="_blank" rel="external">Docker教程中文版本</a></p>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/docker/" rel="tag">#docker</a>
+          
+            <a href="/tags/入门教程/" rel="tag">#入门教程</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/11/04/pi网络资源/" rel="prev">PI网络资源</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/10/15/Solr简介/" rel="next">Solr简介</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+ </div>
+
+        
+
+        
+          <div class="comments" id="comments">
+            
+              <div class="ds-thread" data-thread-key="2015/11/04/docker基础/"
+                   data-title="Docker基础命令" data-url="http://kuku940.github.io/2015/11/04/docker基础/">
+              </div>
+            
+          </div>
+        
+      </div>
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点简介
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="http://7xljab.com1.z0.glb.clouddn.com/博客|个人博客|不卜个人博客|不卜" alt="不卜" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">不卜</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description">善易者不卜</p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">17</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            <a href="/categories">
+              <span class="site-state-item-count">11</span>
+              <span class="site-state-item-name">分类</span>
+              </a>
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">30</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/kuku940" target="_blank">GitHub</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.zhihu.com/people/roingeek" target="_blank">ZhiHu</a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+            <p class="site-author-name">友情链接</p>
+            
+              <span class="links-of-author-item">
+              <a href="http://zhumang.top/" target="_blank">竹芒</a>
+              </span>
+            
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Docker基础命令"><span class="nav-number">1.</span> <span class="nav-text">Docker基础命令</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#"><span class="nav-number">1.1.</span> <span class="nav-text"></span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Dockerfile"><span class="nav-number">2.</span> <span class="nav-text">Dockerfile</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Docker_Registry"><span class="nav-number">3.</span> <span class="nav-text">Docker Registry</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Docker_API"><span class="nav-number">4.</span> <span class="nav-text">Docker API</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Docker_Registry_API"><span class="nav-number">4.1.</span> <span class="nav-text">Docker Registry API</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Docker_Hub_API"><span class="nav-number">4.2.</span> <span class="nav-text">Docker Hub API</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Docker_Remote_API"><span class="nav-number">4.3.</span> <span class="nav-text">Docker Remote API</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Docker_Image_API"><span class="nav-number">4.4.</span> <span class="nav-text">Docker Image API</span></a></li></ol></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner"> <div class="copyright" >
+  
+  &copy; &nbsp; 
+  <span itemprop="copyrightYear">2015</span>
+  <span class="with-love">
+    <i class="icon-next-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">不卜</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 搭建
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+ </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"roingeek"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+    
+     
+
+    
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.5.1"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.5.1"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.5.1" id="motion.global"></script>
+
+
+
+
+  <script type="text/javascript" src="/js/nav-toggle.js?v=0.4.5.1"></script>
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.5.1" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      var $indicator = $(indicator);
+      var opacity = action === 'show' ? 0.4 : 0;
+      $indicator.velocity ?
+        $indicator.velocity('stop').velocity({
+          opacity: opacity
+        }, { duration: 100 }) :
+        $indicator.stop().animate({
+          opacity: opacity
+        }, 100);
+    }
+
+  });
+</script>
+
+<script type="text/javascript" id="sidebar.nav">
+  $(document).ready(function () {
+    var html = $('html');
+    var TAB_ANIMATE_DURATION = 200;
+    var hasVelocity = $.isFunction(html.velocity);
+
+    $('.sidebar-nav li').on('click', function () {
+      var item = $(this);
+      var activeTabClassName = 'sidebar-nav-active';
+      var activePanelClassName = 'sidebar-panel-active';
+      if (item.hasClass(activeTabClassName)) {
+        return;
+      }
+
+      var currentTarget = $('.' + activePanelClassName);
+      var target = $('.' + item.data('target'));
+
+      hasVelocity ?
+        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
+            .addClass(activePanelClassName);
+        }) :
+        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
+          currentTarget.hide();
+          target
+            .stop()
+            .css({'opacity': 0, 'display': 'block'})
+            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
+              currentTarget.removeClass(activePanelClassName);
+              target.addClass(activePanelClassName);
+            });
+        });
+
+      item.siblings().removeClass(activeTabClassName);
+      item.addClass(activeTabClassName);
+    });
+
+    $('.post-toc a').on('click', function (e) {
+      e.preventDefault();
+      var targetSelector = escapeSelector(this.getAttribute('href'));
+      var offset = $(targetSelector).offset().top;
+      hasVelocity ?
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        }) :
+        $('html, body').stop().animate({
+          scrollTop: offset
+        }, 500);
+    });
+
+    // Expand sidebar on post detail page by default, when post has a toc.
+    var $tocContent = $('.post-toc-content');
+    if (isDesktop() && CONFIG.sidebar === 'post') {
+      if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+        displaySidebar();
+      }
+    }
+  });
+</script>
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+      if (isMobile()) {
+        FastClick.attach(document.body);
+      }
+    });
+  </script>
+
+  
+
+  
+  
+
+<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"1","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"16"},"slide":{"type":"slide","bdImg":"3","bdPos":"left","bdTop":"250"}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+
+
+
+  
+  <script type="text/javascript" src="/js/lazyload.js"></script>
+  <script type="text/javascript">
+    $(function () {
+      $("#posts").find('img').lazyload({
+        placeholder: "/images/loading.gif",
+        effect: "fadeIn"
+      });
+    });
+  </script>
+</body>
+</html>
