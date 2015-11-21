@@ -1,0 +1,920 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.5.1"/>
+
+
+    <meta name="description" content="不卜个人博客，是一个记录博主学习和成长的个人博客站点。" />
+
+
+
+  <meta name="keywords" content="分页," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1" />
+
+
+<meta name="description" content="导入jar包导入pager-taglib.jar文件,并进行buid path
+DAO层代码在BaseDao类中新建getListForPage方法，可以通过hibernate来解决分页问题
+/**
+ * 使用hql 语句进行操作
+ * @param hql 需要执行的hql语句
+ * @param offset 设置开始位置
+ * @param length 设置读取数据的记录条数
+ * @re">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用pager-taglib完成jsp分页">
+<meta property="og:url" content="http://kuku940.github.io/2015/11/21/使用pager-taglib完成jsp分页/index.html">
+<meta property="og:site_name" content="不卜博客 - 不卜的个人博客站点">
+<meta property="og:description" content="导入jar包导入pager-taglib.jar文件,并进行buid path
+DAO层代码在BaseDao类中新建getListForPage方法，可以通过hibernate来解决分页问题
+/**
+ * 使用hql 语句进行操作
+ * @param hql 需要执行的hql语句
+ * @param offset 设置开始位置
+ * @param length 设置读取数据的记录条数
+ * @re">
+<meta property="og:image" content="http://7xljab.com1.z0.glb.clouddn.com/不卜个人博客/image/pager-taglib分页效果图.jpg">
+<meta property="og:updated_time" content="2015-11-21T05:49:47.993Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="使用pager-taglib完成jsp分页">
+<meta name="twitter:description" content="导入jar包导入pager-taglib.jar文件,并进行buid path
+DAO层代码在BaseDao类中新建getListForPage方法，可以通过hibernate来解决分页问题
+/**
+ * 使用hql 语句进行操作
+ * @param hql 需要执行的hql语句
+ * @param offset 设置开始位置
+ * @param length 设置读取数据的记录条数
+ * @re">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'post'
+  };
+</script>
+
+  <title> 使用pager-taglib完成jsp分页 | 不卜博客 - 不卜的个人博客站点 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+  
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?a1718d105ac5c566eeca9ca427859200";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-next-logo"></i>
+      </span>
+      <span class="site-title">不卜</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu menu-left">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-next-home"></i> <br />
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            <i class="menu-item-icon icon-next-categories"></i> <br />
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            <i class="menu-item-icon icon-next-about"></i> <br />
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-next-archives"></i> <br />
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon icon-next-tags"></i> <br />
+            标签
+          </a>
+        </li>
+      
+
+      
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <form class="site-search-form">
+    <input type="text" id="st-search-input" class="st-search-input st-default-search-input" />
+  </form>
+
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', 'szZeQCByKssqztmey91S','2.0.0');
+</script>
+
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content"> 
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              使用pager-taglib完成jsp分页
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2015-11-21T13:36:10+08:00" content="2015-11-21">
+            2015-11-21
+          </time>
+        </span>
+
+        
+          <span class="post-category" >
+            &nbsp; | &nbsp; 分类于
+            
+              <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                <a href="/categories/jsp/" itemprop="url" rel="index">
+                  <span itemprop="name">jsp</span>
+                </a>
+              </span>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+              &nbsp; | &nbsp;
+              <a href="/2015/11/21/使用pager-taglib完成jsp分页/#comments" itemprop="discussionUrl">
+                <span class="post-comments-count ds-thread-count" data-thread-key="2015/11/21/使用pager-taglib完成jsp分页/" itemprop="commentsCount"></span>
+              </a>
+            </span>
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><h1 id="导入jar包">导入jar包</h1><p>导入<a href="http://central.maven.org/maven2/jsptags/pager-taglib/2.0/pager-taglib-2.0.jar" target="_blank" rel="external">pager-taglib.jar</a>文件,并进行buid path</p>
+<h1 id="DAO层代码">DAO层代码</h1><p>在BaseDao类中新建getListForPage方法，可以通过hibernate来解决分页问题</p>
+<pre><code><span class="comment">/**
+ * 使用hql 语句进行操作
+ * <span class="doctag">@param</span> hql 需要执行的hql语句
+ * <span class="doctag">@param</span> offset 设置开始位置
+ * <span class="doctag">@param</span> length 设置读取数据的记录条数
+ * <span class="doctag">@return</span> List 返回所需要的集合
+ */</span>
+<span class="keyword">public</span> <span class="keyword">List</span>&lt;T&gt; getListForPage(String hql,<span class="keyword">int</span> offset,<span class="keyword">int</span> pageSize) {
+    Session session = this.sessionFactory.getCurrentSession();
+    Query query = session.createQuery(hql);
+
+    query.setFirstResult(offset);
+    query.setMaxResults(pageSize);
+    <span class="keyword">List</span> <span class="keyword">list</span> =  query.<span class="keyword">list</span>();
+    <span class="keyword">return</span> <span class="keyword">list</span>;
+}
+</code></pre><p>#Service层代码<br>server层引用步骤2中DAO层的getListForPage方法，并且新建find方法调用getListForPage()</p>
+<pre><code><span class="keyword">public</span> Pager&lt;User&gt; <span class="keyword">find</span>() {
+    Pager&lt;User&gt; pagers = <span class="keyword">new</span> Pager&lt;User&gt;();
+
+    <span class="keyword">Long</span> total = (<span class="keyword">Long</span>) <span class="keyword">this</span>.uniqueResult(<span class="string">"select count(*) from User"</span>);
+    <span class="keyword">int</span> pagesize = SystemContext.getPageSize();
+    <span class="keyword">int</span> offset = SystemContext.getOffset();
+
+    pagers.setOffset(offset);
+    pagers.setSize(pagesize);
+
+    pagers.setTotal(total);
+    pagers.setDatas(<span class="keyword">this</span>.getListForPage(<span class="string">"from User"</span>,offset,pagesize));
+
+    <span class="keyword">return</span> pagers;
+}
+</code></pre><h1 id="springmvc的action中创建list()">springmvc的action中创建list()</h1><pre><code>/**
+ * 查询所有的user用户
+ * @param model
+ * @<span class="keyword">return</span>
+ */
+@<span class="type">RequestMapping</span>(value={<span class="string">"users"</span>,<span class="string">"/"</span>},<span class="keyword">method</span>=<span class="type">RequestMethod</span>.<span class="type">GET</span>)
+public <span class="type">String</span> list(<span class="type">Model</span> model){
+    <span class="type">Pager</span>&lt;<span class="type">User</span>&gt; pagers = userService.find();
+    model.addAttribute(<span class="string">"pagers"</span>,pagers);
+    <span class="keyword">return</span> <span class="string">"user/list"</span>;
+}
+</code></pre><h1 id="创建SystemContext-java类，存入offset和pagesize两个变量">创建SystemContext.java类，存入offset和pagesize两个变量</h1><pre><code>package cn.xiaoyu.springmvc.domain;
+<span class="comment">/**
+ * offset和pagesize
+ * 比较好的做法是在系统变量类中，将其设置到ThreadLocal变量中
+ * 这里将其封装到了SystemContext类中
+ * @author xiaoyu 2015-11-20
+ */</span>
+<span class="keyword">public</span> <span class="keyword">class</span> <span class="title">SystemContext</span> {
+    <span class="keyword">private</span> <span class="keyword">static</span> ThreadLocal&lt;Integer&gt; offset = <span class="keyword">new</span> ThreadLocal&lt;Integer&gt;();
+    <span class="keyword">private</span> <span class="keyword">static</span> ThreadLocal&lt;Integer&gt; pagesize = <span class="keyword">new</span> ThreadLocal&lt;Integer&gt;();
+
+    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Integer <span class="title">getOffset</span>(<span class="params"></span>) </span>{
+        <span class="keyword">return</span> offset.<span class="keyword">get</span>();
+    }
+    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">setOffset</span>(<span class="params">Integer _offset</span>) </span>{
+        offset.<span class="keyword">set</span>(_offset);
+    }
+    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">removeOffset</span>(<span class="params"></span>) </span>{
+        offset.remove();
+    }
+
+    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Integer <span class="title">getPageSize</span>(<span class="params"></span>) </span>{
+        <span class="keyword">return</span> pagesize.<span class="keyword">get</span>();
+    }
+    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">setPageSize</span>(<span class="params">Integer _pagesize</span>) </span>{
+        pagesize.<span class="keyword">set</span>(_pagesize);
+    }
+    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">removePageSize</span>(<span class="params"></span>) </span>{
+        pagesize.remove();
+    }
+
+}
+</code></pre><h1 id="创建拦截器">创建拦截器</h1><p>创建PagerFilter.java拦截器，对上面步骤中的offset和pagesize的两个变量进行拦截并存入SystemContext类中</p>
+<pre><code><span class="keyword">package</span> cn.xiaoyu.springmvc.filter;
+
+<span class="keyword">import</span> java.io.IOException;
+
+<span class="keyword">import</span> javax.servlet.Filter;
+<span class="keyword">import</span> javax.servlet.FilterChain;
+<span class="keyword">import</span> javax.servlet.FilterConfig;
+<span class="keyword">import</span> javax.servlet.ServletException;
+<span class="keyword">import</span> javax.servlet.ServletRequest;
+<span class="keyword">import</span> javax.servlet.ServletResponse;
+<span class="keyword">import</span> javax.servlet.http.HttpServletRequest;
+
+<span class="keyword">import</span> cn.xiaoyu.springmvc.domain.SystemContext;
+
+<span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">PagerFilter</span> <span class="keyword">implements</span> <span class="title">Filter</span> </span>{
+
+    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">doFilter</span><span class="params">(ServletRequest request, ServletResponse response,
+            FilterChain chain)</span> <span class="keyword">throws</span> IOException, ServletException </span>{
+        HttpServletRequest httpRequest = (HttpServletRequest) request;
+
+        <span class="keyword">try</span> {
+            SystemContext.setOffset(getOffSet(httpRequest));
+            SystemContext.setPageSize(getPageSize(httpRequest));
+            chain.doFilter(request, response);
+        }<span class="keyword">finally</span> {
+            SystemContext.removeOffset();
+            SystemContext.removePageSize();
+        }
+    }
+
+    <span class="function"><span class="keyword">protected</span> <span class="keyword">int</span> <span class="title">getOffSet</span><span class="params">(HttpServletRequest request)</span> </span>{
+        <span class="keyword">int</span> offset = <span class="number">0</span>;
+        <span class="keyword">try</span> {
+            offset = Integer.parseInt(request.getParameter(<span class="string">"pager.offset"</span>));
+        } <span class="keyword">catch</span> (NumberFormatException ignore) {
+        }
+
+        <span class="keyword">return</span> offset;
+    }
+
+    <span class="function"><span class="keyword">protected</span> <span class="keyword">int</span> <span class="title">getPageSize</span><span class="params">(HttpServletRequest request)</span> </span>{
+        <span class="keyword">return</span> <span class="number">10</span>;
+    }
+
+    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">init</span><span class="params">(FilterConfig config)</span> <span class="keyword">throws</span> ServletException </span>{
+    }
+
+    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">destroy</span><span class="params">()</span> </span>{
+    }
+}
+</code></pre><h1 id="web-xml配置拦截器">web.xml配置拦截器</h1><pre><code><span class="comment">&lt;!-- 配置pager-lib分页的拦截器 --&gt;</span>
+<span class="tag">&lt;<span class="title">filter</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">filter-name</span>&gt;</span>pagerFilter<span class="tag">&lt;/<span class="title">filter-name</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">filter-class</span>&gt;</span>cn.xiaoyu.springmvc.filter.PagerFilter<span class="tag">&lt;/<span class="title">filter-class</span>&gt;</span>
+<span class="tag">&lt;/<span class="title">filter</span>&gt;</span>
+<span class="tag">&lt;<span class="title">filter-mapping</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">filter-name</span>&gt;</span>pagerFilter<span class="tag">&lt;/<span class="title">filter-name</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">url-pattern</span>&gt;</span>/*<span class="tag">&lt;/<span class="title">url-pattern</span>&gt;</span>
+<span class="tag">&lt;/<span class="title">filter-mapping</span>&gt;</span>
+</code></pre><h1 id="添加分页角标页面">添加分页角标页面</h1><p>在WebRoot下面添加WebRoot/inc/pager.jsp文件，作为分页的角标</p>
+<pre><code><span class="xml"><span class="tag">&lt;<span class="title">%@</span> <span class="attribute">page</span> <span class="attribute">language</span>=<span class="value">"java"</span> <span class="attribute">contentType</span>=<span class="value">"text/html; charset=UTF-8"</span>
+    <span class="attribute">pageEncoding</span>=<span class="value">"UTF-8"</span><span class="value">%</span>&gt;</span>
+<span class="tag">&lt;<span class="title">%@taglib</span> <span class="attribute">prefix</span>=<span class="value">"pg"</span> <span class="attribute">uri</span>=<span class="value">"http://jsptags.com/tags/navigation/pager"</span><span class="value">%</span>&gt;</span>
+<span class="tag">&lt;<span class="title">%@taglib</span> <span class="attribute">prefix</span>=<span class="value">"c"</span> <span class="attribute">uri</span>=<span class="value">"http://java.sun.com/jsp/jstl/core"</span> %&gt;</span>
+<span class="tag">&lt;<span class="title">pg:pager</span> <span class="attribute">maxPageItems</span>=<span class="value">"10"</span> <span class="attribute">items</span>=<span class="value">"$</span></span></span><span class="expression">{<span class="variable">param.items</span> }</span><span class="xml"><span class="tag"><span class="value">"</span> <span class="attribute">export</span>=<span class="value">"curPage=pageNumber"</span> <span class="attribute">url</span>=<span class="value">"$</span></span></span><span class="expression">{<span class="variable">param.url</span> }</span><span class="xml"><span class="tag"><span class="value">"</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">c:forEach</span> <span class="attribute">items</span>=<span class="value">"$</span></span></span><span class="expression">{<span class="variable">param.params</span> }</span><span class="xml"><span class="tag"><span class="value">"</span> <span class="attribute">var</span>=<span class="value">"p"</span>&gt;</span>
+        <span class="tag">&lt;<span class="title">pg:param</span> <span class="attribute">name</span>=<span class="value">"$</span></span></span><span class="expression">{<span class="variable">p</span> }</span><span class="xml"><span class="tag"><span class="value">"</span>/&gt;</span>
+    <span class="tag">&lt;/<span class="title">c:forEach</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">pg:last</span>&gt;</span>
+    共$</span><span class="expression">{<span class="variable">param.items</span> }</span><span class="xml">记录,共$</span><span class="expression">{<span class="variable">pageNumber</span> }</span><span class="xml">页,
+    <span class="tag">&lt;/<span class="title">pg:last</span>&gt;</span>
+    当前第$</span><span class="expression">{<span class="variable">curPage</span> }</span><span class="xml">页
+    <span class="tag">&lt;<span class="title">pg:first</span>&gt;</span>
+        <span class="tag">&lt;<span class="title">a</span> <span class="attribute">href</span>=<span class="value">"$</span></span></span><span class="expression">{<span class="variable">pageUrl</span> }</span><span class="xml"><span class="tag"><span class="value">"</span>&gt;</span>首页<span class="tag">&lt;/<span class="title">a</span>&gt;</span>
+    <span class="tag">&lt;/<span class="title">pg:first</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">pg:prev</span>&gt;</span>
+        <span class="tag">&lt;<span class="title">a</span> <span class="attribute">href</span>=<span class="value">"$</span></span></span><span class="expression">{<span class="variable">pageUrl</span> }</span><span class="xml"><span class="tag"><span class="value">"</span>&gt;</span>上一页<span class="tag">&lt;/<span class="title">a</span>&gt;</span>
+    <span class="tag">&lt;/<span class="title">pg:prev</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">pg:pages</span>&gt;</span>
+        <span class="tag">&lt;<span class="title">c:if</span> <span class="attribute">test</span>=<span class="value">"$</span></span></span><span class="expression">{<span class="variable">curPage</span> <span class="variable"><span class="keyword">eq</span></span> <span class="variable">pageNumber</span> }</span><span class="xml"><span class="tag"><span class="value">"</span>&gt;</span>
+            [$</span><span class="expression">{<span class="variable">pageNumber</span> }</span><span class="xml">]
+        <span class="tag">&lt;/<span class="title">c:if</span>&gt;</span>
+        <span class="tag">&lt;<span class="title">c:if</span> <span class="attribute">test</span>=<span class="value">"$</span></span></span><span class="expression">{<span class="variable">curPage</span> <span class="variable"><span class="keyword">ne</span></span> <span class="variable">pageNumber</span> }</span><span class="xml"><span class="tag"><span class="value">"</span>&gt;</span>
+            <span class="tag">&lt;<span class="title">a</span> <span class="attribute">href</span>=<span class="value">"$</span></span></span><span class="expression">{<span class="variable">pageUrl</span> }</span><span class="xml"><span class="tag"><span class="value">"</span>&gt;</span>$</span><span class="expression">{<span class="variable">pageNumber</span> }</span><span class="xml"><span class="tag">&lt;/<span class="title">a</span>&gt;</span>
+        <span class="tag">&lt;/<span class="title">c:if</span>&gt;</span>
+    <span class="tag">&lt;/<span class="title">pg:pages</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">pg:next</span>&gt;</span>
+        <span class="tag">&lt;<span class="title">a</span> <span class="attribute">href</span>=<span class="value">"$</span></span></span><span class="expression">{<span class="variable">pageUrl</span> }</span><span class="xml"><span class="tag"><span class="value">"</span>&gt;</span>下一页<span class="tag">&lt;/<span class="title">a</span>&gt;</span>
+    <span class="tag">&lt;/<span class="title">pg:next</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">pg:last</span>&gt;</span>
+        <span class="tag">&lt;<span class="title">a</span> <span class="attribute">href</span>=<span class="value">"$</span></span></span><span class="expression">{<span class="variable">pageUrl</span> }</span><span class="xml"><span class="tag"><span class="value">"</span>&gt;</span>尾页<span class="tag">&lt;/<span class="title">a</span>&gt;</span>
+    <span class="tag">&lt;/<span class="title">pg:last</span>&gt;</span>
+<span class="tag">&lt;/<span class="title">pg:pager</span>&gt;</span></span>
+</code></pre><h1 id="创建分页页面">创建分页页面</h1><p>创建引入pager.jsp的页面list.jsp，代码如下：</p>
+<pre><code><span class="xml"><span class="tag">&lt;<span class="title">%@</span> <span class="attribute">page</span> <span class="attribute">language</span>=<span class="value">"java"</span> <span class="attribute">contentType</span>=<span class="value">"text/html; charset=UTF-8"</span>
+    <span class="attribute">pageEncoding</span>=<span class="value">"UTF-8"</span><span class="value">%</span>&gt;</span>
+<span class="tag">&lt;<span class="title">%@taglib</span> <span class="attribute">prefix</span>=<span class="value">"c"</span> <span class="attribute">uri</span>=<span class="value">"http://java.sun.com/jsp/jstl/core"</span> %&gt;</span>
+
+<span class="doctype">&lt;!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd"&gt;</span>
+<span class="tag">&lt;<span class="title">html</span>&gt;</span>
+<span class="tag">&lt;<span class="title">head</span>&gt;</span>
+<span class="tag">&lt;<span class="title">meta</span> <span class="attribute">http-equiv</span>=<span class="value">"Content-Type"</span> <span class="attribute">content</span>=<span class="value">"text/html; charset=UTF-8"</span>&gt;</span>
+<span class="tag">&lt;<span class="title">title</span>&gt;</span>用户列表<span class="tag">&lt;/<span class="title">title</span>&gt;</span>
+<span class="tag">&lt;/<span class="title">head</span>&gt;</span>
+<span class="tag">&lt;<span class="title">body</span>&gt;</span>
+<span class="tag">&lt;<span class="title">table</span> <span class="attribute">width</span>=<span class="value">"700"</span> <span class="attribute">align</span>=<span class="value">"center"</span> <span class="attribute">border</span>=<span class="value">"1"</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">tr</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">td</span>&gt;</span>用户标识<span class="tag">&lt;/<span class="title">td</span>&gt;</span><span class="tag">&lt;<span class="title">td</span>&gt;</span>用户名<span class="tag">&lt;/<span class="title">td</span>&gt;</span><span class="tag">&lt;<span class="title">td</span>&gt;</span>用户昵称<span class="tag">&lt;/<span class="title">td</span>&gt;</span><span class="tag">&lt;<span class="title">td</span>&gt;</span>用户密码<span class="tag">&lt;/<span class="title">td</span>&gt;</span><span class="tag">&lt;<span class="title">td</span>&gt;</span>用户邮箱<span class="tag">&lt;/<span class="title">td</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">td</span>&gt;</span>操作<span class="tag">&lt;/<span class="title">td</span>&gt;</span>
+    <span class="tag">&lt;/<span class="title">tr</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">c:if</span> <span class="attribute">test</span>=<span class="value">"$</span></span></span><span class="expression">{<span class="variable">pagers.total</span> <span class="variable">le</span> 0 }</span><span class="xml"><span class="tag"><span class="value">"</span>&gt;</span>
+        <span class="tag">&lt;<span class="title">tr</span>&gt;</span>
+        <span class="tag">&lt;<span class="title">td</span> <span class="attribute">colspan</span>=<span class="value">"6"</span>&gt;</span>目前还没有用户数据<span class="tag">&lt;/<span class="title">td</span>&gt;</span>
+        <span class="tag">&lt;/<span class="title">tr</span>&gt;</span>
+    <span class="tag">&lt;/<span class="title">c:if</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">c:if</span> <span class="attribute">test</span>=<span class="value">"$</span></span></span><span class="expression">{<span class="variable">pagers.total</span> <span class="variable"><span class="keyword">gt</span></span> 0}</span><span class="xml"><span class="tag"><span class="value">"</span>&gt;</span>
+        <span class="tag">&lt;<span class="title">c:forEach</span> <span class="attribute">items</span>=<span class="value">"$</span></span></span><span class="expression">{<span class="variable">pagers.datas</span> }</span><span class="xml"><span class="tag"><span class="value">"</span> <span class="attribute">var</span>=<span class="value">"u"</span>&gt;</span>
+        <span class="tag">&lt;<span class="title">tr</span>&gt;</span>
+        <span class="tag">&lt;<span class="title">td</span>&gt;</span>$</span><span class="expression">{<span class="variable">u.id</span> }</span><span class="xml"><span class="tag">&lt;/<span class="title">td</span>&gt;</span><span class="tag">&lt;<span class="title">td</span>&gt;</span>$</span><span class="expression">{<span class="variable">u.username</span> }</span><span class="xml"><span class="tag">&lt;/<span class="title">td</span>&gt;</span>
+        <span class="tag">&lt;<span class="title">td</span>&gt;</span><span class="tag">&lt;<span class="title">a</span> <span class="attribute">href</span>=<span class="value">"$</span></span></span><span class="expression">{<span class="variable">u.id</span> }</span><span class="xml"><span class="tag"><span class="value">"</span>&gt;</span>$</span><span class="expression">{<span class="variable">u.nickname</span> }</span><span class="xml"><span class="tag">&lt;/<span class="title">a</span>&gt;</span><span class="tag">&lt;/<span class="title">td</span>&gt;</span>
+        <span class="tag">&lt;<span class="title">td</span>&gt;</span>$</span><span class="expression">{<span class="variable">u.password</span> }</span><span class="xml"><span class="tag">&lt;/<span class="title">td</span>&gt;</span><span class="tag">&lt;<span class="title">td</span>&gt;</span>$</span><span class="expression">{<span class="variable">u.email</span> }</span><span class="xml"><span class="tag">&lt;/<span class="title">td</span>&gt;</span>
+        <span class="tag">&lt;<span class="title">td</span>&gt;</span><span class="tag">&lt;<span class="title">a</span> <span class="attribute">href</span>=<span class="value">"$</span></span></span><span class="expression">{<span class="variable">u.id</span> }</span><span class="xml"><span class="tag"><span class="value">/update"</span>&gt;</span>更新<span class="tag">&lt;/<span class="title">a</span>&gt;</span> <span class="tag">&lt;<span class="title">a</span> <span class="attribute">href</span>=<span class="value">"$</span></span></span><span class="expression">{<span class="variable">u.id</span> }</span><span class="xml"><span class="tag"><span class="value">/delete"</span>&gt;</span>删除<span class="tag">&lt;/<span class="title">a</span>&gt;</span><span class="tag">&lt;/<span class="title">td</span>&gt;</span>
+        <span class="tag">&lt;/<span class="title">tr</span>&gt;</span>
+        <span class="tag">&lt;/<span class="title">c:forEach</span>&gt;</span>
+        <span class="tag">&lt;<span class="title">tr</span>&gt;</span>
+        <span class="tag">&lt;<span class="title">td</span> <span class="attribute">colspan</span>=<span class="value">"6"</span>&gt;</span>
+            <span class="tag">&lt;<span class="title">jsp:include</span> <span class="attribute">page</span>=<span class="value">"/inc/pager.jsp"</span>&gt;</span>
+                <span class="tag">&lt;<span class="title">jsp:param</span> <span class="attribute">value</span>=<span class="value">"users"</span> <span class="attribute">name</span>=<span class="value">"url"</span>/&gt;</span>
+                <span class="tag">&lt;<span class="title">jsp:param</span> <span class="attribute">value</span>=<span class="value">"$</span></span></span><span class="expression">{<span class="variable">pagers.total</span>}</span><span class="xml"><span class="tag"><span class="value">"</span> <span class="attribute">name</span>=<span class="value">"items"</span>/&gt;</span>
+            <span class="tag">&lt;/<span class="title">jsp:include</span>&gt;</span>
+        <span class="tag">&lt;/<span class="title">td</span>&gt;</span>
+        <span class="tag">&lt;/<span class="title">tr</span>&gt;</span>
+    <span class="tag">&lt;/<span class="title">c:if</span>&gt;</span>
+<span class="tag">&lt;/<span class="title">table</span>&gt;</span>
+<span class="tag">&lt;/<span class="title">body</span>&gt;</span>
+<span class="tag">&lt;/<span class="title">html</span>&gt;</span></span>
+</code></pre><h1 id="效果图">效果图</h1><p>如此，就可访问得到如下的效果（表示jsp分页效果实现）<br><img src="http://7xljab.com1.z0.glb.clouddn.com/不卜个人博客/image/pager-taglib分页效果图.jpg" alt="jsp页面中显示效果"></p>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/分页/" rel="tag">#分页</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/11/04/pi网络资源/" rel="next">PI网络资源</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+ </div>
+
+        
+
+        
+          <div class="comments" id="comments">
+            
+              <div class="ds-thread" data-thread-key="2015/11/21/使用pager-taglib完成jsp分页/"
+                   data-title="使用pager-taglib完成jsp分页" data-url="http://kuku940.github.io/2015/11/21/使用pager-taglib完成jsp分页/">
+              </div>
+            
+          </div>
+        
+      </div>
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点简介
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="http://7xljab.com1.z0.glb.clouddn.com/博客|个人博客|不卜个人博客|不卜" alt="不卜" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">不卜</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description">善易者不卜</p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">18</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            <a href="/categories">
+              <span class="site-state-item-count">12</span>
+              <span class="site-state-item-name">分类</span>
+              </a>
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">31</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/kuku940" target="_blank">GitHub</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.zhihu.com/people/roingeek" target="_blank">ZhiHu</a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+            <p class="site-author-name">友情链接</p>
+            
+              <span class="links-of-author-item">
+              <a href="http://zhumang.top/" target="_blank">竹芒</a>
+              </span>
+            
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#导入jar包"><span class="nav-number">1.</span> <span class="nav-text">导入jar包</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#DAO层代码"><span class="nav-number">2.</span> <span class="nav-text">DAO层代码</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#springmvc的action中创建list()"><span class="nav-number">3.</span> <span class="nav-text">springmvc的action中创建list()</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#创建SystemContext-java类，存入offset和pagesize两个变量"><span class="nav-number">4.</span> <span class="nav-text">创建SystemContext.java类，存入offset和pagesize两个变量</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#创建拦截器"><span class="nav-number">5.</span> <span class="nav-text">创建拦截器</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#web-xml配置拦截器"><span class="nav-number">6.</span> <span class="nav-text">web.xml配置拦截器</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#添加分页角标页面"><span class="nav-number">7.</span> <span class="nav-text">添加分页角标页面</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#创建分页页面"><span class="nav-number">8.</span> <span class="nav-text">创建分页页面</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#效果图"><span class="nav-number">9.</span> <span class="nav-text">效果图</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner"> <div class="copyright" >
+  
+  &copy; &nbsp; 
+  <span itemprop="copyrightYear">2015</span>
+  <span class="with-love">
+    <i class="icon-next-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">不卜</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 搭建
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+ </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"roingeek"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+    
+     
+
+    
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.5.1"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.5.1"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.5.1" id="motion.global"></script>
+
+
+
+
+  <script type="text/javascript" src="/js/nav-toggle.js?v=0.4.5.1"></script>
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.5.1" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      var $indicator = $(indicator);
+      var opacity = action === 'show' ? 0.4 : 0;
+      $indicator.velocity ?
+        $indicator.velocity('stop').velocity({
+          opacity: opacity
+        }, { duration: 100 }) :
+        $indicator.stop().animate({
+          opacity: opacity
+        }, 100);
+    }
+
+  });
+</script>
+
+<script type="text/javascript" id="sidebar.nav">
+  $(document).ready(function () {
+    var html = $('html');
+    var TAB_ANIMATE_DURATION = 200;
+    var hasVelocity = $.isFunction(html.velocity);
+
+    $('.sidebar-nav li').on('click', function () {
+      var item = $(this);
+      var activeTabClassName = 'sidebar-nav-active';
+      var activePanelClassName = 'sidebar-panel-active';
+      if (item.hasClass(activeTabClassName)) {
+        return;
+      }
+
+      var currentTarget = $('.' + activePanelClassName);
+      var target = $('.' + item.data('target'));
+
+      hasVelocity ?
+        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
+            .addClass(activePanelClassName);
+        }) :
+        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
+          currentTarget.hide();
+          target
+            .stop()
+            .css({'opacity': 0, 'display': 'block'})
+            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
+              currentTarget.removeClass(activePanelClassName);
+              target.addClass(activePanelClassName);
+            });
+        });
+
+      item.siblings().removeClass(activeTabClassName);
+      item.addClass(activeTabClassName);
+    });
+
+    $('.post-toc a').on('click', function (e) {
+      e.preventDefault();
+      var targetSelector = escapeSelector(this.getAttribute('href'));
+      var offset = $(targetSelector).offset().top;
+      hasVelocity ?
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        }) :
+        $('html, body').stop().animate({
+          scrollTop: offset
+        }, 500);
+    });
+
+    // Expand sidebar on post detail page by default, when post has a toc.
+    var $tocContent = $('.post-toc-content');
+    if (isDesktop() && CONFIG.sidebar === 'post') {
+      if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+        displaySidebar();
+      }
+    }
+  });
+</script>
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+      if (isMobile()) {
+        FastClick.attach(document.body);
+      }
+    });
+  </script>
+
+  
+
+  
+  
+
+<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"1","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"16"},"slide":{"type":"slide","bdImg":"3","bdPos":"left","bdTop":"250"}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+
+
+
+  
+  <script type="text/javascript" src="/js/lazyload.js"></script>
+  <script type="text/javascript">
+    $(function () {
+      $("#posts").find('img').lazyload({
+        placeholder: "/images/loading.gif",
+        effect: "fadeIn"
+      });
+    });
+  </script>
+</body>
+</html>
