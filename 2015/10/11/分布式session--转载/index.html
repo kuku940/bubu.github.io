@@ -2,11 +2,9 @@
 <html class="theme-next use-motion theme-next-mist">
 <head>
   
-
 <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
-
 
 <meta http-equiv="Cache-Control" content="no-transform" />
 <meta http-equiv="Cache-Control" content="no-siteapp" />
@@ -14,74 +12,35 @@
 
 
 
-
-
-
-
   <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
-
-
 
 
 <link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.5.1"/>
 
-
-    <meta name="description" content="不卜个人博客，是一个记录博主学习和成长的个人博客站点。" />
-
+  <meta name="description" content="不卜个人博客，是一个JavaEE后台相关开发人员的个人博客站点，记录并分享了博主学习成长过程中的诸多问题和困惑！" />
 
 
   <meta name="keywords" content="session,分布式," />
 
 
 
-
-
   <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1" />
 
-
-<meta name="description" content="与分布式缓存在高并发和高可用下所要解决问题差不多。
-图示  
-构建一个高效无单点故障的分布式session服务
-高并发下分布式Session需解决的问题
-透明处理存储介质的故障转移
-动态增删节点，减小“缓存颠簸”问题
-保证数据在各个节点的分布均衡
-Session序列化和反序列化
-
-保证“基本可用 Basically Available”的分布式Session方案Eric A. Brewer 在 1">
+<meta name="description" content="目前，为了使web能适应大规模的访问,需要实现应用的集群部署. 而实现集群部署首先要解决session的统一，即需要实现session的共享机制。 目前，在集群系统下实现session统一的有如下几种方案：(1) 应用服务器间的session复制共享（如tomcat session共享）(2) 基于cache DB缓存的session共享">
 <meta property="og:type" content="article">
 <meta property="og:title" content="分布式session--转载">
 <meta property="og:url" content="http://kuku940.github.io/2015/10/11/分布式session--转载/index.html">
 <meta property="og:site_name" content="不卜博客 - 不卜的个人博客站点">
-<meta property="og:description" content="与分布式缓存在高并发和高可用下所要解决问题差不多。
-图示  
-构建一个高效无单点故障的分布式session服务
-高并发下分布式Session需解决的问题
-透明处理存储介质的故障转移
-动态增删节点，减小“缓存颠簸”问题
-保证数据在各个节点的分布均衡
-Session序列化和反序列化
-
-保证“基本可用 Basically Available”的分布式Session方案Eric A. Brewer 在 1">
+<meta property="og:description" content="目前，为了使web能适应大规模的访问,需要实现应用的集群部署. 而实现集群部署首先要解决session的统一，即需要实现session的共享机制。 目前，在集群系统下实现session统一的有如下几种方案：(1) 应用服务器间的session复制共享（如tomcat session共享）(2) 基于cache DB缓存的session共享">
 <meta property="og:image" content="http://7xljab.com1.z0.glb.clouddn.com/不卜个人博客/image/Distributed_session.png">
 <meta property="og:image" content="http://7xljab.com1.z0.glb.clouddn.com/不卜个人博客/image/serialization_strategy.png">
 <meta property="og:image" content="http://7xljab.com1.z0.glb.clouddn.com/不卜个人博客/image/Dietribute_session_zookeeper.png">
 <meta property="og:image" content="http://7xljab.com1.z0.glb.clouddn.com/不卜个人博客/image/State_Server%20.png">
 <meta property="og:image" content="http://7xljab.com1.z0.glb.clouddn.com/不卜个人博客/image/sessionState%20_partitionResolverType.png">
-<meta property="og:updated_time" content="2015-10-12T11:46:09.349Z">
+<meta property="og:updated_time" content="2015-11-21T08:38:09.545Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="分布式session--转载">
-<meta name="twitter:description" content="与分布式缓存在高并发和高可用下所要解决问题差不多。
-图示  
-构建一个高效无单点故障的分布式session服务
-高并发下分布式Session需解决的问题
-透明处理存储介质的故障转移
-动态增删节点，减小“缓存颠簸”问题
-保证数据在各个节点的分布均衡
-Session序列化和反序列化
-
-保证“基本可用 Basically Available”的分布式Session方案Eric A. Brewer 在 1">
-
+<meta name="twitter:description" content="目前，为了使web能适应大规模的访问,需要实现应用的集群部署. 而实现集群部署首先要解决session的统一，即需要实现session的共享机制。 目前，在集群系统下实现session统一的有如下几种方案：(1) 应用服务器间的session复制共享（如tomcat session共享）(2) 基于cache DB缓存的session共享">
 
 <script type="text/javascript" id="hexo.configuration">
   var CONFIG = {
@@ -286,7 +245,8 @@ Session序列化和反序列化
       
 
       
-        <span itemprop="articleBody"><p>与分布式缓存在高并发和高可用下所要解决问题差不多。</p>
+        <span itemprop="articleBody"><p>目前，为了使web能适应大规模的访问,需要实现应用的集群部署. 而实现集群部署首先要解决session的统一，即需要实现session的共享机制。<br> 目前，在集群系统下实现session统一的有如下几种方案：<br>(1) 应用服务器间的session复制共享（如tomcat session共享）<br>(2) 基于cache DB缓存的session共享<br><a id="more"></a></p>
+<p>与分布式缓存在高并发和高可用下所要解决问题差不多。</p>
 <h1 id="图示">图示</h1><p><img src="http://7xljab.com1.z0.glb.clouddn.com/不卜个人博客/image/Distributed_session.png" alt="">  </p>
 <p><strong><a href="http://www.oschina.net/question/12_36572" target="_blank" rel="external">构建一个高效无单点故障的分布式session服务</a></strong></p>
 <h1 id="高并发下分布式Session需解决的问题">高并发下分布式Session需解决的问题</h1><ul>
@@ -426,7 +386,7 @@ Session序列化和反序列化
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">18</span>
+              <span class="site-state-item-count">16</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>

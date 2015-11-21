@@ -2,11 +2,9 @@
 <html class="theme-next use-motion theme-next-mist">
 <head>
   
-
 <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
-
 
 <meta http-equiv="Cache-Control" content="no-transform" />
 <meta http-equiv="Cache-Control" content="no-siteapp" />
@@ -14,41 +12,29 @@
 
 
 
-
-
-
-
   <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
-
-
 
 
 <link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.5.1"/>
 
-
-    <meta name="description" content="不卜个人博客，是一个记录博主学习和成长的个人博客站点。" />
-
+  <meta name="description" content="不卜个人博客，是一个JavaEE后台相关开发人员的个人博客站点，记录并分享了博主学习成长过程中的诸多问题和困惑！" />
 
 
-  <meta name="keywords" content="博客,个人博客,不卜个人博客,不卜" />
-
-
+  <meta name="keywords" content="不卜,博客,个人博客,不卜个人博客" />
 
 
 
   <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1" />
 
-
-<meta name="description" content="不卜个人博客，是一个记录博主学习和成长的个人博客站点。">
+<meta name="description" content="不卜个人博客，是一个JavaEE后台相关开发人员的个人博客站点，记录并分享了博主学习成长过程中的诸多问题和困惑！">
 <meta property="og:type" content="website">
 <meta property="og:title" content="不卜博客 - 不卜的个人博客站点">
 <meta property="og:url" content="http://kuku940.github.io/page/3/index.html">
 <meta property="og:site_name" content="不卜博客 - 不卜的个人博客站点">
-<meta property="og:description" content="不卜个人博客，是一个记录博主学习和成长的个人博客站点。">
+<meta property="og:description" content="不卜个人博客，是一个JavaEE后台相关开发人员的个人博客站点，记录并分享了博主学习成长过程中的诸多问题和困惑！">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="不卜博客 - 不卜的个人博客站点">
-<meta name="twitter:description" content="不卜个人博客，是一个记录博主学习和成长的个人博客站点。">
-
+<meta name="twitter:description" content="不卜个人博客，是一个JavaEE后台相关开发人员的个人博客站点，记录并分享了博主学习成长过程中的诸多问题和困惑！">
 
 <script type="text/javascript" id="hexo.configuration">
   var CONFIG = {
@@ -258,7 +244,7 @@
 
       
         
-          <h1 id="安装curl">安装curl</h1><p>从<a href="http://curl.haxx.se/download.html">curl官网</a>下载你需要的curl版本，这儿我使用的<a href="http://pan.baidu.com/s/1pJACQOr">win64位</a>，解压后，将curl.exe文件放置到<code>C:\Windows\System32</code>路径下，可是使用命令行敲入curl出现以下图片，表示安装成功。<br><img src="http://7xljab.com1.z0.glb.clouddn.com/不卜个人博客/image/curl安装完成敲入截图.png" alt="curl安装截图" title="curl敲入截图"><br>
+          <p>curl是利用URL语法在命令行方式下工作的开源文件传输工具。它被广泛应用在Unix、多种Linux发行版中，并且有DOS和Win32、Win64下的移植版本。<br>
           <div class="post-more-link text-center">
             <a class="btn" href="/2015/09/16/curl简单入门/#more" rel="contents">
               阅读全文 &raquo;
@@ -435,11 +421,7 @@
 
       
         
-          <h1 id="问题一">问题一</h1><p><strong>描述：</strong><br>在python编写代码时，可能在运行时出现些中文字符解析不了</p>
-<pre><code>File <span class="string">"BeautifulSoup.py"</span>, <span class="built_in">line</span> <span class="number">21</span>
-SyntaxError: Non-ASCII <span class="keyword">character</span> <span class="string">'\xe6'</span> <span class="operator">in</span> <span class="built_in">file</span> BeautifulSoup.py <span class="command"><span class="keyword">on</span> <span class="title">line</span> <span class="title">21</span>, <span class="title">but</span></span>
-no encoding declared; see <span class="keyword">http</span>://python.org/dev/peps/pep-<span class="number">0263</span>/ <span class="keyword">for</span> details
-</code></pre>
+          <p>乱码在哪种语言里都会出现，初学python会遇到很多莫名的乱码问题，这儿提供几种常见的解决python中文乱码的方法。<br>
           <div class="post-more-link text-center">
             <a class="btn" href="/2015/09/13/python乱码/#more" rel="contents">
               阅读全文 &raquo;
@@ -527,18 +509,7 @@ no encoding declared; see <span class="keyword">http</span>://python.org/dev/pep
 
       
         
-          <h1 id="Python命令行简单示例">Python命令行简单示例</h1><pre><code><span class="prompt">&gt;&gt;&gt; </span>resp = requests.get(<span class="string">'https://api.github.com/user'</span>, auth=(<span class="string">'user'</span>, <span class="string">'pass'</span>))
-<span class="prompt">&gt;&gt;&gt; </span>resp.status_code
-<span class="number">200</span>
-<span class="prompt">&gt;&gt;&gt; </span>resp.headers[<span class="string">'content-type'</span>]
-<span class="string">'application/json; charset=utf8'</span>
-<span class="prompt">&gt;&gt;&gt; </span>resp.encoding
-<span class="string">'utf-8'</span>
-<span class="prompt">&gt;&gt;&gt; </span>resp.text
-<span class="string">u'{"type":"User"...'</span>
-<span class="prompt">&gt;&gt;&gt; </span>resp.json()
-{<span class="string">u'private_gists'</span>: <span class="number">419</span>, <span class="string">u'total_private_repos'</span>: <span class="number">77</span>, ...}
-</code></pre>
+          <p>在HTTP相关处理中使用python是不必要的麻烦，这包括urllib2模块以巨大的复杂性代价获取综合性的功能。相比于urllib2,Kenneth Reitz的Requests模块更能简约的支持完整的简单用例。<br>
           <div class="post-more-link text-center">
             <a class="btn" href="/2015/09/13/python的requests库/#more" rel="contents">
               阅读全文 &raquo;
@@ -573,8 +544,8 @@ no encoding declared; see <span class="keyword">http</span>://python.org/dev/pep
           
           
             
-              <a class="post-title-link" href="/2015/09/10/三国进度条/" itemprop="url">
-                三国进度条
+              <a class="post-title-link" href="/2015/09/07/MarkDown语法规则/" itemprop="url">
+                MarkDown语法规则
               </a>
             
           
@@ -584,8 +555,8 @@ no encoding declared; see <span class="keyword">http</span>://python.org/dev/pep
       <div class="post-meta">
         <span class="post-time">
           发表于
-          <time itemprop="dateCreated" datetime="2015-09-10T19:18:31+08:00" content="2015-09-10">
-            2015-09-10
+          <time itemprop="dateCreated" datetime="2015-09-07T20:33:29+08:00" content="2015-09-07">
+            2015-09-07
           </time>
         </span>
 
@@ -594,8 +565,8 @@ no encoding declared; see <span class="keyword">http</span>://python.org/dev/pep
             &nbsp; | &nbsp; 分类于
             
               <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                <a href="/categories/游戏/" itemprop="url" rel="index">
-                  <span itemprop="name">游戏</span>
+                <a href="/categories/markdown/" itemprop="url" rel="index">
+                  <span itemprop="name">markdown</span>
                 </a>
               </span>
 
@@ -610,8 +581,8 @@ no encoding declared; see <span class="keyword">http</span>://python.org/dev/pep
           
             <span class="post-comments-count">
               &nbsp; | &nbsp;
-              <a href="/2015/09/10/三国进度条/#comments" itemprop="discussionUrl">
-                <span class="post-comments-count ds-thread-count" data-thread-key="2015/09/10/三国进度条/" itemprop="commentsCount"></span>
+              <a href="/2015/09/07/MarkDown语法规则/#comments" itemprop="discussionUrl">
+                <span class="post-comments-count ds-thread-count" data-thread-key="2015/09/07/MarkDown语法规则/" itemprop="commentsCount"></span>
               </a>
             </span>
           
@@ -626,18 +597,9 @@ no encoding declared; see <span class="keyword">http</span>://python.org/dev/pep
 
       
         
-          <span itemprop="articleBody">
-            
-            三国进度条
-三国进度条全屏地址
-
-进入游戏后，先选择一个进度，开始新游戏输入您的名字，然后点随机，数字代表的是您的属性，下面三个是您的初始武将，武将的属性在这时候是看不到的，但熟悉三国的话，相信你知道应该刷出哪些才是强力武将了。
-
-
-            
-          </span>
+          <p>Markdown是一种可以使用普通文本编辑器编写的标记语言，通过简单的标记语法，它可以使普通文本内容具有一定的格式。<br>
           <div class="post-more-link text-center">
-            <a class="btn" href="/2015/09/10/三国进度条/#more" rel="contents">
+            <a class="btn" href="/2015/09/07/MarkDown语法规则/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -697,7 +659,7 @@ no encoding declared; see <span class="keyword">http</span>://python.org/dev/pep
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">18</span>
+              <span class="site-state-item-count">16</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>

@@ -2,11 +2,9 @@
 <html class="theme-next use-motion theme-next-mist">
 <head>
   
-
 <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
-
 
 <meta http-equiv="Cache-Control" content="no-transform" />
 <meta http-equiv="Cache-Control" content="no-siteapp" />
@@ -14,51 +12,30 @@
 
 
 
-
-
-
-
   <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
-
-
 
 
 <link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.5.1"/>
 
-
-    <meta name="description" content="不卜个人博客，是一个记录博主学习和成长的个人博客站点。" />
-
+  <meta name="description" content="不卜个人博客，是一个JavaEE后台相关开发人员的个人博客站点，记录并分享了博主学习成长过程中的诸多问题和困惑！" />
 
 
   <meta name="keywords" content="python,乱码," />
 
 
 
-
-
   <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1" />
 
-
-<meta name="description" content="问题一描述：在python编写代码时，可能在运行时出现些中文字符解析不了
-File &quot;BeautifulSoup.py&quot;, line 21
-SyntaxError: Non-ASCII character &apos;\xe6&apos; in file BeautifulSoup.py on line 21, but
-no encoding declared; see http://python.org/dev/p">
+<meta name="description" content="乱码在哪种语言里都会出现，初学python会遇到很多莫名的乱码问题，这儿提供几种常见的解决python中文乱码的方法。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="python乱码">
 <meta property="og:url" content="http://kuku940.github.io/2015/09/13/python乱码/index.html">
 <meta property="og:site_name" content="不卜博客 - 不卜的个人博客站点">
-<meta property="og:description" content="问题一描述：在python编写代码时，可能在运行时出现些中文字符解析不了
-File &quot;BeautifulSoup.py&quot;, line 21
-SyntaxError: Non-ASCII character &apos;\xe6&apos; in file BeautifulSoup.py on line 21, but
-no encoding declared; see http://python.org/dev/p">
-<meta property="og:updated_time" content="2015-09-13T05:17:18.075Z">
+<meta property="og:description" content="乱码在哪种语言里都会出现，初学python会遇到很多莫名的乱码问题，这儿提供几种常见的解决python中文乱码的方法。">
+<meta property="og:updated_time" content="2015-11-21T08:35:17.663Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="python乱码">
-<meta name="twitter:description" content="问题一描述：在python编写代码时，可能在运行时出现些中文字符解析不了
-File &quot;BeautifulSoup.py&quot;, line 21
-SyntaxError: Non-ASCII character &apos;\xe6&apos; in file BeautifulSoup.py on line 21, but
-no encoding declared; see http://python.org/dev/p">
-
+<meta name="twitter:description" content="乱码在哪种语言里都会出现，初学python会遇到很多莫名的乱码问题，这儿提供几种常见的解决python中文乱码的方法。">
 
 <script type="text/javascript" id="hexo.configuration">
   var CONFIG = {
@@ -263,12 +240,12 @@ no encoding declared; see http://python.org/dev/p">
       
 
       
-        <span itemprop="articleBody"><h1 id="问题一">问题一</h1><p><strong>描述：</strong><br>在python编写代码时，可能在运行时出现些中文字符解析不了</p>
+        <span itemprop="articleBody"><p>乱码在哪种语言里都会出现，初学python会遇到很多莫名的乱码问题，这儿提供几种常见的解决python中文乱码的方法。<br><a id="more"></a></p>
+<h1 id="问题一">问题一</h1><p><strong>描述：</strong><br>在python编写代码时，可能在运行时出现些中文字符解析不了</p>
 <pre><code>File <span class="string">"BeautifulSoup.py"</span>, <span class="built_in">line</span> <span class="number">21</span>
 SyntaxError: Non-ASCII <span class="keyword">character</span> <span class="string">'\xe6'</span> <span class="operator">in</span> <span class="built_in">file</span> BeautifulSoup.py <span class="command"><span class="keyword">on</span> <span class="title">line</span> <span class="title">21</span>, <span class="title">but</span></span>
 no encoding declared; see <span class="keyword">http</span>://python.org/dev/peps/pep-<span class="number">0263</span>/ <span class="keyword">for</span> details
-</code></pre><a id="more"></a>
-<p><strong>解决方案：</strong><br>在编写python文件开始部分添加上：</p>
+</code></pre><p><strong>解决方案：</strong><br>在编写python文件开始部分添加上：</p>
 <pre><code><span class="preprocessor"># !/usr/bin/python</span>
 <span class="preprocessor"># -*- coding: utf-8 -*-</span>
 </code></pre><p><strong>注意：</strong><br>第二行代码：<code>#coding=utf-8</code>要添加在文件头的第一行或者第二行，否则不起效果</p>
@@ -394,7 +371,7 @@ sys.setdefaultencoding(<span class="string">'utf8'</span>)
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">18</span>
+              <span class="site-state-item-count">16</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>

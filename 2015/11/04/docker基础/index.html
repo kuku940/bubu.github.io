@@ -2,11 +2,9 @@
 <html class="theme-next use-motion theme-next-mist">
 <head>
   
-
 <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
-
 
 <meta http-equiv="Cache-Control" content="no-transform" />
 <meta http-equiv="Cache-Control" content="no-siteapp" />
@@ -14,59 +12,32 @@
 
 
 
-
-
-
-
   <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
-
-
 
 
 <link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.5.1"/>
 
-
-    <meta name="description" content="不卜个人博客，是一个记录博主学习和成长的个人博客站点。" />
-
+  <meta name="description" content="不卜个人博客，是一个JavaEE后台相关开发人员的个人博客站点，记录并分享了博主学习成长过程中的诸多问题和困惑！" />
 
 
   <meta name="keywords" content="docker,入门教程," />
 
 
 
-
-
   <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1" />
 
-
-<meta name="description" content="Docker基础命令
-docker version 查看docker版本
-docker info 查看docker是否正确安装
-sudo docker pull busybox 使用预先构建的镜像来创建一个镜像或者是容器
-BusyBox是最小的Linux系统，他提供了该系统的主要功能，不包含一些与GUN的相关功能和选项
-docker run busybox /bin/echo Hello Worl">
+<meta name="description" content="Docker 是一个开源的应用容器引擎，让开发者可以打包他们的应用以及依赖包到一个可移植的容器中，然后发布到任何流行的 Linux 机器上，也可以实现虚拟化。容器是完全使用沙箱机制，相互之间不会有任何接口（类似 iPhone 的 app）。几乎没有性能开销,可以很容易地在机器和数据中心中运行。最重要的是,他们不依赖于任何语言、框架包括系统。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Docker基础命令">
 <meta property="og:url" content="http://kuku940.github.io/2015/11/04/docker基础/index.html">
 <meta property="og:site_name" content="不卜博客 - 不卜的个人博客站点">
-<meta property="og:description" content="Docker基础命令
-docker version 查看docker版本
-docker info 查看docker是否正确安装
-sudo docker pull busybox 使用预先构建的镜像来创建一个镜像或者是容器
-BusyBox是最小的Linux系统，他提供了该系统的主要功能，不包含一些与GUN的相关功能和选项
-docker run busybox /bin/echo Hello Worl">
+<meta property="og:description" content="Docker 是一个开源的应用容器引擎，让开发者可以打包他们的应用以及依赖包到一个可移植的容器中，然后发布到任何流行的 Linux 机器上，也可以实现虚拟化。容器是完全使用沙箱机制，相互之间不会有任何接口（类似 iPhone 的 app）。几乎没有性能开销,可以很容易地在机器和数据中心中运行。最重要的是,他们不依赖于任何语言、框架包括系统。">
 <meta property="og:image" content="http://www.wenwenyun.com/uploads/allimg/140924/12222025G-3.png">
 <meta property="og:image" content="https://docs.docker.com/article-img/architecture.svg">
-<meta property="og:updated_time" content="2015-11-04T14:40:20.700Z">
+<meta property="og:updated_time" content="2015-11-21T08:29:20.325Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Docker基础命令">
-<meta name="twitter:description" content="Docker基础命令
-docker version 查看docker版本
-docker info 查看docker是否正确安装
-sudo docker pull busybox 使用预先构建的镜像来创建一个镜像或者是容器
-BusyBox是最小的Linux系统，他提供了该系统的主要功能，不包含一些与GUN的相关功能和选项
-docker run busybox /bin/echo Hello Worl">
-
+<meta name="twitter:description" content="Docker 是一个开源的应用容器引擎，让开发者可以打包他们的应用以及依赖包到一个可移植的容器中，然后发布到任何流行的 Linux 机器上，也可以实现虚拟化。容器是完全使用沙箱机制，相互之间不会有任何接口（类似 iPhone 的 app）。几乎没有性能开销,可以很容易地在机器和数据中心中运行。最重要的是,他们不依赖于任何语言、框架包括系统。">
 
 <script type="text/javascript" id="hexo.configuration">
   var CONFIG = {
@@ -271,7 +242,8 @@ docker run busybox /bin/echo Hello Worl">
       
 
       
-        <span itemprop="articleBody"><h1 id="Docker基础命令">Docker基础命令</h1><h2 id=""><img src="http://www.wenwenyun.com/uploads/allimg/140924/12222025G-3.png" alt="场景示例图"></h2><p><img src="https://docs.docker.com/article-img/architecture.svg" alt="123"></p>
+        <span itemprop="articleBody"><p>Docker 是一个开源的应用容器引擎，让开发者可以打包他们的应用以及依赖包到一个可移植的容器中，然后发布到任何流行的 Linux 机器上，也可以实现虚拟化。容器是完全使用沙箱机制，相互之间不会有任何接口（类似 iPhone 的 app）。几乎没有性能开销,可以很容易地在机器和数据中心中运行。最重要的是,他们不依赖于任何语言、框架包括系统。<br><a id="more"></a></p>
+<h1 id="Docker基础命令">Docker基础命令</h1><h2 id=""><img src="http://www.wenwenyun.com/uploads/allimg/140924/12222025G-3.png" alt="场景示例图"></h2><p><img src="https://docs.docker.com/article-img/architecture.svg" alt="123"></p>
 <p><code>docker version</code> 查看docker版本</p>
 <p><code>docker info</code> 查看docker是否正确安装</p>
 <p><code>sudo docker pull busybox</code> 使用预先构建的镜像来创建一个镜像或者是容器</p>
@@ -408,7 +380,7 @@ docker run busybox /bin/echo Hello Worl">
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">18</span>
+              <span class="site-state-item-count">16</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>

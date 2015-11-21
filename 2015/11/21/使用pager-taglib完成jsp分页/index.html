@@ -2,11 +2,9 @@
 <html class="theme-next use-motion theme-next-mist">
 <head>
   
-
 <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
-
 
 <meta http-equiv="Cache-Control" content="no-transform" />
 <meta http-equiv="Cache-Control" content="no-siteapp" />
@@ -14,43 +12,31 @@
 
 
 
-
-
-
-
   <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
-
-
 
 
 <link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.5.1"/>
 
-
-    <meta name="description" content="不卜个人博客，是一个记录博主学习和成长的个人博客站点。" />
-
+  <meta name="description" content="不卜个人博客，是一个JavaEE后台相关开发人员的个人博客站点，记录并分享了博主学习成长过程中的诸多问题和困惑！" />
 
 
   <meta name="keywords" content="分页," />
 
 
 
-
-
   <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1" />
 
-
-<meta name="description" content="导入jar包导入pager-taglib.jar文件,并进行buid path">
+<meta name="description" content="Pager-taglib 2.0 是一套分页标签库，可以灵活地实现多种不同风格的分页导航页面，并且可以很好的与服务器分页逻辑分离。这样一套标签库，你想你的分页效果怎样就能怎样。 pager-taglib,可以方便的帮我们完成分页的功能，当然大家不要担心他的效率，它支持每次从数据库中只取出要显示的数据,这样可以减少数据库的压力。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="使用pager-taglib完成jsp分页">
 <meta property="og:url" content="http://kuku940.github.io/2015/11/21/使用pager-taglib完成jsp分页/index.html">
 <meta property="og:site_name" content="不卜博客 - 不卜的个人博客站点">
-<meta property="og:description" content="导入jar包导入pager-taglib.jar文件,并进行buid path">
+<meta property="og:description" content="Pager-taglib 2.0 是一套分页标签库，可以灵活地实现多种不同风格的分页导航页面，并且可以很好的与服务器分页逻辑分离。这样一套标签库，你想你的分页效果怎样就能怎样。 pager-taglib,可以方便的帮我们完成分页的功能，当然大家不要担心他的效率，它支持每次从数据库中只取出要显示的数据,这样可以减少数据库的压力。">
 <meta property="og:image" content="http://7xljab.com1.z0.glb.clouddn.com/不卜个人博客/image/pager-taglib分页效果图.jpg">
-<meta property="og:updated_time" content="2015-11-21T05:51:32.343Z">
+<meta property="og:updated_time" content="2015-11-21T08:37:04.367Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="使用pager-taglib完成jsp分页">
-<meta name="twitter:description" content="导入jar包导入pager-taglib.jar文件,并进行buid path">
-
+<meta name="twitter:description" content="Pager-taglib 2.0 是一套分页标签库，可以灵活地实现多种不同风格的分页导航页面，并且可以很好的与服务器分页逻辑分离。这样一套标签库，你想你的分页效果怎样就能怎样。 pager-taglib,可以方便的帮我们完成分页的功能，当然大家不要担心他的效率，它支持每次从数据库中只取出要显示的数据,这样可以减少数据库的压力。">
 
 <script type="text/javascript" id="hexo.configuration">
   var CONFIG = {
@@ -255,7 +241,8 @@
       
 
       
-        <span itemprop="articleBody"><h1 id="导入jar包">导入jar包</h1><p>导入<a href="http://central.maven.org/maven2/jsptags/pager-taglib/2.0/pager-taglib-2.0.jar" target="_blank" rel="external">pager-taglib.jar</a>文件,并进行buid path<br><a id="more"></a></p>
+        <span itemprop="articleBody"><p>Pager-taglib 2.0 是一套分页标签库，可以灵活地实现多种不同风格的分页导航页面，并且可以很好的与服务器分页逻辑分离。这样一套标签库，你想你的分页效果怎样就能怎样。 pager-taglib,可以方便的帮我们完成分页的功能，当然大家不要担心他的效率，它支持每次从数据库中只取出要显示的数据,这样可以减少数据库的压力。<br><a id="more"></a></p>
+<h1 id="导入jar包">导入jar包</h1><p>导入<a href="http://central.maven.org/maven2/jsptags/pager-taglib/2.0/pager-taglib-2.0.jar" target="_blank" rel="external">pager-taglib.jar</a>文件,并进行buid path</p>
 <h1 id="DAO层代码">DAO层代码</h1><p>在BaseDao类中新建getListForPage方法，可以通过hibernate来解决分页问题</p>
 <pre><code><span class="comment">/**
  * 使用hql 语句进行操作
@@ -557,7 +544,7 @@ public <span class="type">String</span> list(<span class="type">Model</span> mod
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">18</span>
+              <span class="site-state-item-count">16</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>

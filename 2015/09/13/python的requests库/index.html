@@ -2,11 +2,9 @@
 <html class="theme-next use-motion theme-next-mist">
 <head>
   
-
 <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
-
 
 <meta http-equiv="Cache-Control" content="no-transform" />
 <meta http-equiv="Cache-Control" content="no-siteapp" />
@@ -14,54 +12,30 @@
 
 
 
-
-
-
-
   <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
-
-
 
 
 <link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.5.1"/>
 
-
-    <meta name="description" content="不卜个人博客，是一个记录博主学习和成长的个人博客站点。" />
-
+  <meta name="description" content="不卜个人博客，是一个JavaEE后台相关开发人员的个人博客站点，记录并分享了博主学习成长过程中的诸多问题和困惑！" />
 
 
   <meta name="keywords" content="python,python库,入门教程," />
 
 
 
-
-
   <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1" />
 
-
-<meta name="description" content="Python命令行简单示例&amp;gt;&amp;gt;&amp;gt; resp = requests.get(&apos;https://api.github.com/user&apos;, auth=(&apos;user&apos;, &apos;pass&apos;))
-&amp;gt;&amp;gt;&amp;gt; resp.status_code
-200
-&amp;gt;&amp;gt;&amp;gt; resp.headers[&apos;content-type&apos;]
-&apos;application/json; chars">
+<meta name="description" content="在HTTP相关处理中使用python是不必要的麻烦，这包括urllib2模块以巨大的复杂性代价获取综合性的功能。相比于urllib2,Kenneth Reitz的Requests模块更能简约的支持完整的简单用例。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="python的requests库">
 <meta property="og:url" content="http://kuku940.github.io/2015/09/13/python的requests库/index.html">
 <meta property="og:site_name" content="不卜博客 - 不卜的个人博客站点">
-<meta property="og:description" content="Python命令行简单示例&amp;gt;&amp;gt;&amp;gt; resp = requests.get(&apos;https://api.github.com/user&apos;, auth=(&apos;user&apos;, &apos;pass&apos;))
-&amp;gt;&amp;gt;&amp;gt; resp.status_code
-200
-&amp;gt;&amp;gt;&amp;gt; resp.headers[&apos;content-type&apos;]
-&apos;application/json; chars">
-<meta property="og:updated_time" content="2015-09-20T06:34:22.450Z">
+<meta property="og:description" content="在HTTP相关处理中使用python是不必要的麻烦，这包括urllib2模块以巨大的复杂性代价获取综合性的功能。相比于urllib2,Kenneth Reitz的Requests模块更能简约的支持完整的简单用例。">
+<meta property="og:updated_time" content="2015-11-21T08:33:39.263Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="python的requests库">
-<meta name="twitter:description" content="Python命令行简单示例&amp;gt;&amp;gt;&amp;gt; resp = requests.get(&apos;https://api.github.com/user&apos;, auth=(&apos;user&apos;, &apos;pass&apos;))
-&amp;gt;&amp;gt;&amp;gt; resp.status_code
-200
-&amp;gt;&amp;gt;&amp;gt; resp.headers[&apos;content-type&apos;]
-&apos;application/json; chars">
-
+<meta name="twitter:description" content="在HTTP相关处理中使用python是不必要的麻烦，这包括urllib2模块以巨大的复杂性代价获取综合性的功能。相比于urllib2,Kenneth Reitz的Requests模块更能简约的支持完整的简单用例。">
 
 <script type="text/javascript" id="hexo.configuration">
   var CONFIG = {
@@ -266,7 +240,8 @@
       
 
       
-        <span itemprop="articleBody"><h1 id="Python命令行简单示例">Python命令行简单示例</h1><pre><code><span class="prompt">&gt;&gt;&gt; </span>resp = requests.get(<span class="string">'https://api.github.com/user'</span>, auth=(<span class="string">'user'</span>, <span class="string">'pass'</span>))
+        <span itemprop="articleBody"><p>在HTTP相关处理中使用python是不必要的麻烦，这包括urllib2模块以巨大的复杂性代价获取综合性的功能。相比于urllib2,Kenneth Reitz的Requests模块更能简约的支持完整的简单用例。<br><a id="more"></a></p>
+<h1 id="Python命令行简单示例">Python命令行简单示例</h1><pre><code><span class="prompt">&gt;&gt;&gt; </span>resp = requests.get(<span class="string">'https://api.github.com/user'</span>, auth=(<span class="string">'user'</span>, <span class="string">'pass'</span>))
 <span class="prompt">&gt;&gt;&gt; </span>resp.status_code
 <span class="number">200</span>
 <span class="prompt">&gt;&gt;&gt; </span>resp.headers[<span class="string">'content-type'</span>]
@@ -277,8 +252,7 @@
 <span class="string">u'{"type":"User"...'</span>
 <span class="prompt">&gt;&gt;&gt; </span>resp.json()
 {<span class="string">u'private_gists'</span>: <span class="number">419</span>, <span class="string">u'total_private_repos'</span>: <span class="number">77</span>, ...}
-</code></pre><a id="more"></a>
-<h1 id="安装">安装</h1><p>使用<code>pip</code>或者<code>easy_install</code>安装<code>Requests</code></p>
+</code></pre><h1 id="安装">安装</h1><p>使用<code>pip</code>或者<code>easy_install</code>安装<code>Requests</code></p>
 <pre><code>pip <span class="keyword">install</span> requests
 easy_install requests
 </code></pre><h1 id="发送请求">发送请求</h1><p>使用Requests发送网络请求非常简单。</p>
@@ -867,7 +841,7 @@ Sounds great! I<span class="string">'ll get right on it.</span>
 
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2015/09/10/三国进度条/" rel="next">三国进度条</a>
+              <a href="/2015/09/07/MarkDown语法规则/" rel="next">MarkDown语法规则</a>
             
           </div>
         </div>
@@ -933,7 +907,7 @@ Sounds great! I<span class="string">'ll get right on it.</span>
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">18</span>
+              <span class="site-state-item-count">16</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
