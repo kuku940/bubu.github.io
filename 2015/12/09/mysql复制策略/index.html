@@ -1,0 +1,824 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+  
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1" />
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.5.1"/>
+
+  <meta name="keywords" content="mysql,备份,复制,不卜" />
+
+
+<meta name="description" content="架构变化的同时，业务也在不断的发展，可能很快就会发现，随着访问量的不断增加，拆分后的某个数据库压力越来越大，马上就要达到能力的瓶颈，数据库的架构不得不再次进行变更，这时通过mysql的复制策略来对系统进行扩展。通过数据库的复制策略，可以将一台mysql数据库服务器中的数据复制到其他的mysql数据库服务器上。当各台数据库服务器上都包含相同数据时，前端应用通过访问mysql集群中任意一台服务器，都能">
+<meta property="og:type" content="article">
+<meta property="og:title" content="mysql复制策略">
+<meta property="og:url" content="http://kuku940.github.io/2015/12/09/mysql复制策略/index.html">
+<meta property="og:site_name" content="不卜博客 - 不卜的个人博客站点">
+<meta property="og:description" content="架构变化的同时，业务也在不断的发展，可能很快就会发现，随着访问量的不断增加，拆分后的某个数据库压力越来越大，马上就要达到能力的瓶颈，数据库的架构不得不再次进行变更，这时通过mysql的复制策略来对系统进行扩展。通过数据库的复制策略，可以将一台mysql数据库服务器中的数据复制到其他的mysql数据库服务器上。当各台数据库服务器上都包含相同数据时，前端应用通过访问mysql集群中任意一台服务器，都能">
+<meta property="og:image" content="http://7xljab.com1.z0.glb.clouddn.com/不卜个人博客/image/mysql_master-slave.gif">
+<meta property="og:updated_time" content="2015-12-09T12:50:41.471Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="mysql复制策略">
+<meta name="twitter:description" content="架构变化的同时，业务也在不断的发展，可能很快就会发现，随着访问量的不断增加，拆分后的某个数据库压力越来越大，马上就要达到能力的瓶颈，数据库的架构不得不再次进行变更，这时通过mysql的复制策略来对系统进行扩展。通过数据库的复制策略，可以将一台mysql数据库服务器中的数据复制到其他的mysql数据库服务器上。当各台数据库服务器上都包含相同数据时，前端应用通过访问mysql集群中任意一台服务器，都能">
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'post'
+  };
+</script>
+
+  <title> mysql复制策略 | 不卜博客 - 不卜的个人博客站点 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+  
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?a1718d105ac5c566eeca9ca427859200";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-next-logo"></i>
+      </span>
+      <span class="site-title">不卜</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu menu-left">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-next-home"></i> <br />
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            <i class="menu-item-icon icon-next-categories"></i> <br />
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            <i class="menu-item-icon icon-next-about"></i> <br />
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-next-archives"></i> <br />
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon icon-next-tags"></i> <br />
+            标签
+          </a>
+        </li>
+      
+
+      
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <form class="site-search-form">
+    <input type="text" id="st-search-input" class="st-search-input st-default-search-input" />
+  </form>
+
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', 'szZeQCByKssqztmey91S','2.0.0');
+</script>
+
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content"> 
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              mysql复制策略
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2015-12-09T20:50:20+08:00" content="2015-12-09">
+            2015-12-09
+          </time>
+        </span>
+
+        
+          <span class="post-category" >
+            &nbsp; | &nbsp; 分类于
+            
+              <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                <a href="/categories/mysql/" itemprop="url" rel="index">
+                  <span itemprop="name">mysql</span>
+                </a>
+              </span>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+              &nbsp; | &nbsp;
+              <a href="/2015/12/09/mysql复制策略/#comments" itemprop="discussionUrl">
+                <span class="post-comments-count ds-thread-count" data-thread-key="2015/12/09/mysql复制策略/" itemprop="commentsCount"></span>
+              </a>
+            </span>
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><p>架构变化的同时，业务也在不断的发展，可能很快就会发现，随着访问量的不断增加，拆分后的某个数据库压力越来越大，马上就要达到能力的瓶颈，数据库的架构不得不再次进行变更，这时通过mysql的复制策略来对系统进行扩展。<br>通过数据库的复制策略，可以将一台mysql数据库服务器中的数据复制到其他的mysql数据库服务器上。当各台数据库服务器上都包含相同数据时，前端应用通过访问mysql集群中任意一台服务器，都能够读到相同的数据，这样每台mysql服务器所需要承担的负载就会大大降低。从而提高整个系统的承载能力，达到系统扩展的目的。<br><a id="more"></a></p>
+<h1 id="master-slave复制策略">master-slave复制策略</h1><p>要实现数据库的复制，需要开启Master服务端的Binary log。数据复制的过程实际上就是Slave从Master上获取Binary log的过程，然后再在本地镜像的执行日志中记录的操作。由于复制过程是异步的，因此Master和Slave之间的数据有可能存在延迟的现象，此时只能够保证数据最终的一致性。</p>
+<h2 id="主从复制原理">主从复制原理</h2><p>整体上来说，复制有3个步骤：</p>
+<pre><code>(<span class="number">1</span>)master将改变记录到二进制日志(<span class="built_in">binary</span> <span class="built_in">log</span>)中（这些记录叫做二进制日志事件，<span class="built_in">binary</span> <span class="built_in">log</span> events）；
+(<span class="number">2</span>)slave将master的<span class="built_in">binary</span> <span class="built_in">log</span> events拷贝到它的中继日志(relay <span class="built_in">log</span>)；
+(<span class="number">3</span>)slave重做中继日志中的事件，将改变反映它自己的数据。
+</code></pre><p><img src="http://7xljab.com1.z0.glb.clouddn.com/不卜个人博客/image/mysql_master-slave.gif" alt=""><br>Mysql的复制可以基于一条语句（statement Level）,也可以基于一条记录（row level）。通过row level的复制，可以不记录执行的sql语句相关联的上下文信息，只需要记录数据变更的内容即可。但由于每行的变更都会被记录，这样可能会产生大量的日志内容，而使用statement level在只是记录修改数据的sql语句，减少binary log的日志量，节约了I/O成本。但是，为了让sql语句在Slave也能正确的执行，它还需要记录sql执行的上下文信息，以保证所有sql语句在Slave执行时能够得到在Master端执行的相同的结果。</p>
+<h2 id="mysql的master-slaves配置">mysql的master-slaves配置</h2><h3 id="环境说明">环境说明</h3><p>数据库：mysql 5.5<br>系统：CentOS 6.5<br>在每台机器上面安装mysql 5.5的服务端和客户端</p>
+<h3 id="配置">配置</h3><p>一般主从搭建的步骤如下：</p>
+<pre><code><span class="number">1</span>、创建主库、从库
+<span class="number">2</span>、dump主库数据到从库
+<span class="number">3</span>、修改主库、从库配置
+<span class="number">4</span>、主库grant user,从库start slave
+</code></pre><h4 id="Master配置">Master配置</h4><p>在[mysqld]下面添加如下配置信息：</p>
+<pre><code>server-id     =   <span class="number">1</span>           <span class="preprocessor"># 服务ID</span>
+<span class="built_in">log</span>-bin       =   mysql-bin   <span class="preprocessor"># 开启二进制日志（见附录）</span>
+binlog-<span class="keyword">do</span>-db  =   test        <span class="preprocessor"># 需要同步的数据库</span>
+binlog-ignore-db=mysql        <span class="preprocessor"># 被忽略的数据库</span>
+binlog-ignore-db=information-schema <span class="preprocessor"># 被忽略的数据库</span>
+</code></pre><p>为slave添加登陆master的账号：</p>
+<pre><code>mysql&gt; grant replication slave,replication client <span class="keyword">on</span> *<span class="built_in">.</span>* <span class="keyword">to</span> <span class="string">'账号'</span>@<span class="string">'从服务器IP地址'</span> identified <span class="keyword">by</span> <span class="string">'密码'</span>;
+</code></pre><p>保存后重启mysql服务，<code>service mysql restart</code>,然后进入mysql命令行查看master状态：</p>
+<pre><code>mysql&gt; show master status\G;
+<span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span> 1. row <span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span>
+File: mysql-bin.000001
+Position: 106
+Binlog_Do_DB: test
+Binlog_Ignore_DB: mysql,information-schema
+1 row in set (0.00 sec)
+</code></pre><p>可以查看到File为mysql-bin.000001；Position为106,这在后面slave数据还原有作用！</p>
+<h4 id="Slave配置">Slave配置</h4><p>在[mysqld]下面添加如下配置信息：</p>
+<pre><code>server-id = 2        # 服务ID
+replicate-<span class="operator"><span class="keyword">do</span>-db=<span class="keyword">test</span> # 同步数据库
+<span class="keyword">replicate</span>-<span class="keyword">ignore</span>-db=mysql # 被忽略的数据库
+<span class="keyword">replicate</span>-<span class="keyword">ignore</span>-db=infomation-<span class="keyword">schema</span> # 被忽略的数据库</span>
+</code></pre><p>在5.1之后废弃了如下的写法：</p>
+<pre><code>master-host=<span class="number">192.168</span><span class="number">.1</span><span class="number">.199</span>
+master-user= slave1
+master-password=slave1    
+master-port=<span class="number">3306</span>
+</code></pre><p>使用如下的写法：</p>
+<pre><code><span class="operator"><span class="keyword">change</span> <span class="keyword">master</span> <span class="keyword">to</span> master_host=<span class="string">'192.168.83.61'</span>, master_user=<span class="string">'slave1'</span>, master_password=<span class="string">'slave1'</span>;</span>
+</code></pre><p>如果需要先使用mysqldump导出数据，想从master的指定位置还原的话，就要先锁定master数据库，导入sql,然后使用如下的命令，并填入master服务器二进制索引文件的名称和pos值：<br>    change master to master_host=’192.168.83.61’,master_post=3306,master_user=’slave1’, master_password=’slave1’,master_log_file=’mysql-bin.000001’,master_log_pos=106;</p>
+<p>这样就可以启动从服务器，并查看状态</p>
+<pre><code><span class="operator"><span class="keyword">start</span> <span class="keyword">slave</span>;</span>
+<span class="operator"><span class="keyword">show</span> <span class="keyword">slave</span> <span class="keyword">status</span>\<span class="keyword">G</span>;</span>
+</code></pre><p>如果查看显示一下两个变量都是yes表示主从运行正常</p>
+<pre><code>Slave_IO_Running：连接到主库，并读取主库的日志到本地，生成本地日志文件
+<span class="label">Slave_SQL_Running:</span>读取本地日志文件，并执行日志里的SQL命令。
+</code></pre><p>接下来就可在主数据库更新数据然后就可以在从库中查看数据是否同步成功</p>
+<h3 id="使用mysqldump来备份和还原数据">使用mysqldump来备份和还原数据</h3><pre><code># 先锁表，然后备份，还原，解锁表
+
+# mysqldump备份
+mysqldump -<span class="keyword">u</span>用户名 -p密码 -<span class="keyword">h</span>主机 数据库名 &gt; 导出路径
+mysqldump -uroot -p123456 -hlocalhost <span class="keyword">test</span> &gt; /home/mysql/<span class="keyword">test</span>.sql
+mysqldump -<span class="keyword">u</span>用户名 -p密码 -<span class="keyword">h</span>主机 数据库名 表名 &gt; 导出路径
+
+## 导出一个数据库结构
+mysqldump -<span class="keyword">u</span>用户名 -p密码 -<span class="keyword">h</span>主机 数据库名 --<span class="keyword">no</span>-data --add-<span class="keyword">drop</span>-database --add-<span class="keyword">drop</span>-<span class="keyword">table</span> smgp_apps_wcnc &gt; 导出路径 
+### --<span class="keyword">no</span>-data:不dump数据库的数据，--add-<span class="keyword">drop</span>-database：创建数据库之前加一个<span class="keyword">drop</span> database；--add-<span class="keyword">drop</span>-<span class="keyword">table</span> 在每个create语句之前增加一个<span class="keyword">drop</span> <span class="keyword">table</span> 
+
+# 还原数据库
+## 未进入数据库
+mysql -<span class="keyword">u</span>用户名 -p密码 -<span class="keyword">h</span>主机 &lt; /home/mysql/<span class="keyword">test</span>.sql
+mysqldump -<span class="keyword">u</span>用户名 -p密码 -<span class="keyword">h</span>主机 数据库名 &lt; 导入路径
+## 进入数据库
+source /home/mysql/<span class="keyword">test</span>.sql
+</code></pre><h1 id="master-master复制策略">master-master复制策略</h1><p>Master-Slaves复制架构存在一个问题，即所谓的单节点故障。当Master宕机时，系统将无法写入，而在某些特定的场景下，也可能需要Master停机，以便进行系统维护，优化或者升级。同样的道理，Master体积将会导致整个系统都无法写入，知道Master恢复，大部分情况下这显然是难以接受的，为了尽可能低系统停止写入的时间，最佳的方式就是Dual-Master架构，即Master-Master架构。</p>
+<h2 id="创建同步用户">创建同步用户</h2><p>master1上：</p>
+<pre><code><span class="operator"><span class="keyword">grant</span> <span class="keyword">replication</span> <span class="keyword">slave</span>,<span class="keyword">replication</span> <span class="keyword">client</span> <span class="keyword">on</span> *.* <span class="keyword">to</span> <span class="string">'账号'</span>@<span class="string">'master2IP'</span> <span class="keyword">identified</span> <span class="keyword">by</span> <span class="string">'密码'</span>;</span>
+</code></pre><p>master2上;</p>
+<pre><code><span class="operator"><span class="keyword">grant</span> <span class="keyword">replication</span> <span class="keyword">slave</span>,<span class="keyword">replication</span> <span class="keyword">client</span> <span class="keyword">on</span> *.* <span class="keyword">to</span> <span class="string">'账号'</span>@<span class="string">'master1IP'</span> <span class="keyword">identified</span> <span class="keyword">by</span> <span class="string">'密码'</span>;</span>
+</code></pre><p>使用<code>select host,user from mysql.user</code>来查询同步用户是否创建成功！</p>
+<h2 id="修改配置文件">修改配置文件</h2><p>master1配置文件如下：</p>
+<pre><code>[mysqld]
+datadir=/var/lib/mysql
+socket=/var/lib/mysql/mysql.sock
+server-id=<span class="number">1</span>
+<span class="built_in">log</span>-bin = mysql_bin
+port=<span class="number">3306</span>
+
+<span class="preprocessor">#master-maser need add</span>
+<span class="built_in">log</span>-slave-updates
+sync_binlog=<span class="number">1</span>
+auto_increment_offset=<span class="number">1</span>
+auto_increment_increment=<span class="number">2</span>
+<span class="preprocessor">#replicate-do-db = test</span>
+<span class="preprocessor">#replicate-ignore-db = mysql,information_schema</span>
+</code></pre><p>master2配置文件如下：</p>
+<pre><code>[mysqld]
+datadir=/var/lib/mysql
+socket=/var/lib/mysql/mysql.sock
+user=mysql
+innodb_file_per_table
+server-id=2
+#relay-log-<span class="operator"><span class="keyword">purge</span>=<span class="number">1</span>
+<span class="keyword">read</span>-<span class="keyword">only</span>=<span class="number">1</span> # <span class="number">0</span> <span class="keyword">read</span>/write <span class="number">1</span> <span class="keyword">read</span> <span class="keyword">only</span>.
+<span class="keyword">log</span>-<span class="keyword">bin</span>
+
+#<span class="keyword">master</span>-<span class="keyword">master</span> need <span class="keyword">add</span>
+#<span class="keyword">binlog</span>-<span class="keyword">do</span>-db = <span class="keyword">test</span>
+#<span class="keyword">binlog</span>-<span class="keyword">ignore</span>-db=mysql
+<span class="keyword">log</span>-<span class="keyword">slave</span>-updates
+sync_binlog=<span class="number">1</span>
+auto_increment_offset=<span class="number">2</span>
+auto_increment_increment=<span class="number">2</span></span>
+</code></pre><p>重启服务器上面的mysql server服务器</p>
+<h2 id="查看服务器状态">查看服务器状态</h2><p>master1查看服务器状态：</p>
+<pre><code>mysql&gt;flush tables with read lock;
+<span class="header">mysql&gt; show master status;
++------------------------+----------+--------------+------------------+-------------------+</span>
+<span class="header">| File                   | Position | Binlog_Do_DB | Binlog_Ignore_DB | Executed_Gtid_Set |
++------------------------+----------+--------------+------------------+-------------------+</span>
+<span class="header">| mysqlmaster-bin.000001 |      128 |              |                  |                   |
++------------------------+----------+--------------+------------------+-------------------+</span>
+1 row in set (0.00 sec)
+mysql&gt;unlock tables;
+</code></pre><p>master2查看服务器状态：</p>
+<pre><code>mysql&gt;flush tables with read lock;
+<span class="header">mysql&gt; show master status;
++-----------------------+----------+--------------+------------------+-------------------+</span>
+<span class="header">| File                  | Position | Binlog_Do_DB | Binlog_Ignore_DB | Executed_Gtid_Set |
++-----------------------+----------+--------------+------------------+-------------------+</span>
+<span class="header">| mysqlslave-bin.000001 |      334 |              |                  |                   |
++-----------------------+----------+--------------+------------------+-------------------+</span>
+1 row in set (0.00 sec)
+mysql&gt;unlock tables;
+</code></pre><p>注：<br>这里锁表和解锁的目的是为了生产环境中不让进新的数据，好让从服务器定位同步位置。<br>如果主数据库本来就有数据的情况下，在锁表之后还需要备份主服务器的数据库，再恢复到从服务器的过程，使主从数据库数据一致，再做复制。<br>由于我们是新安装的数据库，主从服务器的数据是一致的，因此可忽略锁表、备份恢复、解锁等步骤。 </p>
+<h2 id="指定同步位置">指定同步位置</h2><p>master1设置同步位置:</p>
+<pre><code><span class="operator"><span class="keyword">change</span> <span class="keyword">master</span> <span class="keyword">to</span> master_host=<span class="string">'192.168.1.200'</span>,master_user=<span class="string">'xiaoyu'</span>, master_password=<span class="string">'xiaode'</span>,master_log_file=<span class="string">'mysql-bin.000002'</span>,master_log_pos=<span class="number">107</span>;</span>
+</code></pre><p>master2设置同步位置：</p>
+<pre><code><span class="operator"><span class="keyword">change</span> <span class="keyword">master</span> <span class="keyword">to</span> master_host=<span class="string">'192.168.1.177'</span>,master_user=<span class="string">'xiaoyu'</span>, master_password=<span class="string">'xiaode'</span>,master_log_file=<span class="string">'mysql-bin.000001'</span>,master_log_pos=<span class="number">364</span>;</span>
+</code></pre><h2 id="启动从服务器进程">启动从服务器进程</h2><p>master1启动并查看状态：</p>
+<pre><code>mysql&gt; start slave<span class="comment">;</span>
+mysql&gt; show slave status\G<span class="comment">;</span>
+</code></pre><p>master2启动并查看状态：</p>
+<pre><code>mysql&gt; start slave<span class="comment">;</span>
+mysql&gt; show slave status\G<span class="comment">;</span>
+</code></pre><p>查看进程状态：</p>
+<pre><code>mysql&gt; show <span class="built_in">processlist</span>\G<span class="comment">;</span>
+</code></pre><h2 id="Dual-Master同步测试">Dual-Master同步测试</h2><p>如果分别从两个数据上面增删改都可以同步，两边数据一致的话，说明Dual-Master同步配置成功！</p>
+<h1 id="附录">附录</h1><h2 id="log_bin日志">log_bin日志</h2><p>my.conf文件中的[mysqld]标签下的log_bin指定日志文件，如果不提供文件名，mysql将自己产生缺省文件名。mysql会在文件名后面自动添加数字引，每次启动服务时，都会重新生成一个新的二进制文件。</p>
+<p>此外，使用log-bin-index可以指定索引文件；<br>使用binlog-do-db可以指定记录的数据库；<br>使用binlog-ignore-db可以指定不记录的数据库。  </p>
+<p>注意的是：binlog-do-db和binlog-ignore-db一次只指定一个数据库，指定多个数据库需要多个语句。<br>而且，MySQL会将所有的数据库名称改成小写，在指定数据库时必须全部使用小写名字，否则不会起作用。  </p>
+<p>以后对数据库每做的一次操作，都会在binlog中有所记录。</p>
+<h2 id="master-master架构主键冲突">master-master架构主键冲突</h2><p>如果数据库id需要自增长的话，且业务要求id可以不连续的话，可以设置如下的两个参数，保证一个数据库是奇数增长，一个数据库是偶数增长，这样两者就不会出现主键冲突的问题了</p>
+<pre><code>主<span class="number">1</span>： 
+<span class="keyword">auto</span>-increment-increment=<span class="number">2</span> 
+<span class="keyword">auto</span>-increment-offset=<span class="number">1</span> 
+主<span class="number">2</span>： 
+<span class="keyword">auto</span>-increment-increment=<span class="number">2</span> 
+<span class="keyword">auto</span>-increment-offset=<span class="number">2</span>
+</code></pre><h1 id="参考">参考</h1><p><a href="http://www.open-open.com/lib/view/open1373874692544.html#_label0" target="_blank" rel="external">MySQL主从复制原理以及架构</a><br><a href="http://www.linuxidc.com/Linux/2014-10/108435.htm" target="_blank" rel="external">MySQL 5.5.40实现一主多从 One-Master muil-slave</a><br><a href="http://www.canway.net/Original/0F92492015.html" target="_blank" rel="external">MySQL Dual Master环境配置（一）</a><br><a href="http://www.canway.net/Original/shujuku/0F92502015.html" target="_blank" rel="external">MySQL Dual Master环境配置（二）</a></p>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/mysql/" rel="tag">#mysql</a>
+          
+            <a href="/tags/备份/" rel="tag">#备份</a>
+          
+            <a href="/tags/复制/" rel="tag">#复制</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/12/08/linux下安装mysql数据库/" rel="next">linux安装mysql数据库</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+ </div>
+
+        
+
+        
+          <div class="comments" id="comments">
+            
+              <div class="ds-thread" data-thread-key="2015/12/09/mysql复制策略/"
+                   data-title="mysql复制策略" data-url="http://kuku940.github.io/2015/12/09/mysql复制策略/">
+              </div>
+            
+          </div>
+        
+      </div>
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点简介
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="http://7xljab.com1.z0.glb.clouddn.com/博客|个人博客|不卜个人博客|不卜" alt="不卜" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">不卜</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description">善易者不卜</p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">19</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            <a href="/categories">
+              <span class="site-state-item-count">12</span>
+              <span class="site-state-item-name">分类</span>
+              </a>
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">33</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/kuku940" target="_blank">GitHub</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.zhihu.com/people/roingeek" target="_blank">ZhiHu</a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+            <p class="site-author-name">友情链接</p>
+            
+              <span class="links-of-author-item">
+              <a href="http://zhumang.top/" target="_blank">竹芒</a>
+              </span>
+            
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#master-slave复制策略"><span class="nav-number">1.</span> <span class="nav-text">master-slave复制策略</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#主从复制原理"><span class="nav-number">1.1.</span> <span class="nav-text">主从复制原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mysql的master-slaves配置"><span class="nav-number">1.2.</span> <span class="nav-text">mysql的master-slaves配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#环境说明"><span class="nav-number">1.2.1.</span> <span class="nav-text">环境说明</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#配置"><span class="nav-number">1.2.2.</span> <span class="nav-text">配置</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Master配置"><span class="nav-number">1.2.2.1.</span> <span class="nav-text">Master配置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Slave配置"><span class="nav-number">1.2.2.2.</span> <span class="nav-text">Slave配置</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用mysqldump来备份和还原数据"><span class="nav-number">1.2.3.</span> <span class="nav-text">使用mysqldump来备份和还原数据</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#master-master复制策略"><span class="nav-number">2.</span> <span class="nav-text">master-master复制策略</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#创建同步用户"><span class="nav-number">2.1.</span> <span class="nav-text">创建同步用户</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#修改配置文件"><span class="nav-number">2.2.</span> <span class="nav-text">修改配置文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#查看服务器状态"><span class="nav-number">2.3.</span> <span class="nav-text">查看服务器状态</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#指定同步位置"><span class="nav-number">2.4.</span> <span class="nav-text">指定同步位置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#启动从服务器进程"><span class="nav-number">2.5.</span> <span class="nav-text">启动从服务器进程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Dual-Master同步测试"><span class="nav-number">2.6.</span> <span class="nav-text">Dual-Master同步测试</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#附录"><span class="nav-number">3.</span> <span class="nav-text">附录</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#log_bin日志"><span class="nav-number">3.1.</span> <span class="nav-text">log_bin日志</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#master-master架构主键冲突"><span class="nav-number">3.2.</span> <span class="nav-text">master-master架构主键冲突</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考"><span class="nav-number">4.</span> <span class="nav-text">参考</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner"> <div class="copyright" >
+  
+  &copy; &nbsp; 
+  <span itemprop="copyrightYear">2015</span>
+  <span class="with-love">
+    <i class="icon-next-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">不卜</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 搭建
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+ </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"roingeek"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+    
+     
+
+    
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.5.1"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.5.1"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.5.1" id="motion.global"></script>
+
+
+
+
+  <script type="text/javascript" src="/js/nav-toggle.js?v=0.4.5.1"></script>
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.5.1" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      var $indicator = $(indicator);
+      var opacity = action === 'show' ? 0.4 : 0;
+      $indicator.velocity ?
+        $indicator.velocity('stop').velocity({
+          opacity: opacity
+        }, { duration: 100 }) :
+        $indicator.stop().animate({
+          opacity: opacity
+        }, 100);
+    }
+
+  });
+</script>
+
+<script type="text/javascript" id="sidebar.nav">
+  $(document).ready(function () {
+    var html = $('html');
+    var TAB_ANIMATE_DURATION = 200;
+    var hasVelocity = $.isFunction(html.velocity);
+
+    $('.sidebar-nav li').on('click', function () {
+      var item = $(this);
+      var activeTabClassName = 'sidebar-nav-active';
+      var activePanelClassName = 'sidebar-panel-active';
+      if (item.hasClass(activeTabClassName)) {
+        return;
+      }
+
+      var currentTarget = $('.' + activePanelClassName);
+      var target = $('.' + item.data('target'));
+
+      hasVelocity ?
+        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
+            .addClass(activePanelClassName);
+        }) :
+        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
+          currentTarget.hide();
+          target
+            .stop()
+            .css({'opacity': 0, 'display': 'block'})
+            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
+              currentTarget.removeClass(activePanelClassName);
+              target.addClass(activePanelClassName);
+            });
+        });
+
+      item.siblings().removeClass(activeTabClassName);
+      item.addClass(activeTabClassName);
+    });
+
+    $('.post-toc a').on('click', function (e) {
+      e.preventDefault();
+      var targetSelector = escapeSelector(this.getAttribute('href'));
+      var offset = $(targetSelector).offset().top;
+      hasVelocity ?
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        }) :
+        $('html, body').stop().animate({
+          scrollTop: offset
+        }, 500);
+    });
+
+    // Expand sidebar on post detail page by default, when post has a toc.
+    var $tocContent = $('.post-toc-content');
+    if (isDesktop() && CONFIG.sidebar === 'post') {
+      if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+        displaySidebar();
+      }
+    }
+  });
+</script>
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+      if (isMobile()) {
+        FastClick.attach(document.body);
+      }
+    });
+  </script>
+
+  
+
+  
+  
+
+<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"1","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"16"},"slide":{"type":"slide","bdImg":"3","bdPos":"left","bdTop":"250"}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+
+
+
+  
+  <script type="text/javascript" src="/js/lazyload.js"></script>
+  <script type="text/javascript">
+    $(function () {
+      $("#posts").find('img').lazyload({
+        placeholder: "/images/loading.gif",
+        effect: "fadeIn"
+      });
+    });
+  </script>
+</body>
+</html>
