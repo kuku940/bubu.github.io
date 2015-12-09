@@ -30,7 +30,7 @@
 <meta property="og:site_name" content="不卜博客 - 不卜的个人博客站点">
 <meta property="og:description" content="架构变化的同时，业务也在不断的发展，可能很快就会发现，随着访问量的不断增加，拆分后的某个数据库压力越来越大，马上就要达到能力的瓶颈，数据库的架构不得不再次进行变更，这时通过mysql的复制策略来对系统进行扩展。通过数据库的复制策略，可以将一台mysql数据库服务器中的数据复制到其他的mysql数据库服务器上。当各台数据库服务器上都包含相同数据时，前端应用通过访问mysql集群中任意一台服务器，都能">
 <meta property="og:image" content="http://7xljab.com1.z0.glb.clouddn.com/不卜个人博客/image/mysql_master-slave.gif">
-<meta property="og:updated_time" content="2015-12-09T12:50:41.471Z">
+<meta property="og:updated_time" content="2015-12-09T13:05:29.065Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="mysql复制策略">
 <meta name="twitter:description" content="架构变化的同时，业务也在不断的发展，可能很快就会发现，随着访问量的不断增加，拆分后的某个数据库压力越来越大，马上就要达到能力的瓶颈，数据库的架构不得不再次进行变更，这时通过mysql的复制策略来对系统进行扩展。通过数据库的复制策略，可以将一台mysql数据库服务器中的数据复制到其他的mysql数据库服务器上。当各台数据库服务器上都包含相同数据时，前端应用通过访问mysql集群中任意一台服务器，都能">
@@ -280,8 +280,9 @@ master-password=slave1
 master-port=<span class="number">3306</span>
 </code></pre><p>使用如下的写法：</p>
 <pre><code><span class="operator"><span class="keyword">change</span> <span class="keyword">master</span> <span class="keyword">to</span> master_host=<span class="string">'192.168.83.61'</span>, master_user=<span class="string">'slave1'</span>, master_password=<span class="string">'slave1'</span>;</span>
-</code></pre><p>如果需要先使用mysqldump导出数据，想从master的指定位置还原的话，就要先锁定master数据库，导入sql,然后使用如下的命令，并填入master服务器二进制索引文件的名称和pos值：<br>    change master to master_host=’192.168.83.61’,master_post=3306,master_user=’slave1’, master_password=’slave1’,master_log_file=’mysql-bin.000001’,master_log_pos=106;</p>
-<p>这样就可以启动从服务器，并查看状态</p>
+</code></pre><p>如果需要先使用mysqldump导出数据，想从master的指定位置还原的话，就要先锁定master数据库，导入sql,然后使用如下的命令，并填入master服务器二进制索引文件的名称和pos值：</p>
+<pre><code><span class="operator"><span class="keyword">change</span> <span class="keyword">master</span> <span class="keyword">to</span> master_host=<span class="string">'192.168.83.61'</span>,master_post=<span class="number">3306</span>,master_user=<span class="string">'slave1'</span>, master_password=<span class="string">'slave1'</span>,master_log_file=<span class="string">'mysql-bin.000001'</span>,master_log_pos=<span class="number">106</span>;</span>
+</code></pre><p>这样就可以启动从服务器，并查看状态</p>
 <pre><code><span class="operator"><span class="keyword">start</span> <span class="keyword">slave</span>;</span>
 <span class="operator"><span class="keyword">show</span> <span class="keyword">slave</span> <span class="keyword">status</span>\<span class="keyword">G</span>;</span>
 </code></pre><p>如果查看显示一下两个变量都是yes表示主从运行正常</p>
