@@ -1,0 +1,1140 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+  
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1" />
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.5.1"/>
+
+  <meta name="keywords" content="一级缓存,二级缓存,查询缓存,不卜" />
+
+
+<meta name="description" content="在本篇随笔里将会分析一下hibernate的缓存机制，包括一级缓存(session级别)、二级缓存(sessionFactory级别)以及查询缓存，当然还要讨论下我们的N+1的问题。随笔虽长，但我相信看完的朋友绝对能对hibernate的 N+1问题以及缓存有更深的了解。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="hibernate缓存机制-转载">
+<meta property="og:url" content="http://kuku940.github.io/2015/12/15/hibernate缓存机制-转载/index.html">
+<meta property="og:site_name" content="不卜博客 - 不卜的个人博客站点">
+<meta property="og:description" content="在本篇随笔里将会分析一下hibernate的缓存机制，包括一级缓存(session级别)、二级缓存(sessionFactory级别)以及查询缓存，当然还要讨论下我们的N+1的问题。随笔虽长，但我相信看完的朋友绝对能对hibernate的 N+1问题以及缓存有更深的了解。">
+<meta property="og:updated_time" content="2015-12-15T15:53:07.663Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="hibernate缓存机制-转载">
+<meta name="twitter:description" content="在本篇随笔里将会分析一下hibernate的缓存机制，包括一级缓存(session级别)、二级缓存(sessionFactory级别)以及查询缓存，当然还要讨论下我们的N+1的问题。随笔虽长，但我相信看完的朋友绝对能对hibernate的 N+1问题以及缓存有更深的了解。">
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'post'
+  };
+</script>
+
+  <title> hibernate缓存机制-转载 | 不卜博客 - 不卜的个人博客站点 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+  
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?a1718d105ac5c566eeca9ca427859200";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-next-logo"></i>
+      </span>
+      <span class="site-title">不卜</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu menu-left">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-next-home"></i> <br />
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            <i class="menu-item-icon icon-next-categories"></i> <br />
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            <i class="menu-item-icon icon-next-about"></i> <br />
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-next-archives"></i> <br />
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon icon-next-tags"></i> <br />
+            标签
+          </a>
+        </li>
+      
+
+      
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <form class="site-search-form">
+    <input type="text" id="st-search-input" class="st-search-input st-default-search-input" />
+  </form>
+
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', 'szZeQCByKssqztmey91S','2.0.0');
+</script>
+
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content"> 
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              hibernate缓存机制-转载
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2015-12-15T20:50:20+08:00" content="2015-12-15">
+            2015-12-15
+          </time>
+        </span>
+
+        
+          <span class="post-category" >
+            &nbsp; | &nbsp; 分类于
+            
+              <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                <a href="/categories/hibernate/" itemprop="url" rel="index">
+                  <span itemprop="name">hibernate</span>
+                </a>
+              </span>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+              &nbsp; | &nbsp;
+              <a href="/2015/12/15/hibernate缓存机制-转载/#comments" itemprop="discussionUrl">
+                <span class="post-comments-count ds-thread-count" data-thread-key="2015/12/15/hibernate缓存机制-转载/" itemprop="commentsCount"></span>
+              </a>
+            </span>
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><p>在本篇随笔里将会分析一下hibernate的缓存机制，包括一级缓存(session级别)、二级缓存(sessionFactory级别)以及查询缓存，当然还要讨论下我们的N+1的问题。<br>随笔虽长，但我相信看完的朋友绝对能对hibernate的 N+1问题以及缓存有更深的了解。<br><a id="more"></a></p>
+<h1 id="N+1问题">N+1问题</h1><p>首先我们来探讨一下N+1的问题，我们先通过一个例子来看一下，什么是N+1问题：<br>list()获得对象：</p>
+<pre><code>// 此时会发出一条sql，将<span class="number">30</span>个学生全部查询出来
+<span class="type">List</span>&lt;<span class="type">Student</span>&gt; ls = (<span class="type">List</span>&lt;<span class="type">Student</span>&gt;)session.createQuery(<span class="string">"from Student"</span>)
+        .setFirstResult(<span class="number">0</span>).setMaxResults(<span class="number">30</span>).list();
+<span class="type">Iterator</span>&lt;<span class="type">Student</span>&gt; stus = ls.<span class="keyword">iterator</span>();            
+<span class="keyword">for</span>(;stus.hasNext();){
+    <span class="type">Student</span> stu = (<span class="type">Student</span>)stus.next();
+    <span class="type">System</span>.<span class="keyword">out</span>.println(stu.getName());
+}
+</code></pre><p>如果通过list()方法来获得对象，毫无疑问，hibernate会发出一条sql语句，将所有的对象查询出来，这点相信大家都能理解  </p>
+<blockquote>
+<p>Hibernate: select student0<em>.id as id2</em>, student0<em>.name as name2</em>, student0<em>.rid as rid2</em>, student0<em>.sex as sex2</em> from t<em>student student0</em> limit ?  </p>
+</blockquote>
+<p>那么，我们再来看看iterator()这种情况<br>iterator()获得对象</p>
+<pre><code>/**
+ * 如果使用<span class="keyword">iterator</span>方法返回列表，对于hibernate而言，它仅仅只是发出取id列表的sql
+ * 在查询相应的具体的某个学生信息时，会发出相应的<span class="type">SQL</span>去取学生信息
+ * 这就是典型的N+<span class="number">1</span>问题
+ * 存在<span class="keyword">iterator</span>的原因是，有可能会在一个session中查询两次数据，如果使用list每一次都会把所有的对象查询上来
+ * 而是要<span class="keyword">iterator</span>仅仅只会查询id，此时所有的对象已经存储在一级缓存(session的缓存)中，可以直接获取
+ */
+<span class="type">Iterator</span>&lt;<span class="type">Student</span>&gt; stus = (<span class="type">Iterator</span>&lt;<span class="type">Student</span>&gt;)session.createQuery(<span class="string">"from Student"</span>)
+            .setFirstResult(<span class="number">0</span>).setMaxResults(<span class="number">30</span>).iterate();            
+<span class="keyword">for</span>(;stus.hasNext();){
+    <span class="type">Student</span> stu = (<span class="type">Student</span>)stus.next();
+    <span class="type">System</span>.<span class="keyword">out</span>.println(stu.getName());
+}
+</code></pre><p>在执行完上述的测试用例后，我们来看看控制台的输出，看会发出多少条 sql 语句：</p>
+<blockquote>
+<p>Hibernate: select student0_.id as col_0<em>0</em> from t<em>student student0</em> limit ?<br>Hibernate: select student0_.id as id2<em>0</em>, student0_.name as name2<em>0</em>, student0_.rid as rid2<em>0</em>, student0_.sex as sex2<em>0</em> from t<em>student student0</em> where student0<em>.id=?<br>Hibernate: select student0</em>.id as id2<em>0</em>, student0_.name as name2<em>0</em>, student0_.rid as rid2<em>0</em>, student0_.sex as sex2<em>0</em> from t<em>student student0</em> where student0<em>.id=?<br>Hibernate: select student0</em>.id as id2<em>0</em>, student0_.name as name2<em>0</em>, student0_.rid as rid2<em>0</em>, student0_.sex as sex2<em>0</em> from t<em>student student0</em> where student0_.id=?<br>… …</p>
+</blockquote>
+<p>我们看到，当如果通过iterator()方法来获得我们对象的时候，hibernate首先会发出1条sql去查询出所有对象的 id 值，当我们如果需要查询到某个对象的具体信息的时候，hibernate此时会根据查询出来的 id 值再发sql语句去从数据库中查询对象的信息，这就是典型的 N+1 的问题。 </p>
+<p>那么这种 N+1 问题我们如何解决呢，其实我们只需要使用 list() 方法来获得对象即可。但是既然可以通过 list() 我们就不会出现 N+1的问题，那么我们为什么还要保留 iterator()这种形式呢？  </p>
+<p>我们考虑这样一种情况，如果我们需要在一个session当中要两次查询出很多对象，此时我们如果写两条 list()时，hibernate此时会发出两条 sql 语句，而且这两条语句是一样的，但是我们如果第一条语句使用 list()，而第二条语句使用 iterator()的话，此时我们也会发两条sql语句，但是第二条语句只会将查询出对象的id，所以相对应取出所有的对象而已，显然这样可以节省内存，而如果再要获取对象的时候，因为第一条语句已经将对象都查询出来了，此时会将对象保存到session的一级缓存中去，所以再次查询时，就会首先去缓存中查找，如果找到，则不发sql语句了。这里就牵涉到了接下来这个概念:<strong>hibernate的一级缓存</strong>。</p>
+<h1 id="一级缓存(session级别)">一级缓存(session级别)</h1><p>我们来看看hibernate提供的一级缓存：</p>
+<pre><code>/<span class="keyword">*</span><span class="keyword">*</span>
+ <span class="keyword">*</span> 此时会发出一条sql，将所有学生全部查询出来，并放到session的一级缓存当中
+ <span class="keyword">*</span> 当再次查询学生信息时，会首先去缓存中看是否存在，如果不存在，再去数据库中查询
+ <span class="keyword">*</span> 这就是hibernate的一级缓存(session缓存)             
+ <span class="keyword">*</span> <span class="keyword">*</span>/
+List<span class="variable">&lt;Student&gt;</span> stus = (List<span class="variable">&lt;Student&gt;</span>)session.createQuery(<span class="string">"from Student"</span>)
+            .setFirstResult(0).setMaxResults(30).list();
+Student stu = (Student)session.load(Student.class, 1);
+</code></pre><p>我们来看看控制台输出：  </p>
+<blockquote>
+<p>Hibernate: select student0<em>.id as id2</em>, student0<em>.name as name2</em>, student0<em>.rid as rid2</em>, student0<em>.sex as sex2</em> from t<em>student student0</em> limit ?</p>
+</blockquote>
+<p>我们看到此时hibernate仅仅只会发出一条 sql 语句，因为第一行代码就会将整个的对象查询出来，放到session的一级缓存中去，当我如果需要再次查询学生对象时，此时首先会去缓存中看是否存在该对象，如果存在，则直接从缓存中取出，就不会再发sql了，但是要注意一点： <strong>hibernate的一级缓存是session级别的，所以如果session关闭后，缓存就没了</strong>，此时就会再次发sql去查数据库。  </p>
+<pre><code>try{
+    session = HibernateUtil.openSession();            
+    /<span class="keyword">*</span><span class="keyword">*</span>
+     <span class="keyword">*</span> 此时会发出一条sql，将所有学生全部查询出来，并放到session的一级缓存当中
+     <span class="keyword">*</span> 当再次查询学生信息时，会首先去缓存中看是否存在，如果不存在，再去数据库中查询
+     <span class="keyword">*</span> 这就是hibernate的一级缓存(session缓存)             
+     <span class="keyword">*</span> <span class="keyword">*</span>/
+    List<span class="variable">&lt;Student&gt;</span> stus = (List<span class="variable">&lt;Student&gt;</span>)session.createQuery(<span class="string">"from Student"</span>)
+                            .setFirstResult(0).setMaxResults(30).list();
+    Student stu = (Student)session.load(Student.class, 1);
+    System.out.println(stu.getName() + <span class="string">"-----------"</span>);
+} catch (Exception e){
+    e.printStackTrace();
+} finally {
+    HibernateUtil.close(session);
+}        
+/<span class="keyword">*</span><span class="keyword">*</span>
+<span class="keyword">*</span> 当session关闭以后，session的一级缓存也就没有了，这时就又会去数据库中查询         
+<span class="keyword">*</span> <span class="keyword">*</span>/
+session = HibernateUtil.openSession();
+Student stu = (Student)session.load(Student.class, 1);
+System.out.println(stu.getName() + <span class="string">"-----------"</span>);
+</code></pre><p>执行的后的sql语句如下：  </p>
+<blockquote>
+<p>Hibernate: select student0<em>.id as id2</em>, student0<em>.name as name2</em>, student0<em>.sex as sex2</em>, student0<em>.rid as rid2</em> from t<em>student student0</em> limit ?  </p>
+<p>Hibernate: select student0_.id as id2<em>2</em>, student0_.name as name2<em>2</em>, student0_.sex as sex2<em>2</em>, student0_.rid as rid2<em>2</em>, classroom1_.id as id1<em>0</em>, classroom1_.name as name1<em>0</em>, classroom1_.sid as sid1<em>0</em>, special2_.id as id0<em>1</em>, special2_.name as name0<em>1</em>, special2_.type as type0<em>1</em> from t<em>student student0</em> left outer join t<em>classroom classroom1</em> on student0<em>.rid=classroom1</em>.id left outer join t<em>special special2</em> on classroom1<em>.sid=special2</em>.id where student0_.id=?</p>
+</blockquote>
+<p>我们看到此时会发出两条sql语句，因为session关闭以后，一级缓存就不存在了，所以如果再查询的时候，就会再发sql。要解决这种问题，我们应该怎么做呢？这就要我们来配置hibernate的二级缓存了，也就是sessionFactory级别的缓存。  </p>
+<h1 id="二级缓存(sessionFactory级别)">二级缓存(sessionFactory级别)</h1><p>使用hibernate二级缓存，我们首先需要对其进行配置，配置步骤如下：<br>1.hibernate并没有提供相应的二级缓存的组件，所以需要加入额外的二级缓存包，常用的二级缓存包是EHcache。<br>这个我们在下载好的hibernate的lib-&gt;optional-&gt;ehcache下可以找到(我这里使用的hibernate4.1.7版本)，然后将里面的几个jar包导入即可。<br>2.在hibernate.cfg.xml配置文件中配置我们二级缓存的一些属性：</p>
+<pre><code><span class="comment">&lt;!-- 开启二级缓存 --&gt;</span>
+<span class="tag">&lt;<span class="title">property</span> <span class="attribute">name</span>=<span class="value">"hibernate.cache.use_second_level_cache"</span>&gt;</span>true<span class="tag">&lt;/<span class="title">property</span>&gt;</span>
+<span class="comment">&lt;!-- 二级缓存的提供类 在hibernate4.0版本以后我们都是配置这个属性来指定二级缓存的提供类--&gt;</span>
+<span class="tag">&lt;<span class="title">property</span> <span class="attribute">name</span>=<span class="value">"hibernate.cache.region.factory_class"</span>&gt;</span>org.hibernate.cache.ehcache.EhCacheRegionFactory<span class="tag">&lt;/<span class="title">property</span>&gt;</span>
+<span class="comment">&lt;!-- 二级缓存配置文件的位置 --&gt;</span>
+<span class="tag">&lt;<span class="title">property</span> <span class="attribute">name</span>=<span class="value">"hibernate.cache.provider_configuration_file_resource_path"</span>&gt;</span>ehcache.xml<span class="tag">&lt;/<span class="title">property</span>&gt;</span>
+</code></pre><p>我这里使用的是hibernate4.1.7版本，如果是使用hibernate3的版本的话，那么二级缓存的提供类则要配置成这个：</p>
+<pre><code><span class="comment">&lt;!--这个类在4.0版本以后已经不建议被使用了--&gt;</span>
+<span class="tag">&lt;<span class="title">property</span> <span class="attribute">name</span>=<span class="value">"hibernate.cache.provider_class"</span>&gt;</span>net.sf.ehcache.hibernate.EhCacheProvider<span class="tag">&lt;/<span class="title">property</span>&gt;</span>
+</code></pre><p>3.配置hibernate的二级缓存是通过使用 ehcache的缓存包，所以我们需要创建一个 ehcache.xml 的配置文件，来配置我们的缓存信息，将其放到项目根目录下</p>
+<pre><code><span class="tag">&lt;<span class="title">ehcache</span>&gt;</span>
+    <span class="comment">&lt;!-- Sets the path to the directory where cache .data files are created.
+
+     If the path is a Java System Property it is replaced by
+     its value in the running VM.
+
+     The following properties are translated:
+     user.home - User's home directory
+     user.dir - User's current working directory
+     java.io.tmpdir - Default temp file path --&gt;</span>
+
+<span class="comment">&lt;!--指定二级缓存存放在磁盘上的位置--&gt;</span>
+<span class="tag">&lt;<span class="title">diskStore</span> <span class="attribute">path</span>=<span class="value">"user.dir"</span>/&gt;</span>　　　　
+<span class="comment">&lt;!--我们可以给每个实体类指定一个对应的缓存，如果没有匹配到该类，则使用这个默认的缓存配置--&gt;</span>    
+<span class="tag">&lt;<span class="title">defaultCache</span>        
+    <span class="attribute">maxElementsInMemory</span>=<span class="value">"10000"</span>　　//在内存中存放的最大对象数
+    <span class="attribute">eternal</span>=<span class="value">"false"</span>　　　　　　　　　//是否永久保存缓存，设置成<span class="attribute">false</span>
+    <span class="attribute">timeToIdleSeconds</span>=<span class="value">"120"</span>　　　　
+    <span class="attribute">timeToLiveSeconds</span>=<span class="value">"120"</span>　　　　
+    <span class="attribute">overflowToDisk</span>=<span class="value">"true"</span>　　　　　//如果对象数量超过内存中最大的数，是否将其保存到磁盘中，设置成<span class="attribute">true</span>
+    /&gt;</span>　
+
+<span class="comment">&lt;!--
+1、timeToLiveSeconds的定义是：以创建时间为基准开始计算的超时时长；
+2、timeToIdleSeconds的定义是：在创建时间和最近访问时间中取出离现在最近的时间作为基准计算的超时时长；
+3、如果仅设置了timeToLiveSeconds，则该对象的超时时间=创建时间+timeToLiveSeconds，假设为A；
+4、如果没设置timeToLiveSeconds，则该对象的超时时间=max(创建时间，最近访问时间)+timeToIdleSeconds，假设为B；
+5、如果两者都设置了，则取出A、B最少的值，即min(A,B)，表示只要有一个超时成立即算超时。
+    --&gt;</span>
+
+<span class="comment">&lt;!--可以给每个实体类指定一个配置文件，通过name属性指定，要使用类的全名--&gt;</span>    
+<span class="tag">&lt;<span class="title">cache</span> <span class="attribute">name</span>=<span class="value">"com.xiaoluo.bean.Student"</span>
+    <span class="attribute">maxElementsInMemory</span>=<span class="value">"10000"</span>
+    <span class="attribute">eternal</span>=<span class="value">"false"</span>
+    <span class="attribute">timeToIdleSeconds</span>=<span class="value">"300"</span>
+    <span class="attribute">timeToLiveSeconds</span>=<span class="value">"600"</span>
+    <span class="attribute">overflowToDisk</span>=<span class="value">"true"</span>
+    /&gt;</span>
+
+<span class="tag">&lt;<span class="title">cache</span> <span class="attribute">name</span>=<span class="value">"sampleCache2"</span>
+    <span class="attribute">maxElementsInMemory</span>=<span class="value">"1000"</span>
+    <span class="attribute">eternal</span>=<span class="value">"true"</span>
+    <span class="attribute">timeToIdleSeconds</span>=<span class="value">"0"</span>
+    <span class="attribute">timeToLiveSeconds</span>=<span class="value">"0"</span>
+    <span class="attribute">overflowToDisk</span>=<span class="value">"false"</span>
+    /&gt;</span> --&gt;
+<span class="tag">&lt;/<span class="title">ehcache</span>&gt;</span>
+</code></pre><h1 id="开启我们的二级缓存">开启我们的二级缓存</h1><h2 id="xml配置">xml配置</h2><p>如果使用xml配置，我们需要在 Student.hbm.xml 中加上一下配置：</p>
+<pre><code><span class="tag">&lt;<span class="title">hibernate-mapping</span> <span class="attribute">package</span>=<span class="value">"com.xiaoluo.bean"</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">class</span> <span class="attribute">name</span>=<span class="value">"Student"</span> <span class="attribute">table</span>=<span class="value">"t_student"</span>&gt;</span>
+        <span class="comment">&lt;!-- 二级缓存一般设置为只读的 --&gt;</span>
+        <span class="tag">&lt;<span class="title">cache</span> <span class="attribute">usage</span>=<span class="value">"read-only"</span>/&gt;</span>
+        <span class="tag">&lt;<span class="title">id</span> <span class="attribute">name</span>=<span class="value">"id"</span> <span class="attribute">type</span>=<span class="value">"int"</span> <span class="attribute">column</span>=<span class="value">"id"</span>&gt;</span>
+            <span class="tag">&lt;<span class="title">generator</span> <span class="attribute">class</span>=<span class="value">"native"</span>/&gt;</span>
+        <span class="tag">&lt;/<span class="title">id</span>&gt;</span>
+        <span class="tag">&lt;<span class="title">property</span> <span class="attribute">name</span>=<span class="value">"name"</span> <span class="attribute">column</span>=<span class="value">"name"</span> <span class="attribute">type</span>=<span class="value">"string"</span>&gt;</span><span class="tag">&lt;/<span class="title">property</span>&gt;</span>
+        <span class="tag">&lt;<span class="title">property</span> <span class="attribute">name</span>=<span class="value">"sex"</span> <span class="attribute">column</span>=<span class="value">"sex"</span> <span class="attribute">type</span>=<span class="value">"string"</span>&gt;</span><span class="tag">&lt;/<span class="title">property</span>&gt;</span>
+        <span class="tag">&lt;<span class="title">many-to-one</span> <span class="attribute">name</span>=<span class="value">"room"</span> <span class="attribute">column</span>=<span class="value">"rid"</span> <span class="attribute">fetch</span>=<span class="value">"join"</span>&gt;</span><span class="tag">&lt;/<span class="title">many-to-one</span>&gt;</span>
+    <span class="tag">&lt;/<span class="title">class</span>&gt;</span>
+<span class="tag">&lt;/<span class="title">hibernate-mapping</span>&gt;</span>
+</code></pre><p>二级缓存的使用策略一般有这几种：read-only、nonstrict-read-write、read-write、transactional。<br>注意：我们通常使用二级缓存都是将其配置成 read-only ，即我们应当在那些不需要进行修改的实体类上使用二级缓存，否则如果对缓存进行读写的话，性能会变差，这样设置缓存就失去了意义。</p>
+<h2 id="annotation配置">annotation配置</h2><p>如果使用annotation配置，我们需要在Student这个类上加上这样一个注解：</p>
+<pre><code><span class="annotation">@Entity</span>
+<span class="annotation">@Table</span>(name=<span class="string">"t_student"</span>)
+<span class="annotation">@Cache</span>(usage=CacheConcurrencyStrategy.READ_ONLY)　　<span class="comment">//　　表示开启二级缓存，并使用read-only策略</span>
+<span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Student</span>{</span>    
+    <span class="keyword">private</span> <span class="typename">int</span> id;
+    <span class="keyword">private</span> String name;
+    <span class="keyword">private</span> String sex;
+    <span class="keyword">private</span> Classroom room;
+    <span class="comment">// getter()和setter()</span>
+}
+</code></pre><p>这样我们的二级缓存配置就算完成了，接下来我们来通过测试用例测试下我们的二级缓存是否起作用</p>
+<h2 id="二级缓存测试">二级缓存测试</h2><h3 id="二级缓存是sessionFactory级别的缓存">二级缓存是sessionFactory级别的缓存</h3><p>TestCase1：</p>
+<pre><code><span class="keyword">public</span> <span class="keyword">class</span> TestSecondCache {
+    <span class="keyword">@Test</span>    
+    <span class="keyword">public</span> <span class="keyword">void</span> testCache1() {
+        Session session = <span class="literal">null</span>; 
+        <span class="keyword">try</span> {
+            session = HibernateUtil.openSession();
+
+            Student stu = (Student) session.load(Student.<span class="keyword">class</span>, <span class="number">1</span>);
+            System.<span class="keyword">out</span>.println(stu.getName() + <span class="string">"-----------"</span>);
+        } <span class="keyword">catch</span> (Exception e) {
+            e.printStackTrace();
+        } <span class="keyword">finally</span> {
+            HibernateUtil.close(session);
+        }        
+        <span class="keyword">try</span> {            
+            <span class="comment">/**
+             * 即使当session关闭以后，因为配置了二级缓存，而二级缓存是sessionFactory级别的，所以会从缓存中取出该数据
+             * 只会发出一条sql语句             
+             * */</span>
+            session = HibernateUtil.openSession();
+            Student stu = (Student) session.load(Student.<span class="keyword">class</span>, <span class="number">1</span>);
+            System.<span class="keyword">out</span>.println(stu.getName() + <span class="string">"-----------"</span>);            
+            <span class="comment">/**
+             * 因为设置了二级缓存为read-only，所以不能对其进行修改             
+             * */</span>
+            session.beginTransaction();
+            stu.setName(<span class="string">"aaa"</span>);
+            session.getTransaction().commit();
+        } <span class="keyword">catch</span> (Exception e) {
+            e.printStackTrace();
+            session.getTransaction().rollback();
+        } <span class="keyword">finally</span> {
+            HibernateUtil.close(session);
+        }
+    }
+}
+</code></pre><p>hibernate生成的sql语句如下：</p>
+<blockquote>
+<p>Hibernate: select student0_.id as id2<em>2</em>, student0_.name as name2<em>2</em>, student0_.sex as sex2<em>2</em>, student0_.rid as rid2<em>2</em>, classroom1_.id as id1<em>0</em>, classroom1_.name as name1<em>0</em>, classroom1_.sid as sid1<em>0</em>, special2_.id as id0<em>1</em>, special2_.name as name0<em>1</em>, special2_.type as type0<em>1</em> from t<em>student student0</em> left outer join t<em>classroom classroom1</em> on student0<em>.rid=classroom1</em>.id left outer join t<em>special special2</em> on classroom1<em>.sid=special2</em>.id where student0_.id=?<br>zhangsan———–<br>zhangsan———–  </p>
+</blockquote>
+<p>因为二级缓存是sessionFactory级别的缓存，我们看到，在配置了二级缓存以后，当我们session关闭以后，我们再去查询对象的时候，此时hibernate首先会去二级缓存中查询是否有该对象，有就不会再发sql了。</p>
+<h3 id="二级缓存缓存的是对象">二级缓存缓存的是对象</h3><p>二级缓存缓存的是对象，如果查询出来的是对象的一些属性，则不会被加到缓存中去</p>
+<p>TestCase2：</p>
+<pre><code><span class="comment">@Test    </span>
+public void testCache2(){
+    Session session = null;        
+    try {
+        session = HibernateUtil.openSession();            
+        /<span class="keyword">*</span><span class="keyword">*</span>
+         <span class="keyword">*</span> 注意：二级缓存中缓存的仅仅是对象，而下面这里只保存了姓名和性别两个字段，所以 不会被加载到二级缓存里面
+         <span class="keyword">*</span> /
+        List<span class="variable">&lt;Object[]&gt;</span> ls = (List<span class="variable">&lt;Object[]&gt;</span>) session.createQuery(<span class="string">"select stu.name, stu.sex from Student stu"</span>)
+                .setFirstResult(0).setMaxResults(30).list();
+    } catch (Exception e) {
+        e.printStackTrace();
+    } finally {
+        HibernateUtil.close(session);
+    }        
+
+    try {            
+        /<span class="keyword">*</span><span class="keyword">*</span>
+         <span class="keyword">*</span> 由于二级缓存缓存的是对象，所以此时会发出两条sql             
+         <span class="keyword">*</span> /
+        session = HibernateUtil.openSession();
+        Student stu = (Student) session.load(Student.class, 1);
+        System.out.println(stu);
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+}
+</code></pre><p>hibernate生成的sql:</p>
+<blockquote>
+<p>Hibernate: select student0_.name as col_0<em>0</em>, student0_.sex as col_1<em>0</em> from t<em>student student0</em> limit ? </p>
+<p>Hibernate: select student0_.id as id2<em>2</em>, student0_.name as name2<em>2</em>, student0_.sex as sex2<em>2</em>, student0_.rid as rid2<em>2</em>, classroom1_.id as id1<em>0</em>, classroom1_.name as name1<em>0</em>, classroom1_.sid as sid1<em>0</em>, special2_.id as id0<em>1</em>, special2_.name as name0<em>1</em>, special2_.type as type0<em>1</em> from t<em>student student0</em> left outer join t<em>classroom classroom1</em> on student0<em>.rid=classroom1</em>.id left outer join t<em>special special2</em> on classroom1<em>.sid=special2</em>.id where student0_.id=?</p>
+</blockquote>
+<p>我们看到这个测试用例，如果我们只是取出对象的一些属性的话，则不会将其保存到二级缓存中去，因为二级缓存缓存的仅仅是对象。如果需要缓存属性，可以考虑使用查询缓存来进行缓存。</p>
+<h3 id="通过二级缓存来解决_N+1_的问题">通过二级缓存来解决 N+1 的问题</h3><p>TestCase3：</p>
+<pre><code>@<span class="type">Test</span>    
+public <span class="type">void</span> testCache3() {
+    <span class="type">Session</span> session = null;        
+    <span class="keyword">try</span> {
+        session = <span class="type">HibernateUtil</span>.openSession();            
+        // 将查询出来的<span class="type">Student</span>对象缓存到二级缓存中去
+        <span class="type">List</span>&lt;<span class="type">Student</span>&gt; stus = (<span class="type">List</span>&lt;<span class="type">Student</span>&gt;) session.createQuery(<span class="string">"select stu from Student stu"</span>).list();
+    } catch (<span class="type">Exception</span> e) {
+        e.printStackTrace();
+    } <span class="keyword">finally</span> {
+        <span class="type">HibernateUtil</span>.close(session);
+    }        
+
+    <span class="keyword">try</span> {            
+        /**
+         * 由于学生的对象已经缓存在二级缓存中了，此时再使用iterate来获取对象的时候，首先会通过一条
+         * 取id的语句，然后在获取对象时去二级缓存中，如果发现就不会再发<span class="type">SQL</span>，这样也就解决了N+<span class="number">1</span>问题 
+         * 而且内存占用也不多             
+         * */
+        session = <span class="type">HibernateUtil</span>.openSession();
+        <span class="type">Iterator</span>&lt;<span class="type">Student</span>&gt; <span class="keyword">iterator</span> = session.createQuery(<span class="string">"from Student"</span>).iterate();            
+        <span class="keyword">for</span> (; <span class="keyword">iterator</span>.hasNext();) {
+            <span class="type">Student</span> stu = (<span class="type">Student</span>) <span class="keyword">iterator</span>.next();
+            <span class="type">System</span>.<span class="keyword">out</span>.println(stu.getName());
+        }
+    } catch (<span class="type">Exception</span> e) {
+        e.printStackTrace();
+    }
+}
+</code></pre><p>当我们如果需要查询出两次对象的时候，可以使用二级缓存来解决N+1的问题。</p>
+<h3 id="二级缓存会缓存_hql_语句吗？">二级缓存会缓存 hql 语句吗？</h3><p>TestCase4：</p>
+<pre><code>@<span class="keyword">Test</span>    
+public void testCache4() {
+    Session session = null;
+    try {
+        session = HibernateUtil.openSession();
+        <span class="keyword">List</span>&lt;Student&gt; <span class="keyword">ls</span> = session.createQuery(<span class="string">"from Student"</span>)
+              .setFirstResult(0).setMaxResults(50).<span class="keyword">list</span>();
+    } catch (Exception <span class="keyword">e</span>) {
+        <span class="keyword">e</span>.printStackTrace();
+    } finally {
+        HibernateUtil.<span class="keyword">close</span>(session);
+    }        
+
+    try {
+    <span class="comment">// 使用List会发出两条一模一样的sql，此时如果希望不发sql就需要使用查询缓存</span>
+        session = HibernateUtil.openSession();
+        <span class="keyword">List</span>&lt;Student&gt; <span class="keyword">ls</span> = session.createQuery(<span class="string">"from Student"</span>)
+                .setFirstResult(0).setMaxResults(50).<span class="keyword">list</span>();
+        Iterator&lt;Student&gt; stu = <span class="keyword">ls</span>.iterator();            
+        <span class="keyword">for</span>(;stu.hasNext();){
+            Student student = stu.next();
+            System.<span class="keyword">out</span>.println(student.getName());
+        }
+    } catch (Exception <span class="keyword">e</span>) {
+        <span class="keyword">e</span>.printStackTrace();
+    } finally {
+        HibernateUtil.<span class="keyword">close</span>(session);
+    }
+}
+</code></pre><p>hibernate生成的sql语句：</p>
+<blockquote>
+<p>Hibernate: select student0<em>.id as id2</em>, student0<em>.name as name2</em>, student0<em>.sex as sex2</em>, student0<em>.rid as rid2</em> from t<em>student student0</em> limit ?Hibernate: select student0<em>.id as id2</em>, student0<em>.name as name2</em>, student0<em>.sex as sex2</em>, student0<em>.rid as rid2</em> from t<em>student student0</em> limit ?  </p>
+</blockquote>
+<p>我们看到，当我们如果通过 list() 去查询两次对象时，二级缓存虽然会缓存查询出来的对象，但是我们看到发出了两条相同的查询语句，这是因为二级缓存不会缓存我们的hql查询语句，要想解决这个问题，我们就要配置我们的查询缓存了。</p>
+<h1 id="查询缓存(sessionFactory级别)">查询缓存(sessionFactory级别)</h1><p>我们如果要配置查询缓存，只需要在hibernate.cfg.xml中加入一条配置即可：</p>
+<pre><code><span class="comment">&lt;!-- 开启查询缓存 --&gt;</span>
+<span class="tag">&lt;<span class="title">property</span> <span class="attribute">name</span>=<span class="value">"hibernate.cache.use_query_cache"</span>&gt;</span>true<span class="tag">&lt;/<span class="title">property</span>&gt;</span>
+</code></pre><p>然后我们如果在查询hql语句时要使用查询缓存，就需要在查询语句后面设置这样一个方法:</p>
+<pre><code>List&lt;Student&gt; ls = session.createQuery(<span class="string">"from Student where name like ?"</span>)
+    .setCacheable(<span class="literal">true</span>)　　<span class="comment">//开启查询缓存，查询缓存也是SessionFactory级别的缓存</span>
+    .setParameter(<span class="number">0</span>, <span class="string">"%王%"</span>)
+    .setFirstResult(<span class="number">0</span>).setMaxResults(<span class="number">50</span>).<span class="built_in">list</span>();
+</code></pre><p>如果是在annotation中，我们还需要在这个类上加上这样一个注解：@Cacheable<br>接下来我们来通过测试用例来看看我们的查询缓存  </p>
+<h2 id="查询缓存也是sessionFactory级别的缓存">查询缓存也是sessionFactory级别的缓存</h2><p>TestCase1：</p>
+<pre><code>@<span class="type">Test</span>    
+public <span class="type">void</span> test2() {
+    <span class="type">Session</span> session = null;        
+    <span class="keyword">try</span> {            
+        // 此时会发出一条sql取出所有的学生信息
+        session = <span class="type">HibernateUtil</span>.openSession();
+        <span class="type">List</span>&lt;<span class="type">Student</span>&gt; ls = session.createQuery(<span class="string">"from Student"</span>)
+                .setCacheable(<span class="literal">true</span>)        //开启查询缓存,查询缓存也是sessionFactory级别的缓存
+                .setFirstResult(<span class="number">0</span>).setMaxResults(<span class="number">50</span>).list();
+        <span class="type">Iterator</span>&lt;<span class="type">Student</span>&gt; stus = ls.<span class="keyword">iterator</span>();            
+        <span class="keyword">for</span>(;stus.hasNext();) {
+            <span class="type">Student</span> stu = stus.next();
+            <span class="type">System</span>.<span class="keyword">out</span>.println(stu.getName());
+        }
+    } catch (<span class="type">Exception</span> e) {
+        e.printStackTrace();
+    } <span class="keyword">finally</span> {
+        <span class="type">HibernateUtil</span>.close(session);
+    }        
+
+    <span class="keyword">try</span> {            
+        //此时会发出一条sql取出所有的学生信息             
+        session = <span class="type">HibernateUtil</span>.openSession();
+        <span class="type">List</span>&lt;<span class="type">Student</span>&gt; ls = session.createQuery(<span class="string">"from Student"</span>)
+            .setCacheable(<span class="literal">true</span>)  //开启查询缓存,查询缓存也是sessionFactory级别的缓存
+            .setFirstResult(<span class="number">0</span>).setMaxResults(<span class="number">50</span>).list();
+        <span class="type">Iterator</span>&lt;<span class="type">Student</span>&gt; stus = ls.<span class="keyword">iterator</span>();            
+        <span class="keyword">for</span>(;stus.hasNext();) {
+            <span class="type">Student</span> stu = stus.next();
+            <span class="type">System</span>.<span class="keyword">out</span>.println(stu.getName());
+        }
+    } catch (<span class="type">Exception</span> e) {
+        e.printStackTrace();
+    } <span class="keyword">finally</span> {
+        <span class="type">HibernateUtil</span>.close(session);
+    }
+}
+</code></pre><p>hibernate生成的sql语句：</p>
+<blockquote>
+<p>Hibernate: select student0<em>.id as id2</em>, student0<em>.name as name2</em>, student0<em>.sex as sex2</em>, student0<em>.rid as rid2</em> from t<em>student student0</em> limit ?</p>
+</blockquote>
+<p>我们看到，此时如果我们发出两条相同的语句，hibernate也只会发出一条sql，因为已经开启了查询缓存了，并且查询缓存也是sessionFactory级别的</p>
+<h2 id="只有当_HQL_查询语句完全相同时，连参数设置都要相同，此时查询缓存才有效">只有当 HQL 查询语句完全相同时，连参数设置都要相同，此时查询缓存才有效</h2><p>TestCase2：</p>
+<pre><code>@<span class="type">Test</span>    
+public <span class="type">void</span> test3() {
+    <span class="type">Session</span> session = null;        
+        <span class="keyword">try</span> {            
+        // 此时会发出一条sql取出所有的学生信息             
+        session = <span class="type">HibernateUtil</span>.openSession();
+        <span class="type">List</span>&lt;<span class="type">Student</span>&gt; ls = session.createQuery(<span class="string">"from Student where name like ?"</span>)
+            .setCacheable(<span class="literal">true</span>)      //开启查询缓存，查询缓存也是<span class="type">SessionFactory</span>级别的缓存
+            .setParameter(<span class="number">0</span>, <span class="string">"%王%"</span>)
+            .setFirstResult(<span class="number">0</span>).setMaxResults(<span class="number">50</span>).list();
+        <span class="type">Iterator</span>&lt;<span class="type">Student</span>&gt; stus = ls.<span class="keyword">iterator</span>();            
+        <span class="keyword">for</span>(;stus.hasNext();) {
+            <span class="type">Student</span> stu = stus.next();
+            <span class="type">System</span>.<span class="keyword">out</span>.println(stu.getName());
+        }
+    } catch (<span class="type">Exception</span> e) {
+        e.printStackTrace();
+    } <span class="keyword">finally</span> {
+        <span class="type">HibernateUtil</span>.close(session);
+    }
+    session = null;        
+    <span class="keyword">try</span> {            
+        // 此时会发出一条sql取出所有的学生信息             
+        session = <span class="type">HibernateUtil</span>.openSession();
+
+        //只有当<span class="type">HQL</span>完全相同的时候，连参数都要相同，查询缓存才有效             
+        //<span class="type">List</span>&lt;<span class="type">Student</span>&gt; ls = session.createQuery(<span class="string">"from Student where name like ?"</span>)
+        //    .setCacheable(<span class="literal">true</span>)    //开启查询缓存，查询缓存也是<span class="type">SessionFactory</span>级别的缓存
+        //    .setParameter(<span class="number">0</span>, <span class="string">"%王%"</span>)
+        //    .setFirstResult(<span class="number">0</span>).setMaxResults(<span class="number">50</span>).list();
+        <span class="type">List</span>&lt;<span class="type">Student</span>&gt; ls = session.createQuery(<span class="string">"from Student where name like ?"</span>)
+            .setCacheable(<span class="literal">true</span>)        //开启查询缓存，查询缓存也是<span class="type">SessionFactory</span>级别的缓存
+            .setParameter(<span class="number">0</span>, <span class="string">"%张%"</span>)
+            .setFirstResult(<span class="number">0</span>).setMaxResults(<span class="number">50</span>).list();
+        <span class="type">Iterator</span>&lt;<span class="type">Student</span>&gt; stus = ls.<span class="keyword">iterator</span>();           
+        <span class="keyword">for</span>(;stus.hasNext();) {
+            <span class="type">Student</span> stu = stus.next();
+            <span class="type">System</span>.<span class="keyword">out</span>.println(stu.getName());
+        }
+    } catch (<span class="type">Exception</span> e) {
+        e.printStackTrace();
+    } <span class="keyword">finally</span> {
+        <span class="type">HibernateUtil</span>.close(session);
+    }
+}
+</code></pre><p>hibernate生成的sql语句:</p>
+<blockquote>
+<p>Hibernate: select student0<em>.id as id2</em>, student0<em>.name as name2</em>, student0<em>.sex as sex2</em>, student0<em>.rid as rid2</em> from t<em>student student0</em> where student0<em>.name like ? limit ?Hibernate: select student0</em>.id as id2<em>, student0</em>.name as name2<em>, student0</em>.sex as sex2<em>, student0</em>.rid as rid2_ from t<em>student student0</em> where student0_.name like ? limit ?  </p>
+</blockquote>
+<p>我们看到，如果我们的hql查询语句不同的话，我们的查询缓存也没有作用</p>
+<h2 id="查询缓存也能引起_N+1_的问题">查询缓存也能引起 N+1 的问题</h2><p>查询缓存也能引起 N+1 的问题，我们这里首先先将 Student 对象上的二级缓存先注释掉：</p>
+<pre><code><span class="comment">&lt;!-- 二级缓存一般设置为只读的 --&gt;</span>
+<span class="comment">&lt;!--　　&lt;cache usage="read-only"/&gt;　　--&gt;</span>
+</code></pre><p>TestCase4：</p>
+<pre><code>@<span class="type">Test</span>    
+public <span class="type">void</span> test4() {
+    <span class="type">Session</span> session = null;        
+    <span class="keyword">try</span> {            
+        /**
+         * 查询缓存缓存的不是对象而是id            
+         */
+        session = <span class="type">HibernateUtil</span>.openSession();
+        <span class="type">List</span>&lt;<span class="type">Student</span>&gt; ls = session.createQuery(<span class="string">"from Student where name like ?"</span>)
+            .setCacheable(<span class="literal">true</span>)//开启查询缓存，查询缓存也是<span class="type">SessionFactory</span>级别的缓存
+            .setParameter(<span class="number">0</span>, <span class="string">"%王%"</span>)
+            .setFirstResult(<span class="number">0</span>).setMaxResults(<span class="number">50</span>).list();
+
+        <span class="type">Iterator</span>&lt;<span class="type">Student</span>&gt; stus = ls.<span class="keyword">iterator</span>();            
+        <span class="keyword">for</span>(;stus.hasNext();) {
+            <span class="type">Student</span> stu = stus.next();
+            <span class="type">System</span>.<span class="keyword">out</span>.println(stu.getName());
+        }
+    } catch (<span class="type">Exception</span> e) {
+        e.printStackTrace();
+    } <span class="keyword">finally</span> {
+        <span class="type">HibernateUtil</span>.close(session);
+    }
+
+    session = null;        
+    <span class="keyword">try</span> {            
+        /**
+         * 查询缓存缓存的是id，此时由于在缓存中已经存在了这样的一组学生数据，但是仅仅只是缓存了
+         * id，所以此处会发出大量的sql语句根据id取对象，这也是发现N+<span class="number">1</span>问题的第二个原因
+         * 所以如果使用查询缓存必须开启二级缓存             ]
+         **/
+        session = <span class="type">HibernateUtil</span>.openSession();
+        <span class="type">List</span>&lt;<span class="type">Student</span>&gt; ls = session.createQuery(<span class="string">"from Student where name like ?"</span>)
+            .setCacheable(<span class="literal">true</span>)  //开启查询缓存，查询缓存也是<span class="type">SessionFactory</span>级别的缓存
+            .setParameter(<span class="number">0</span>, <span class="string">"%王%"</span>)
+            .setFirstResult(<span class="number">0</span>).setMaxResults(<span class="number">50</span>).list();
+        <span class="type">Iterator</span>&lt;<span class="type">Student</span>&gt; stus = ls.<span class="keyword">iterator</span>();            
+        <span class="keyword">for</span>(;stus.hasNext();) {
+            <span class="type">Student</span> stu = stus.next();
+            <span class="type">System</span>.<span class="keyword">out</span>.println(stu.getName());
+        }
+    } catch (<span class="type">Exception</span> e) {
+        e.printStackTrace();
+    } <span class="keyword">finally</span> {
+        <span class="type">HibernateUtil</span>.close(session);
+    }
+}
+</code></pre><p>hibernate生成的sql语句:</p>
+<blockquote>
+<p>Hibernate: select student0<em>.id as id2</em>, student0<em>.name as name2</em>, student0<em>.sex as sex2</em>, student0<em>.rid as rid2</em> from t<em>student student0</em> where student0_.name like ? limit ?  </p>
+<p>Hibernate: select student0_.id as id2<em>2</em>, student0_.name as name2<em>2</em>, student0_.sex as sex2<em>2</em>, student0_.rid as rid2<em>2</em>, classroom1_.id as id1<em>0</em>, classroom1_.name as name1<em>0</em>, classroom1_.sid as sid1<em>0</em>, special2_.id as id0<em>1</em>, special2_.name as name0<em>1</em>, special2_.type as type0<em>1</em> from t<em>student student0</em> left outer join t<em>classroom classroom1</em> on student0<em>.rid=classroom1</em>.id left outer join t<em>special special2</em> on classroom1<em>.sid=special2</em>.id where student0_.id=?  </p>
+<p>Hibernate: select student0_.id as id2<em>2</em>, student0_.name as name2<em>2</em>, student0_.sex as sex2<em>2</em>, student0_.rid as rid2<em>2</em>, classroom1_.id as id1<em>0</em>, classroom1_.name as name1<em>0</em>, classroom1_.sid as sid1<em>0</em>, special2_.id as id0<em>1</em>, special2_.name as name0<em>1</em>, special2_.type as type0<em>1</em> from t<em>student student0</em> left outer join t<em>classroom classroom1</em> on student0<em>.rid=classroom1</em>.id left outer join t<em>special special2</em> on classroom1<em>.sid=special2</em>.id where student0_.id=?   </p>
+<p>Hibernate: select student0_.id as id2<em>2</em>, student0_.name as name2<em>2</em>, student0_.sex as sex2<em>2</em>, student0_.rid as rid2<em>2</em>, classroom1_.id as id1<em>0</em>, classroom1_.name as name1<em>0</em>, classroom1_.sid as sid1<em>0</em>, special2_.id as id0<em>1</em>, special2_.name as name0<em>1</em>, special2_.type as type0<em>1</em> from t<em>student student0</em> left outer join t<em>classroom classroom1</em> on student0<em>.rid=classroom1</em>.id left outer join t<em>special special2</em> on classroom1<em>.sid=special2</em>.id where student0_.id=?   </p>
+<p>Hibernate: select student0_.id as id2<em>2</em>, student0_.name as name2<em>2</em>, student0_.sex as sex2<em>2</em>, student0_.rid as rid2<em>2</em>, classroom1_.id as id1<em>0</em>, classroom1_.name as name1<em>0</em>, classroom1_.sid as sid1<em>0</em>, special2_.id as id0<em>1</em>, special2_.name as name0<em>1</em>, special2_.type as type0<em>1</em> from t<em>student student0</em> left outer join t<em>classroom classroom1</em> on student0<em>.rid=classroom1</em>.id left outer join t<em>special special2</em> on classroom1<em>.sid=special2</em>.id where student0_.id=?<br>… …</p>
+</blockquote>
+<p>我们看到，当我们将二级缓存注释掉以后，在使用查询缓存时，也会出现 N+1 的问题，为什么呢？<br>因为查询缓存缓存的也仅仅是对象的id，所以第一条 sql 也是将对象的id都查询出来，但是当我们后面如果要得到每个对象的信息的时候，此时又会发sql语句去查询，所以，如果要使用查询缓存，我们一定也要开启我们的二级缓存，这样就不会出现 N+1 问题了。（上面这段话好像有点问题，我测试了一下，查询非ID字段，比如<code>select name from student</code>,这样的查询能很好缓存。  </p>
+<p>这个文章 <a href="http://yangfei520.blog.51cto.com/1041581/287380" target="_blank" rel="external">http://yangfei520.blog.51cto.com/1041581/287380</a> 的这段话就解释清楚了hibernate的查询缓存是主要是针对普通属性结果集的缓存，而对于实体对象的结果集只缓存id。<br>在一级缓存,二级缓存和查询缓存都打开的情况下作查询操作时这样的：<br>查询普通属性，会先到查询缓存中取，如果没有，则查询数据库；<br>查询实体，会先到查询缓存中取id，如果有，则根据id到缓存(一级/二级)中取实体，如果缓存中取不到实体，再查询数据库，此时查就是一个N+1的效果。<br>和一级/二级缓存不同，查询缓存的生命周期 ，是不确定的，当前关联的表发生改变时，查询缓存的生命周期结束）  </p>
+<p>好了，整篇随笔大概花费了2个小时来编写，可以说将hibernate的 N+1 问题、一级缓存、二级缓存、查询缓存的概念以及可能出现的问题都分析了透，希望能对大家提供帮助！</p>
+<h1 id="参考">参考</h1><p>转载自<a href="http://www.360doc.com/content/14/0801/16/1073512_398635409.shtml" target="_blank" rel="external">hibernate缓存机制详细分析(一级、二级、查询缓存，非常清晰明白)</a></p>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/一级缓存/" rel="tag">#一级缓存</a>
+          
+            <a href="/tags/二级缓存/" rel="tag">#二级缓存</a>
+          
+            <a href="/tags/查询缓存/" rel="tag">#查询缓存</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/12/09/mysql复制策略/" rel="next">mysql复制策略</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+ </div>
+
+        
+
+        
+          <div class="comments" id="comments">
+            
+              <div class="ds-thread" data-thread-key="2015/12/15/hibernate缓存机制-转载/"
+                   data-title="hibernate缓存机制-转载" data-url="http://kuku940.github.io/2015/12/15/hibernate缓存机制-转载/">
+              </div>
+            
+          </div>
+        
+      </div>
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点简介
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="http://7xljab.com1.z0.glb.clouddn.com/博客|个人博客|不卜个人博客|不卜" alt="不卜" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">不卜</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description">善易者不卜</p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">20</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            <a href="/categories">
+              <span class="site-state-item-count">13</span>
+              <span class="site-state-item-name">分类</span>
+              </a>
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">38</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/kuku940" target="_blank">GitHub</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.zhihu.com/people/roingeek" target="_blank">ZhiHu</a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+            <p class="site-author-name">友情链接</p>
+            
+              <span class="links-of-author-item">
+              <a href="http://zhumang.top/" target="_blank">竹芒</a>
+              </span>
+            
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#N+1问题"><span class="nav-number">1.</span> <span class="nav-text">N+1问题</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#一级缓存(session级别)"><span class="nav-number">2.</span> <span class="nav-text">一级缓存(session级别)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#二级缓存(sessionFactory级别)"><span class="nav-number">3.</span> <span class="nav-text">二级缓存(sessionFactory级别)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#开启我们的二级缓存"><span class="nav-number">4.</span> <span class="nav-text">开启我们的二级缓存</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#xml配置"><span class="nav-number">4.1.</span> <span class="nav-text">xml配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#annotation配置"><span class="nav-number">4.2.</span> <span class="nav-text">annotation配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二级缓存测试"><span class="nav-number">4.3.</span> <span class="nav-text">二级缓存测试</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#二级缓存是sessionFactory级别的缓存"><span class="nav-number">4.3.1.</span> <span class="nav-text">二级缓存是sessionFactory级别的缓存</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二级缓存缓存的是对象"><span class="nav-number">4.3.2.</span> <span class="nav-text">二级缓存缓存的是对象</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#通过二级缓存来解决_N+1_的问题"><span class="nav-number">4.3.3.</span> <span class="nav-text">通过二级缓存来解决 N+1 的问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二级缓存会缓存_hql_语句吗？"><span class="nav-number">4.3.4.</span> <span class="nav-text">二级缓存会缓存 hql 语句吗？</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#查询缓存(sessionFactory级别)"><span class="nav-number">5.</span> <span class="nav-text">查询缓存(sessionFactory级别)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#查询缓存也是sessionFactory级别的缓存"><span class="nav-number">5.1.</span> <span class="nav-text">查询缓存也是sessionFactory级别的缓存</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#只有当_HQL_查询语句完全相同时，连参数设置都要相同，此时查询缓存才有效"><span class="nav-number">5.2.</span> <span class="nav-text">只有当 HQL 查询语句完全相同时，连参数设置都要相同，此时查询缓存才有效</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#查询缓存也能引起_N+1_的问题"><span class="nav-number">5.3.</span> <span class="nav-text">查询缓存也能引起 N+1 的问题</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考"><span class="nav-number">6.</span> <span class="nav-text">参考</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner"> <div class="copyright" >
+  
+  &copy; &nbsp; 
+  <span itemprop="copyrightYear">2015</span>
+  <span class="with-love">
+    <i class="icon-next-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">不卜</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 搭建
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+ </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"roingeek"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+    
+     
+
+    
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.5.1"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.5.1"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.5.1" id="motion.global"></script>
+
+
+
+
+  <script type="text/javascript" src="/js/nav-toggle.js?v=0.4.5.1"></script>
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.5.1" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      var $indicator = $(indicator);
+      var opacity = action === 'show' ? 0.4 : 0;
+      $indicator.velocity ?
+        $indicator.velocity('stop').velocity({
+          opacity: opacity
+        }, { duration: 100 }) :
+        $indicator.stop().animate({
+          opacity: opacity
+        }, 100);
+    }
+
+  });
+</script>
+
+<script type="text/javascript" id="sidebar.nav">
+  $(document).ready(function () {
+    var html = $('html');
+    var TAB_ANIMATE_DURATION = 200;
+    var hasVelocity = $.isFunction(html.velocity);
+
+    $('.sidebar-nav li').on('click', function () {
+      var item = $(this);
+      var activeTabClassName = 'sidebar-nav-active';
+      var activePanelClassName = 'sidebar-panel-active';
+      if (item.hasClass(activeTabClassName)) {
+        return;
+      }
+
+      var currentTarget = $('.' + activePanelClassName);
+      var target = $('.' + item.data('target'));
+
+      hasVelocity ?
+        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
+            .addClass(activePanelClassName);
+        }) :
+        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
+          currentTarget.hide();
+          target
+            .stop()
+            .css({'opacity': 0, 'display': 'block'})
+            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
+              currentTarget.removeClass(activePanelClassName);
+              target.addClass(activePanelClassName);
+            });
+        });
+
+      item.siblings().removeClass(activeTabClassName);
+      item.addClass(activeTabClassName);
+    });
+
+    $('.post-toc a').on('click', function (e) {
+      e.preventDefault();
+      var targetSelector = escapeSelector(this.getAttribute('href'));
+      var offset = $(targetSelector).offset().top;
+      hasVelocity ?
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        }) :
+        $('html, body').stop().animate({
+          scrollTop: offset
+        }, 500);
+    });
+
+    // Expand sidebar on post detail page by default, when post has a toc.
+    var $tocContent = $('.post-toc-content');
+    if (isDesktop() && CONFIG.sidebar === 'post') {
+      if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+        displaySidebar();
+      }
+    }
+  });
+</script>
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+      if (isMobile()) {
+        FastClick.attach(document.body);
+      }
+    });
+  </script>
+
+  
+
+  
+  
+
+<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"1","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"16"},"slide":{"type":"slide","bdImg":"3","bdPos":"left","bdTop":"250"}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+
+
+
+  
+  <script type="text/javascript" src="/js/lazyload.js"></script>
+  <script type="text/javascript">
+    $(function () {
+      $("#posts").find('img').lazyload({
+        placeholder: "/images/loading.gif",
+        effect: "fadeIn"
+      });
+    });
+  </script>
+</body>
+</html>
