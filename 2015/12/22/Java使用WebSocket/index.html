@@ -20,20 +20,19 @@
 
 <link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.5.1"/>
 
-  <meta name="keywords" content="RPC,不卜" />
+  <meta name="keywords" content="Java,WebSocket,不卜" />
 
 
-<meta name="description" content="RPC介绍 RPC的全称是Remote Procedure Call，即远程过程调用，实现方式有很多，如RMI，WebService等。RPC的实现包括两方，一方称作服务端(server)，一方称作客户端(client)。客户端发送RPC请求到服务端，服务端通过客户端提供的参数执行对应的请求方法，将执行结果返回给客户端，一次RPC调用结束。">
+<meta name="description" content="随着互联网的发展，传统的HTTP协议已经很难满足Web应用日益复杂的需求了。近年来，随着HTML5的诞生，WebSocket协议被提出，它实现了浏览器与服务器的全双工通信，扩展了浏览器与服务端的通信功能，使服务端也能主动向客户端发送数据。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="RPC远程过程调用">
-<meta property="og:url" content="http://kuku940.github.io/2015/10/09/RPC远程过程调用/index.html">
+<meta property="og:title" content="Java使用WebSocket">
+<meta property="og:url" content="http://kuku940.github.io/2015/12/22/Java使用WebSocket/index.html">
 <meta property="og:site_name" content="不卜博客 - 不卜的个人博客站点">
-<meta property="og:description" content="RPC介绍 RPC的全称是Remote Procedure Call，即远程过程调用，实现方式有很多，如RMI，WebService等。RPC的实现包括两方，一方称作服务端(server)，一方称作客户端(client)。客户端发送RPC请求到服务端，服务端通过客户端提供的参数执行对应的请求方法，将执行结果返回给客户端，一次RPC调用结束。">
-<meta property="og:image" content="http://7xljab.com1.z0.glb.clouddn.com/不卜个人博客/image/tcp-rpc.png">
-<meta property="og:updated_time" content="2015-11-26T22:21:44.646Z">
+<meta property="og:description" content="随着互联网的发展，传统的HTTP协议已经很难满足Web应用日益复杂的需求了。近年来，随着HTML5的诞生，WebSocket协议被提出，它实现了浏览器与服务器的全双工通信，扩展了浏览器与服务端的通信功能，使服务端也能主动向客户端发送数据。">
+<meta property="og:updated_time" content="2015-12-22T13:23:39.787Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="RPC远程过程调用">
-<meta name="twitter:description" content="RPC介绍 RPC的全称是Remote Procedure Call，即远程过程调用，实现方式有很多，如RMI，WebService等。RPC的实现包括两方，一方称作服务端(server)，一方称作客户端(client)。客户端发送RPC请求到服务端，服务端通过客户端提供的参数执行对应的请求方法，将执行结果返回给客户端，一次RPC调用结束。">
+<meta name="twitter:title" content="Java使用WebSocket">
+<meta name="twitter:description" content="随着互联网的发展，传统的HTTP协议已经很难满足Web应用日益复杂的需求了。近年来，随着HTML5的诞生，WebSocket协议被提出，它实现了浏览器与服务器的全双工通信，扩展了浏览器与服务端的通信功能，使服务端也能主动向客户端发送数据。">
 
 <script type="text/javascript" id="hexo.configuration">
   var CONFIG = {
@@ -42,7 +41,7 @@
   };
 </script>
 
-  <title> RPC远程过程调用 | 不卜博客 - 不卜的个人博客站点 </title>
+  <title> Java使用WebSocket | 不卜博客 - 不卜的个人博客站点 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -188,7 +187,7 @@
           
           
             
-              RPC远程过程调用
+              Java使用WebSocket
             
           
         </h1>
@@ -197,8 +196,8 @@
       <div class="post-meta">
         <span class="post-time">
           发表于
-          <time itemprop="dateCreated" datetime="2015-10-09T02:10:15+08:00" content="2015-10-09">
-            2015-10-09
+          <time itemprop="dateCreated" datetime="2015-12-22T21:22:18+08:00" content="2015-12-22">
+            2015-12-22
           </time>
         </span>
 
@@ -223,8 +222,8 @@
           
             <span class="post-comments-count">
               &nbsp; | &nbsp;
-              <a href="/2015/10/09/RPC远程过程调用/#comments" itemprop="discussionUrl">
-                <span class="post-comments-count ds-thread-count" data-thread-key="2015/10/09/RPC远程过程调用/" itemprop="commentsCount"></span>
+              <a href="/2015/12/22/Java使用WebSocket/#comments" itemprop="discussionUrl">
+                <span class="post-comments-count ds-thread-count" data-thread-key="2015/12/22/Java使用WebSocket/" itemprop="commentsCount"></span>
               </a>
             </span>
           
@@ -238,99 +237,89 @@
       
 
       
-        <span itemprop="articleBody"><h1 id="RPC介绍">RPC介绍</h1><p> RPC的全称是Remote Procedure Call，即远程过程调用，实现方式有很多，如RMI，WebService等。<br>RPC的实现包括两方，一方称作服务端(server)，一方称作客户端(client)。客户端发送RPC请求到服务端，服务端通过客户端提供的参数执行对应的请求方法，将执行结果返回给客户端，一次RPC调用结束。<br><a id="more"></a></p>
-<h1 id="基于TCP协议实现的RPC">基于TCP协议实现的RPC</h1><p>基于Java的Socket API,我们能够实现一个简单的RPC调用，具体示例如下：包括服务端接口及接口的实现，客户端接口以及远程调用。</p>
-<h2 id="代码实现结构图">代码实现结构图</h2><p><img src="http://7xljab.com1.z0.glb.clouddn.com/不卜个人博客/image/tcp-rpc.png" alt="基于TCP协议实现的RPC的结构图"></p>
-<h2 id="客户端和服务端接口HelloService">客户端和服务端接口HelloService</h2><pre><code><span class="keyword">package</span> cn.xiaoyu.rpc.service;
+        <span itemprop="articleBody"><p>随着互联网的发展，传统的HTTP协议已经很难满足Web应用日益复杂的需求了。近年来，随着HTML5的诞生，WebSocket协议被提出，它实现了浏览器与服务器的全双工通信，扩展了浏览器与服务端的通信功能，使服务端也能主动向客户端发送数据。</p>
+<a id="more"></a>
+<p>我们知道，传统的HTTP协议是无状态的，每次请求（request）都要由客户端（如浏览器）主动发起，服务端进行处理后返回response结果，而服务端很难主动向客户端发送数据；这种客户端是主动方，服务端是被动方的传统Web模式对于信息变化不频繁的Web应用来说造成的麻烦较小，而对于涉及实时信息的Web应用却带来了很大的不便，如带有即时通信、实时数据、订阅推送等功能的应用。在WebSocket规范提出之前，开发人员若要实现这些实时性较强的功能，经常会使用折衷的解决方法：轮询（polling）和Comet技术。其实后者本质上也是一种轮询，只不过有所改进。</p>
+<p>轮询是最原始的实现实时Web应用的解决方案。轮询技术要求客户端以设定的时间间隔周期性地向服务端发送请求，频繁地查询是否有新的数据改动。明显地，这种方法会导致过多不必要的请求，浪费流量和服务器资源。</p>
+<p>Comet技术又可以分为长轮询和流技术。长轮询改进了上述的轮询技术，减小了无用的请求。它会为某些数据设定过期时间，当数据过期后才会向服务端发送请求；这种机制适合数据的改动不是特别频繁的情况。流技术通常是指客户端使用一个隐藏的窗口与服务端建立一个HTTP长连接，服务端会不断更新连接状态以保持HTTP长连接存活；这样的话，服务端就可以通过这条长连接主动将数据发送给客户端；流技术在大并发环境下，可能会考验到服务端的性能。</p>
+<p>这两种技术都是基于请求-应答模式，都不算是真正意义上的实时技术；它们的每一次请求、应答，都浪费了一定流量在相同的头部信息上，并且开发复杂度也较大。</p>
+<p>伴随着HTML5推出的WebSocket，真正实现了Web的实时通信，使B/S模式具备了C/S模式的实时通信能力。WebSocket的工作流程是这样的：浏览器通过JavaScript向服务端发出建立WebSocket连接的请求，在WebSocket连接建立成功后，客户端和服务端就可以通过TCP连接传输数据。因为WebSocket连接本质上是TCP连接，不需要每次传输都带上重复的头部数据，所以它的数据传输量比轮询和Comet技术小了很多。本文不详细地介绍WebSocket规范，主要介绍下WebSocket在Java Web中的实现。</p>
+<p>JavaEE 7中出了JSR-356:Java API for WebSocket规范。不少Web容器，如Tomcat,Nginx,Jetty等都支持WebSocket。Tomcat从7.0.27开始支持WebSocket，从7.0.47开始支持JSR-356，下面的Demo代码也是需要部署在Tomcat7.0.47上才能运行。</p>
+<h1 id="环境">环境</h1><p>Tomcat 7.0.47以上<br>在MyEclipse中引入tomcat/lib下面的websocket-api.jar</p>
+<h1 id="后台程序">后台程序</h1><pre><code>@ServerEndpoint(<span class="keyword">value</span> = <span class="string">"/websocket/{user}"</span>)
+<span class="keyword">public</span> <span class="keyword">class</span> <span class="title">MyServerEndpoint</span> {
+    <span class="keyword">private</span> Session session;
 
-<span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">HelloService</span> </span>{
-    <span class="function"><span class="keyword">public</span> String <span class="title">sayHello</span><span class="params">(String name)</span></span>;
-}
-</code></pre><h2 id="服务端接口的实现HelloServiceImpl">服务端接口的实现HelloServiceImpl</h2><pre><code><span class="keyword">package</span> cn.xiaoyu.rpc.service;
+    @<span class="function">OnOpen
+    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onOpen</span>(<span class="params">Session session,@PathParam(<span class="keyword">value</span>=<span class="string">"user"</span></span>) String user) </span>{
+        <span class="keyword">this</span>.session = session;
+        System.<span class="keyword">out</span>.println(user + <span class="string">"打开:"</span> + session.getId());
+    }
 
-<span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HelloServiceImpl</span> <span class="keyword">implements</span> <span class="title">HelloService</span></span>{
-    <span class="annotation">@Override</span>
-    <span class="function"><span class="keyword">public</span> String <span class="title">sayHello</span><span class="params">(String name)</span> </span>{
-        <span class="keyword">return</span> <span class="string">"Hello "</span> + name;
+    @<span class="function">OnMessage
+    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onMessage</span>(<span class="params">String message</span>) throws IOException </span>{
+        System.<span class="keyword">out</span>.println(<span class="string">"处理消息:"</span> + <span class="keyword">this</span>.session.getId());
+        <span class="keyword">this</span>.session.getBasicRemote().sendText(message);
+    }
+
+    @<span class="function">OnClose
+    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClose</span>(<span class="params"></span>) </span>{
+        System.<span class="keyword">out</span>.println(<span class="string">"关闭:"</span> + <span class="keyword">this</span>.session.getId());
     }
 }
-</code></pre><h2 id="服务端主程序MainServer">服务端主程序MainServer</h2><pre><code><span class="keyword">package</span> cn.xiaoyu.rpc.main;
-
-<span class="keyword">import</span> java.io.ObjectInputStream;
-<span class="keyword">import</span> java.io.ObjectOutputStream;
-<span class="keyword">import</span> java.lang.reflect.Method;
-<span class="keyword">import</span> java.net.ServerSocket;
-<span class="keyword">import</span> java.net.Socket;
-<span class="keyword">import</span> java.util.<span class="keyword">HashMap</span>;
-
-<span class="keyword">import</span> cn.xiaoyu.rpc.service.HelloServiceImpl;
-
-<span class="keyword">public</span> class MainServer {
-    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> main(<span class="keyword">String</span>[] args) <span class="keyword">throws</span> Exception {
-        <span class="comment">//将服务接口的示例先初始化，这儿应该还有更好的方法来实现！</span>
-        <span class="keyword">HashMap</span>&lt;<span class="keyword">String</span>, <span class="keyword">Object</span>&gt; <span class="built_in">map</span> = <span class="keyword">new</span> <span class="keyword">HashMap</span>&lt;&gt;();
-        <span class="built_in">map</span>.put(<span class="string">"cn.xiaoyu.rpc.service.HelloService"</span>,<span class="keyword">new</span> HelloServiceImpl());
-
-        ServerSocket server = <span class="keyword">new</span> ServerSocket(<span class="number">1234</span>);
-
-        <span class="keyword">while</span>(<span class="keyword">true</span>){
-            Socket socket = server.accept();
-
-            <span class="comment">// 读取传递过来的信息</span>
-            ObjectInputStream inputStream = <span class="keyword">new</span> ObjectInputStream(socket.getInputStream());
-            <span class="keyword">String</span> interfacename = inputStream.readUTF(); <span class="comment">// 接口名称</span>
-            <span class="keyword">String</span> methodName = inputStream.readUTF(); <span class="comment">// 方法名称</span>
-            Class&lt;?&gt;[] parameterTypes = (Class&lt;?&gt;[]) inputStream.readObject(); <span class="comment">// 参数类型</span>
-            <span class="keyword">Object</span>[] params = (<span class="keyword">Object</span>[]) inputStream.readObject();
-
-            <span class="comment">// 执行调用过程</span>
-            Class clazz = Class.forName(interfacename); <span class="comment">//获取接口的class</span>
-            <span class="keyword">Object</span> service = <span class="built_in">map</span>.<span class="built_in">get</span>(interfacename); <span class="comment">//获取接口的实现对象</span>
-            Method method = clazz.getMethod(methodName, parameterTypes); <span class="comment">//获取需要的调用的方法</span>
-            <span class="keyword">Object</span> result = method.invoke(service, params); 
-
-            <span class="comment">// 将执行结果输出到客户端</span>
-            ObjectOutputStream outputStream = <span class="keyword">new</span> ObjectOutputStream(socket.getOutputStream());
-            outputStream.writeObject(result);
-
+</code></pre><h1 id="前台页面">前台页面</h1><pre><code><span class="xml"></span><span class="vbscript">&lt;%@ page language=<span class="string">"java"</span> import=<span class="string">"java.util.*"</span> pageEncoding=<span class="string">"utf-8"</span>%&gt;</span><span class="xml">
+</span><span class="vbscript">&lt;%
+    <span class="built_in">String</span> path = <span class="built_in">request</span>.getContextPath();
+    <span class="built_in">String</span> basePath = <span class="built_in">request</span>.getScheme() + <span class="string">"://"</span> + <span class="built_in">request</span>.getServerName() + <span class="string">":"</span> + <span class="built_in">request</span>.getServerPort()    + path + <span class="string">"/"</span>;
+%&gt;</span><span class="xml">
+<span class="doctype">&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"&gt;</span>
+<span class="tag">&lt;<span class="title">html</span>&gt;</span>
+<span class="tag">&lt;<span class="title">head</span>&gt;</span>
+<span class="tag">&lt;<span class="title">base</span> <span class="attribute">href</span>=<span class="value">"</span></span></span><span class="vbscript">&lt;%=basePath%&gt;</span><span class="xml"><span class="tag"><span class="value">"</span>&gt;</span>
+<span class="tag">&lt;<span class="title">title</span>&gt;</span>WebSocket页面<span class="tag">&lt;/<span class="title">title</span>&gt;</span>
+<span class="tag">&lt;<span class="title">script</span> <span class="attribute">type</span>=<span class="value">"text/javascript"</span>&gt;</span><span class="javascript">
+    <span class="keyword">var</span> ws;
+    <span class="keyword">var</span> url = <span class="string">"ws://localhost/websocket/websocket/xiaoyu"</span>;
+    <span class="keyword">var</span> result;
+    <span class="function"><span class="keyword">function</span> <span class="title">initWebSocket</span>(<span class="params"></span>) </span>{
+        result = <span class="built_in">document</span>.getElementById(<span class="string">"result"</span>);
+        <span class="keyword">if</span> (<span class="string">"WebSocket"</span> <span class="keyword">in</span> <span class="built_in">window</span>) {
+            ws = <span class="keyword">new</span> WebSocket(url);
+        } <span class="keyword">else</span> <span class="keyword">if</span> (<span class="string">"MozWebSocket"</span> <span class="keyword">in</span> <span class="built_in">window</span>) {
+            ws = <span class="keyword">new</span> MozWebSocket(url);
+        } <span class="keyword">else</span> {
+            result.innerHTML = <span class="string">"浏览器不支持WebSocket&lt;br&gt;"</span>;
         }
+        ws.onopen = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>{
+            result.innerHTML = <span class="string">"开启:"</span> + <span class="string">"&lt;br&gt;"</span>;
+            ws.send(<span class="string">"index"</span>);
+        };
+        ws.onmessage = <span class="function"><span class="keyword">function</span>(<span class="params">event</span>) </span>{
+            result.innerHTML += <span class="string">"接受消息: "</span> + event.data + <span class="string">"&lt;br&gt;"</span>;
+        };
+        ws.onclose = <span class="function"><span class="keyword">function</span>(<span class="params">event</span>) </span>{
+            result.innerHTML += <span class="string">"关闭"</span> + <span class="string">"&lt;br&gt;"</span>;
+        };
     }
-}
-</code></pre><h2 id="客户端主程序MainClient">客户端主程序MainClient</h2><pre><code>package cn.xiaoyu.rpc.main;
-
-<span class="keyword">import</span> java.io.<span class="type">ObjectInputStream</span>;
-<span class="keyword">import</span> java.io.<span class="type">ObjectOutputStream</span>;
-<span class="keyword">import</span> java.lang.reflect.<span class="type">Method</span>;
-<span class="keyword">import</span> java.net.<span class="type">Socket</span>;
-
-<span class="keyword">import</span> cn.xiaoyu.rpc.service.<span class="type">HelloService</span>;
-
-public class <span class="type">MainClient</span> {
-    public <span class="keyword">static</span> <span class="type">void</span> main(<span class="type">String</span>[] args) throws <span class="type">Exception</span>{
-        // 接口名稱
-        <span class="type">String</span> interfacename = <span class="type">HelloService</span>.class.getName();
-        // 需要遠程執行的方法
-        <span class="type">Method</span> <span class="keyword">method</span> = <span class="type">HelloService</span>.class.getMethod(<span class="string">"sayHello"</span>,<span class="type">String</span>.class);
-        //需要传递参数
-        <span class="type">Object</span>[] params = {<span class="string">"bubu"</span>};
-
-        <span class="type">Socket</span> socket = new <span class="type">Socket</span>(<span class="string">"127.0.0.1"</span>,<span class="number">1234</span>);
-
-        //将方法名称和参数传递到服务端
-        <span class="type">ObjectOutputStream</span> outputStream = new <span class="type">ObjectOutputStream</span>(socket.getOutputStream());
-        outputStream.writeUTF(interfacename); //调用的接口名称
-        outputStream.writeUTF(<span class="keyword">method</span>.getName()); //调用的方法的名称
-        outputStream.writeObject(<span class="keyword">method</span>.getParameterTypes());
-        outputStream.writeObject(params);
-
-        //从服务端读取方法的执行结果
-        <span class="type">ObjectInputStream</span> inputStream = new <span class="type">ObjectInputStream</span>(socket.getInputStream());
-        <span class="type">Object</span> <span class="literal">result</span> = inputStream.readObject();
-
-        <span class="type">System</span>.<span class="keyword">out</span>.println(<span class="literal">result</span>);
+    <span class="function"><span class="keyword">function</span> <span class="title">send</span>(<span class="params"></span>) </span>{
+        ws.send(<span class="built_in">document</span>.getElementById(<span class="string">"msg"</span>).value);
     }
-}
-</code></pre><p>#</p>
+</span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+<span class="tag">&lt;/<span class="title">head</span>&gt;</span>
+<span class="tag">&lt;<span class="title">body</span> <span class="attribute">onload</span>=<span class="value">"initWebSocket();"</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">h1</span>&gt;</span>WebSocket示例<span class="tag">&lt;/<span class="title">h1</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">hr</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">"result"</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">textarea</span> <span class="attribute">rows</span>=<span class="value">"5"</span> <span class="attribute">cols</span>=<span class="value">"20"</span> <span class="attribute">id</span>=<span class="value">"msg"</span>&gt;</span><span class="tag">&lt;/<span class="title">textarea</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">br</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">button</span> <span class="attribute">onclick</span>=<span class="value">"send()"</span>&gt;</span>发送<span class="tag">&lt;/<span class="title">button</span>&gt;</span>
+<span class="tag">&lt;/<span class="title">body</span>&gt;</span>
+<span class="tag">&lt;/<span class="title">html</span>&gt;</span></span>
+</code></pre><h1 id="tomcat配置">tomcat配置</h1><p>修改tomcat安装文件夹下面conf/context.xml文件，在WatchedResource下面添加<loader delegate="true">即可</loader></p>
+<pre><code><span class="tag">&lt;<span class="title">WatchedResource</span>&gt;</span>WEB-INF/web.xml<span class="tag">&lt;/<span class="title">WatchedResource</span>&gt;</span>
+<span class="tag">&lt;<span class="title">Loader</span> <span class="attribute">delegate</span>=<span class="value">"true"</span> /&gt;</span>
+</code></pre><p>到此运行tomcat即可</p>
+<h1 id="参考">参考</h1><p><a href="http://blog.chenzuhuang.com/archive/28.html" target="_blank" rel="external">Java后端WebSocket的Tomcat实现</a><br><a href="http://jingpin.jikexueyuan.com/article/48550.html" target="_blank" rel="external">Tomcat7 配置 WebSocket</a></p>
 </span>
       
     </div>
@@ -339,7 +328,9 @@ public class <span class="type">MainClient</span> {
       
         <div class="post-tags">
           
-            <a href="/tags/RPC/" rel="tag">#RPC</a>
+            <a href="/tags/Java/" rel="tag">#Java</a>
+          
+            <a href="/tags/WebSocket/" rel="tag">#WebSocket</a>
           
         </div>
       
@@ -348,13 +339,11 @@ public class <span class="type">MainClient</span> {
         <div class="post-nav">
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2015/10/09/jackson解析和序列化json串/" rel="prev">jackson解析和序列化json串</a>
-            
           </div>
 
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2015/09/20/Ajax请求的几种类型/" rel="next">Ajax请求的几种类型</a>
+              <a href="/2015/12/16/hibernate映射-[基础，组件，集合]/" rel="next">hibernate映射-[基础，组件，集合]</a>
             
           </div>
         </div>
@@ -379,8 +368,8 @@ public class <span class="type">MainClient</span> {
         
           <div class="comments" id="comments">
             
-              <div class="ds-thread" data-thread-key="2015/10/09/RPC远程过程调用/"
-                   data-title="RPC远程过程调用" data-url="http://kuku940.github.io/2015/10/09/RPC远程过程调用/">
+              <div class="ds-thread" data-thread-key="2015/12/22/Java使用WebSocket/"
+                   data-title="Java使用WebSocket" data-url="http://kuku940.github.io/2015/12/22/Java使用WebSocket/">
               </div>
             
           </div>
@@ -479,7 +468,7 @@ public class <span class="type">MainClient</span> {
           <div class="post-toc">
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#RPC介绍"><span class="nav-number">1.</span> <span class="nav-text">RPC介绍</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#基于TCP协议实现的RPC"><span class="nav-number">2.</span> <span class="nav-text">基于TCP协议实现的RPC</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#代码实现结构图"><span class="nav-number">2.1.</span> <span class="nav-text">代码实现结构图</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#客户端和服务端接口HelloService"><span class="nav-number">2.2.</span> <span class="nav-text">客户端和服务端接口HelloService</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#服务端接口的实现HelloServiceImpl"><span class="nav-number">2.3.</span> <span class="nav-text">服务端接口的实现HelloServiceImpl</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#服务端主程序MainServer"><span class="nav-number">2.4.</span> <span class="nav-text">服务端主程序MainServer</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#客户端主程序MainClient"><span class="nav-number">2.5.</span> <span class="nav-text">客户端主程序MainClient</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#环境"><span class="nav-number">1.</span> <span class="nav-text">环境</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#后台程序"><span class="nav-number">2.</span> <span class="nav-text">后台程序</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#前台页面"><span class="nav-number">3.</span> <span class="nav-text">前台页面</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#tomcat配置"><span class="nav-number">4.</span> <span class="nav-text">tomcat配置</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考"><span class="nav-number">5.</span> <span class="nav-text">参考</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>
