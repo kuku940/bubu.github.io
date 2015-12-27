@@ -32,8 +32,7 @@
 <meta property="og:description" content="随着互联网的发展，传统的HTTP协议已经很难满足Web应用日益复杂的需求了。近年来，随着HTML5的诞生，WebSocket协议被提出，它实现了浏览器与服务器的全双工通信，扩展了浏览器与服务端的通信功能，使服务端也能主动向客户端发送数据。
 在WebSocket规范提出之前，开发人员若要实现这些实时性较强的功能，经常会使用折衷的解决方法：轮询（polling）和Comet技术。其实后者本质上也是一种">
 <meta property="og:image" content="http://7xljab.com1.z0.glb.clouddn.com/不卜个人博客/image/WebSocket的Demo示例.png">
-<meta property="og:image" content="http://7xljab.com1.z0.glb.clouddn.com/不卜个人博客/image/WebSocket编译环境.png">
-<meta property="og:updated_time" content="2015-12-22T16:06:03.785Z">
+<meta property="og:updated_time" content="2015-12-22T17:31:53.621Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java使用WebSocket">
 <meta name="twitter:description" content="随着互联网的发展，传统的HTTP协议已经很难满足Web应用日益复杂的需求了。近年来，随着HTML5的诞生，WebSocket协议被提出，它实现了浏览器与服务器的全双工通信，扩展了浏览器与服务端的通信功能，使服务端也能主动向客户端发送数据。
@@ -317,8 +316,7 @@
 <span class="tag">&lt;/<span class="title">html</span>&gt;</span></span>
 </code></pre><h1 id="显示效果">显示效果</h1><p><img src="http://7xljab.com1.z0.glb.clouddn.com/不卜个人博客/image/WebSocket的Demo示例.png" alt=""></p>
 <p>配置运行tomcat就会出现如上的显示界面，表示WebSocket配置成功了，恭喜！</p>
-<h1 id="错误集锦">错误集锦</h1><h2 id="无法生成WebSocket，界面打印“关闭”字样">无法生成WebSocket，界面打印“关闭”字样</h2><p>如果你的前面的步骤都没有配置错误的话，而且tomcat版本和java版本都正确的话，那么很有可能是你的编译器环境出现问题，我这儿使用的MyEclipse/Eclipse，打开Window-&gt;Preferences,修改编译环境为Java 1.7以上，如下图所示：<br><img src="http://7xljab.com1.z0.glb.clouddn.com/不卜个人博客/image/WebSocket编译环境.png" alt=""></p>
-<h2 id="500错误">500错误</h2><p>如果在Tomcat启动后，访问index.jsp出现500错误：修改tomcat安装文件夹下面conf/context.xml文件，在WatchedResource下面添加<loader delegate="true">即可，表示加载前先问上级loader，同java一般模式；false，先从本loader开始尝试加载</loader></p>
+<h1 id="错误集锦">错误集锦</h1><h2 id="MyEclipse启动后，index页面出现“关闭”字样">MyEclipse启动后，index页面出现“关闭”字样</h2><p>如果在Tomcat启动后，访问index.jsp依然没能成功：修改tomcat安装文件夹下面conf/context.xml文件，在WatchedResource下面添加<loader delegate="true">即可，表示加载前先问上级loader，同java一般模式；false，先从本loader开始尝试加载，但是Eclipse一般不会出现这样的问题！</loader></p>
 <pre><code><span class="tag">&lt;<span class="title">WatchedResource</span>&gt;</span>WEB-INF/web.xml<span class="tag">&lt;/<span class="title">WatchedResource</span>&gt;</span>
 <span class="tag">&lt;<span class="title">Loader</span> <span class="attribute">delegate</span>=<span class="value">"true"</span> /&gt;</span>
 </code></pre><h1 id="参考">参考</h1><p><a href="http://blog.chenzuhuang.com/archive/28.html" target="_blank" rel="external">Java后端WebSocket的Tomcat实现</a><br><a href="http://jingpin.jikexueyuan.com/article/48550.html" target="_blank" rel="external">Tomcat7 配置 WebSocket</a></p>
@@ -340,6 +338,8 @@
       
         <div class="post-nav">
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/12/27/spring4配置websocket的简单Demo/" rel="prev">spring4配置websocket的简单Demo</a>
             
           </div>
 
@@ -411,7 +411,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">22</span>
+              <span class="site-state-item-count">23</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -425,7 +425,7 @@
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">43</span>
+              <span class="site-state-item-count">45</span>
               <span class="site-state-item-name">标签</span>
               </a>
           </div>
@@ -470,7 +470,7 @@
           <div class="post-toc">
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#环境"><span class="nav-number">1.</span> <span class="nav-text">环境</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#后台程序"><span class="nav-number">2.</span> <span class="nav-text">后台程序</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#前台页面"><span class="nav-number">3.</span> <span class="nav-text">前台页面</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#显示效果"><span class="nav-number">4.</span> <span class="nav-text">显示效果</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#错误集锦"><span class="nav-number">5.</span> <span class="nav-text">错误集锦</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#无法生成WebSocket，界面打印“关闭”字样"><span class="nav-number">5.1.</span> <span class="nav-text">无法生成WebSocket，界面打印“关闭”字样</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#500错误"><span class="nav-number">5.2.</span> <span class="nav-text">500错误</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考"><span class="nav-number">6.</span> <span class="nav-text">参考</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#环境"><span class="nav-number">1.</span> <span class="nav-text">环境</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#后台程序"><span class="nav-number">2.</span> <span class="nav-text">后台程序</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#前台页面"><span class="nav-number">3.</span> <span class="nav-text">前台页面</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#显示效果"><span class="nav-number">4.</span> <span class="nav-text">显示效果</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#错误集锦"><span class="nav-number">5.</span> <span class="nav-text">错误集锦</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#MyEclipse启动后，index页面出现“关闭”字样"><span class="nav-number">5.1.</span> <span class="nav-text">MyEclipse启动后，index页面出现“关闭”字样</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考"><span class="nav-number">6.</span> <span class="nav-text">参考</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>
