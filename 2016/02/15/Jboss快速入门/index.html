@@ -23,30 +23,18 @@
   <meta name="keywords" content="JBoss,服务器,不卜" />
 
 
-<meta name="description" content="安装JBoss服务器1、下载地址： http://www.jboss.org/jbossas/downloads ，下载最新版本的JBoss服务器。
-2、解压 jboss-as-7.1.1.Final.zip 到 D:\develop\目录下面。
-3、设置环境变量如下：
-系统变量-&amp;gt;新建-&amp;gt;变量名：JAVA_HOME = C:\Java
-以下是非必须的，启动.bat 中会自动寻找系统变">
+<meta name="description" content="近年来，在J2EE应用服务器领域，JBoss是发展最为迅速的应用服务器。JBoss是免费的，开放源代码J2EE的实现，它通过LGPL许可证进行发布,这使得JBoss广为流行。Boss是一个运行EJB的J2EE应用服务器，例如：数据库访问JDBC、交易(JTA/JTS)、消息机制 (JTS)、命名机制(JNDI)和管理支持(JMX)。它是开放源代码的项目，遵循最新的J2EE规范。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="JBoss快速入门">
-<meta property="og:url" content="http://kuku940.github.io/2015/12/25/Jboss快速入门/index.html">
+<meta property="og:url" content="http://kuku940.github.io/2016/02/15/Jboss快速入门/index.html">
 <meta property="og:site_name" content="不卜博客 - 不卜的个人博客站点">
-<meta property="og:description" content="安装JBoss服务器1、下载地址： http://www.jboss.org/jbossas/downloads ，下载最新版本的JBoss服务器。
-2、解压 jboss-as-7.1.1.Final.zip 到 D:\develop\目录下面。
-3、设置环境变量如下：
-系统变量-&amp;gt;新建-&amp;gt;变量名：JAVA_HOME = C:\Java
-以下是非必须的，启动.bat 中会自动寻找系统变">
+<meta property="og:description" content="近年来，在J2EE应用服务器领域，JBoss是发展最为迅速的应用服务器。JBoss是免费的，开放源代码J2EE的实现，它通过LGPL许可证进行发布,这使得JBoss广为流行。Boss是一个运行EJB的J2EE应用服务器，例如：数据库访问JDBC、交易(JTA/JTS)、消息机制 (JTS)、命名机制(JNDI)和管理支持(JMX)。它是开放源代码的项目，遵循最新的J2EE规范。">
 <meta property="og:image" content="http://7xljab.com1.z0.glb.clouddn.com/%E4%B8%8D%E5%8D%9C%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%2Fimage%2FJBoss_start.png">
 <meta property="og:image" content="http://7xljab.com1.z0.glb.clouddn.com/%E4%B8%8D%E5%8D%9C%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%2Fimage%2FJBoss%E4%B8%BB%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84.png">
-<meta property="og:updated_time" content="2016-02-27T06:16:35.459Z">
+<meta property="og:updated_time" content="2016-02-27T06:24:12.564Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JBoss快速入门">
-<meta name="twitter:description" content="安装JBoss服务器1、下载地址： http://www.jboss.org/jbossas/downloads ，下载最新版本的JBoss服务器。
-2、解压 jboss-as-7.1.1.Final.zip 到 D:\develop\目录下面。
-3、设置环境变量如下：
-系统变量-&amp;gt;新建-&amp;gt;变量名：JAVA_HOME = C:\Java
-以下是非必须的，启动.bat 中会自动寻找系统变">
+<meta name="twitter:description" content="近年来，在J2EE应用服务器领域，JBoss是发展最为迅速的应用服务器。JBoss是免费的，开放源代码J2EE的实现，它通过LGPL许可证进行发布,这使得JBoss广为流行。Boss是一个运行EJB的J2EE应用服务器，例如：数据库访问JDBC、交易(JTA/JTS)、消息机制 (JTS)、命名机制(JNDI)和管理支持(JMX)。它是开放源代码的项目，遵循最新的J2EE规范。">
 
 <script type="text/javascript" id="hexo.configuration">
   var CONFIG = {
@@ -210,8 +198,8 @@
       <div class="post-meta">
         <span class="post-time">
           发表于
-          <time itemprop="dateCreated" datetime="2015-12-25T20:50:20+08:00" content="2015-12-25">
-            2015-12-25
+          <time itemprop="dateCreated" datetime="2016-02-15T10:50:20+08:00" content="2016-02-15">
+            2016-02-15
           </time>
         </span>
 
@@ -236,8 +224,8 @@
           
             <span class="post-comments-count">
               &nbsp; | &nbsp;
-              <a href="/2015/12/25/Jboss快速入门/#comments" itemprop="discussionUrl">
-                <span class="post-comments-count ds-thread-count" data-thread-key="2015/12/25/Jboss快速入门/" itemprop="commentsCount"></span>
+              <a href="/2016/02/15/Jboss快速入门/#comments" itemprop="discussionUrl">
+                <span class="post-comments-count ds-thread-count" data-thread-key="2016/02/15/Jboss快速入门/" itemprop="commentsCount"></span>
               </a>
             </span>
           
@@ -251,7 +239,9 @@
       
 
       
-        <span itemprop="articleBody"><h1 id="安装JBoss服务器">安装JBoss服务器</h1><p>1、下载地址： <a href="http://www.jboss.org/jbossas/downloads" target="_blank" rel="external">http://www.jboss.org/jbossas/downloads</a> ，下载最新版本的JBoss服务器。</p>
+        <span itemprop="articleBody"><p>近年来，在J2EE应用服务器领域，JBoss是发展最为迅速的应用服务器。JBoss是免费的，开放源代码J2EE的实现，它通过LGPL许可证进行发布,这使得JBoss广为流行。Boss是一个运行EJB的J2EE应用服务器，例如：数据库访问JDBC、交易(JTA/JTS)、消息机制 (JTS)、命名机制(JNDI)和管理支持(JMX)。它是开放源代码的项目，遵循最新的J2EE规范。</p>
+<a id="more"></a>
+<h1 id="安装JBoss服务器">安装JBoss服务器</h1><p>1、下载地址： <a href="http://www.jboss.org/jbossas/downloads" target="_blank" rel="external">http://www.jboss.org/jbossas/downloads</a> ，下载最新版本的JBoss服务器。</p>
 <p>2、解压 jboss-as-7.1.1.Final.zip 到 D:\develop\目录下面。</p>
 <p>3、设置环境变量如下：</p>
 <p>系统变量-&gt;新建-&gt;变量名：JAVA_HOME = C:\Java</p>
@@ -394,13 +384,11 @@ at java<span class="class">.lang</span><span class="class">.Thread</span><span c
         <div class="post-nav">
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2015/12/27/spring4配置websocket的简单Demo/" rel="prev">spring4配置websocket的简单Demo</a>
-            
           </div>
 
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2015/12/22/Java使用WebSocket/" rel="next">Java使用WebSocket</a>
+              <a href="/2016/02/08/http协议详解（转载）/" rel="next">http协议详解</a>
             
           </div>
         </div>
@@ -425,8 +413,8 @@ at java<span class="class">.lang</span><span class="class">.Thread</span><span c
         
           <div class="comments" id="comments">
             
-              <div class="ds-thread" data-thread-key="2015/12/25/Jboss快速入门/"
-                   data-title="JBoss快速入门" data-url="http://kuku940.github.io/2015/12/25/Jboss快速入门/">
+              <div class="ds-thread" data-thread-key="2016/02/15/Jboss快速入门/"
+                   data-title="JBoss快速入门" data-url="http://kuku940.github.io/2016/02/15/Jboss快速入门/">
               </div>
             
           </div>
