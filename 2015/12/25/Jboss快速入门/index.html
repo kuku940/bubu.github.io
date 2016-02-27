@@ -1,0 +1,808 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+  
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1" />
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.5.1"/>
+
+  <meta name="keywords" content="JBoss,服务器,不卜" />
+
+
+<meta name="description" content="安装JBoss服务器1、下载地址： http://www.jboss.org/jbossas/downloads ，下载最新版本的JBoss服务器。
+2、解压 jboss-as-7.1.1.Final.zip 到 D:\develop\目录下面。
+3、设置环境变量如下：
+系统变量-&amp;gt;新建-&amp;gt;变量名：JAVA_HOME = C:\Java
+以下是非必须的，启动.bat 中会自动寻找系统变">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JBoss快速入门">
+<meta property="og:url" content="http://kuku940.github.io/2015/12/25/Jboss快速入门/index.html">
+<meta property="og:site_name" content="不卜博客 - 不卜的个人博客站点">
+<meta property="og:description" content="安装JBoss服务器1、下载地址： http://www.jboss.org/jbossas/downloads ，下载最新版本的JBoss服务器。
+2、解压 jboss-as-7.1.1.Final.zip 到 D:\develop\目录下面。
+3、设置环境变量如下：
+系统变量-&amp;gt;新建-&amp;gt;变量名：JAVA_HOME = C:\Java
+以下是非必须的，启动.bat 中会自动寻找系统变">
+<meta property="og:image" content="http://7xljab.com1.z0.glb.clouddn.com/%E4%B8%8D%E5%8D%9C%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%2Fimage%2FJBoss_start.png">
+<meta property="og:image" content="http://7xljab.com1.z0.glb.clouddn.com/%E4%B8%8D%E5%8D%9C%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%2Fimage%2FJBoss%E4%B8%BB%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84.png">
+<meta property="og:updated_time" content="2016-02-27T06:16:35.459Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="JBoss快速入门">
+<meta name="twitter:description" content="安装JBoss服务器1、下载地址： http://www.jboss.org/jbossas/downloads ，下载最新版本的JBoss服务器。
+2、解压 jboss-as-7.1.1.Final.zip 到 D:\develop\目录下面。
+3、设置环境变量如下：
+系统变量-&amp;gt;新建-&amp;gt;变量名：JAVA_HOME = C:\Java
+以下是非必须的，启动.bat 中会自动寻找系统变">
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'post'
+  };
+</script>
+
+  <title> JBoss快速入门 | 不卜博客 - 不卜的个人博客站点 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+  
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?a1718d105ac5c566eeca9ca427859200";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-next-logo"></i>
+      </span>
+      <span class="site-title">不卜</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu menu-left">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-next-home"></i> <br />
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            <i class="menu-item-icon icon-next-categories"></i> <br />
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            <i class="menu-item-icon icon-next-about"></i> <br />
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-next-archives"></i> <br />
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon icon-next-tags"></i> <br />
+            标签
+          </a>
+        </li>
+      
+
+      
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <form class="site-search-form">
+    <input type="text" id="st-search-input" class="st-search-input st-default-search-input" />
+  </form>
+
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', 'szZeQCByKssqztmey91S','2.0.0');
+</script>
+
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content"> 
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              JBoss快速入门
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2015-12-25T20:50:20+08:00" content="2015-12-25">
+            2015-12-25
+          </time>
+        </span>
+
+        
+          <span class="post-category" >
+            &nbsp; | &nbsp; 分类于
+            
+              <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                <a href="/categories/JBoss/" itemprop="url" rel="index">
+                  <span itemprop="name">JBoss</span>
+                </a>
+              </span>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+              &nbsp; | &nbsp;
+              <a href="/2015/12/25/Jboss快速入门/#comments" itemprop="discussionUrl">
+                <span class="post-comments-count ds-thread-count" data-thread-key="2015/12/25/Jboss快速入门/" itemprop="commentsCount"></span>
+              </a>
+            </span>
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><h1 id="安装JBoss服务器">安装JBoss服务器</h1><p>1、下载地址： <a href="http://www.jboss.org/jbossas/downloads" target="_blank" rel="external">http://www.jboss.org/jbossas/downloads</a> ，下载最新版本的JBoss服务器。</p>
+<p>2、解压 jboss-as-7.1.1.Final.zip 到 D:\develop\目录下面。</p>
+<p>3、设置环境变量如下：</p>
+<p>系统变量-&gt;新建-&gt;变量名：JAVA_HOME = C:\Java</p>
+<p>以下是非必须的，启动.bat 中会自动寻找<br>系统变量-&gt;新建-&gt;变量名：CLASSPATH 变量值：.;%JAVA_HOME%\lib;<br>系统变量-&gt;编辑-&gt;变量名：Path 在变量值的最前面加上：%JAVA_HOME%\bin;</p>
+<p>4、启动JBoss。运行脚本安装目录下面bin\standalone.bat完成启动。</p>
+<p>5、访问<a href="http://127.0.0.1:8080/" target="_blank" rel="external">http://127.0.0.1:8080/</a>，出现 Welcome to AS 7访问界面，说明jboss启动成功。</p>
+<p><img src="http://7xljab.com1.z0.glb.clouddn.com/%E4%B8%8D%E5%8D%9C%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%2Fimage%2FJBoss_start.png" alt="jboss启动成功页面"></p>
+<p>6、停止JBoss。在Server的命令行控制台，只要按下<code>Ctrl+C</code>就能够干净的停止这个Server。</p>
+<pre><code>如果不行的话，可以从一个新的命令行控制台，输入以下的命令来给运行的standalone server实例发出一个shutdown指令：
+<span class="variable">$ </span>cd bin
+<span class="variable">$ </span>./jboss-cli.sh --connect command=<span class="symbol">:shutdown</span>
+</code></pre><h1 id="目录结构">目录结构</h1><h2 id="主目录结构">主目录结构</h2><p><img src="http://7xljab.com1.z0.glb.clouddn.com/%E4%B8%8D%E5%8D%9C%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%2Fimage%2FJBoss%E4%B8%BB%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84.png" alt="JBoss主目录结构"></p>
+<pre><code><span class="keyword">bin </span>                Unix和Windows环境下的启动脚本和启动配置文件
+<span class="keyword">bundles </span>            存放OSGI <span class="keyword">bundle </span>
+<span class="label">docs</span>/schema           存放XML schema定义文件   
+<span class="label">domain</span>             domain模式的配置文件、部署内容和可写区域等 
+<span class="label">modules</span>             存放各种模块，AS <span class="number">7</span>是基于模块化的类加载架构 
+<span class="label">standalone</span>         standalone模式的配置文件、部署内容和可写区域等 
+<span class="label">welcome</span>-content       欢迎页面 
+</code></pre><h2 id="standalone目录结构">standalone目录结构</h2><p>这儿是JBoss运行的两种模式的一种，Standalone模式(使用standalone.bat启动)相当于以前的3,4,5,6版本。配置文件、发布内容等放在standalone目录下。</p>
+<pre><code>configuration      <span class="constant">Standalone</span>模式的配置文件，所有配置信息都存放于此
+data               服务器写入的持久化信息，比如通过web管理控制台或<span class="constant">CLI</span>部署的项目存放在content目录下
+deployments          用户部署内容存放目录,服务器运行时能自动侦测和部署这些内容
+<span class="class"><span class="keyword">lib</span>/<span class="title">ext</span>               利用扩展列表机制安装的<span class="title">library</span> <span class="title">jar</span>的存放位置。 </span>
+log                  日志文件   
+tmp                  临时文件 
+</code></pre><h2 id="Domain目录结构">Domain目录结构</h2><p>这儿是JBoss运行的两种模式的另一种，Domain模式(使用domain.bat启动)是JBoss7的一个新特性，可以在一个控制点管理多个服务器。</p>
+<pre><code>configuration       domain 模式的配置文件，所有配置信息都存放于此
+data/content       主机控制器内部工作区。内部存储部署内容的地方，用户不能操作这个目录注意：域模式不支持扫描文件系统来部署内容。
+<span class="class"><span class="keyword">lib</span>/<span class="title">ext</span>               利用扩展列表机制安装的<span class="title">library</span> <span class="title">jar</span>的存放位置。 </span>
+log                  日志文件
+servers              应用服务器实例可写区域。每一个应用服务器实例都有它自己的子目录，当服务器第一次
+</code></pre><h2 id="其他目录">其他目录</h2><p>启动时创建。在每个服务器的目录内包括以下的子目录：</p>
+<pre><code><span class="typedef"><span class="keyword">data</span> <span class="container">{-}</span>           服务器写入信息区 </span>
+<span class="title">log</span> <span class="comment">{-}            日志文件
+tmp <span class="comment">{-}            临时文件</span></span>
+</code></pre><h1 id="添加用户">添加用户</h1><p>访问该Web服务器时，提示新增用户。可在服务端执行add-user.bat / add-user.sh 来添加管理员用户。</p>
+<pre><code>./add-user.sh
+What type of user <span class="operator"><span class="keyword">do</span> you wish <span class="keyword">to</span> <span class="keyword">add</span>?
+ a) <span class="keyword">Management</span> <span class="keyword">User</span> (mgmt-<span class="keyword">users</span>.properties)
+ b) Application <span class="keyword">User</span> (application-<span class="keyword">users</span>.properties)
+(a):</span>
+</code></pre><p>回车后</p>
+<pre><code>Enter <span class="operator">the</span> details <span class="operator">of</span> <span class="operator">the</span> <span class="built_in">new</span> user <span class="built_in">to</span> <span class="built_in">add</span>.
+Realm (ManagementRealm) :                        <span class="comment"> //回车，选用默认</span>
+Username :                                       <span class="comment"> //填写管理员用户名</span>
+Password :
+Re-enter Password :
+</code></pre><p>添加管理员后，访问<a href="http://127.0.0.1:9990/console" target="_blank" rel="external">http://127.0.0.1:9990/console</a> </p>
+<h1 id="两种模式的启动">两种模式的启动</h1><p><strong>以standalone模式运行服务器</strong>：</p>
+<pre><code>&lt;JBOSS_HOME&gt;\bin\standalone<span class="class">.bat</span>     (Windows)  
+&lt;JBOSS_HOME&gt;/bin/standalone<span class="class">.sh</span>      (Unix / Linux)  
+</code></pre><p><strong>以domain模式运行服务器</strong>：</p>
+<pre><code>&lt;JBOSS_HOME&gt;\bin\domain<span class="class">.bat</span>     (Windows)
+&lt;JBOSS_HOME&gt;/bin/domain<span class="class">.sh</span>      (Unix / Linux)  
+</code></pre><p>如果要指定启动配置文件，使用以下命令：</p>
+<pre><code>standalone --server-config=standalone-preview<span class="class">.xml</span>
+domain --domain-config=domain<span class="class">.xml</span> --host-config=host.xml
+</code></pre><p>说明：路径相对于configuration或者是绝对路径。运行standalone/domain时，附加-h，可以查看命令支持的参数。</p>
+<p>JBoss AS7加入了域domain的概念，目的是使多台JBoss AS服务器的配置可以集中于一点，统一配置、统一部署，从而实现在管理多台JBoss AS服务器时，实现集中管理。</p>
+<p>域的目的是将多台服务器组成一个服务器组，并为一个服务器组内的多台主机提供：<br>1.单点集中配置（通过一个域控制器，即Domain Controller，实现组内主机的统一配置）<br>2.单点统一部署，通过域控制器将项目一次部署至组内全部主机 </p>
+<p><strong>关闭JBoss服务器</strong>：</p>
+<pre><code>&lt;JBOSS_HOME&gt;/bin/jboss-cli<span class="class">.sh</span> --connect --command=:shutdown  <span class="comment">//jboss7.1.x </span>
+&lt;JBOSS_HOME&gt;/bin/jboss-cli<span class="class">.bat</span> --connect --command=:shutdown  <span class="comment">//jboss7.1.x</span>
+</code></pre><h1 id="修改访问IP和端口">修改访问IP和端口</h1><h2 id="取消访问限制">取消访问限制</h2><p>默认情况下，JBoss只允许本地(内网) IP地址访问其http服务，所以需要修改配置文件来使的JBoss允许外网能够直接访问。</p>
+<h3 id="第一种方式：配置所有外网都可以访问">第一种方式：配置所有外网都可以访问</h3><p>修改配置文件，在<jboss_home>/standalone/configuration/standalone.xml</jboss_home></p>
+<pre><code><span class="tag">&lt;<span class="title">interfaces</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">interface</span> <span class="attribute">name</span>=<span class="value">"management"</span>&gt;</span>
+        <span class="tag">&lt;<span class="title">inet-address</span> <span class="attribute">value</span>=<span class="value">"${jboss.bind.address.management:127.0.0.1}"</span> /&gt;</span>
+    <span class="tag">&lt;/<span class="title">interface</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">interface</span> <span class="attribute">name</span>=<span class="value">"public"</span>&gt;</span>
+        <span class="tag">&lt;<span class="title">inet-address</span> <span class="attribute">value</span>=<span class="value">"${jboss.bind.address:127.0.0.1}"</span> /&gt;</span>
+    <span class="tag">&lt;/<span class="title">interface</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">interface</span> <span class="attribute">name</span>=<span class="value">"unsecure"</span>&gt;</span>
+        <span class="tag">&lt;<span class="title">inet-address</span> <span class="attribute">value</span>=<span class="value">"${jboss.bind.address.unsecure:127.0.0.1}"</span> /&gt;</span>
+    <span class="tag">&lt;/<span class="title">interface</span>&gt;</span>
+    <span class="comment">&lt;!-- 下面配置的是取消访问限制，默认情况下，JBoss只允许本地(内网)IP地址访问其http服务 --&gt;</span>
+    <span class="tag">&lt;<span class="title">interface</span> <span class="attribute">name</span>=<span class="value">"any"</span>&gt;</span>
+        <span class="tag">&lt;<span class="title">any-ipv4-address</span> /&gt;</span>
+    <span class="tag">&lt;/<span class="title">interface</span>&gt;</span>
+<span class="tag">&lt;/<span class="title">interfaces</span>&gt;</span>
+</code></pre><p>修改如下配置文件：</p>
+<pre><code><span class="comment">&lt;!-- 
+    &lt;socket-binding-group name="standard-sockets" default-interface="public" port-offset="${jboss.socket.binding.port-offset:0}"&gt;
+ --&gt;</span>
+<span class="comment">&lt;!-- 下面吧default-interface改成any对应上面的所有的访问地址，当然你可以直接修改http对应的port即可 --&gt;</span>
+<span class="tag">&lt;<span class="title">socket-binding-group</span> <span class="attribute">name</span>=<span class="value">"standard-sockets"</span> <span class="attribute">default-interface</span>=<span class="value">"any"</span> <span class="attribute">port-offset</span>=<span class="value">"${jboss.socket.binding.port-offset:0}"</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">socket-binding</span> <span class="attribute">name</span>=<span class="value">"management-native"</span> <span class="attribute">interface</span>=<span class="value">"management"</span> <span class="attribute">port</span>=<span class="value">"${jboss.management.native.port:9999}"</span> /&gt;</span>
+    <span class="tag">&lt;<span class="title">socket-binding</span> <span class="attribute">name</span>=<span class="value">"management-http"</span> <span class="attribute">interface</span>=<span class="value">"management"</span> <span class="attribute">port</span>=<span class="value">"${jboss.management.http.port:9990}"</span> /&gt;</span>
+    <span class="tag">&lt;<span class="title">socket-binding</span> <span class="attribute">name</span>=<span class="value">"management-https"</span> <span class="attribute">interface</span>=<span class="value">"management"</span> <span class="attribute">port</span>=<span class="value">"${jboss.management.https.port:9443}"</span> /&gt;</span>
+    <span class="tag">&lt;<span class="title">socket-binding</span> <span class="attribute">name</span>=<span class="value">"ajp"</span> <span class="attribute">port</span>=<span class="value">"8009"</span> /&gt;</span>
+    <span class="tag">&lt;<span class="title">socket-binding</span> <span class="attribute">name</span>=<span class="value">"http"</span> <span class="attribute">port</span>=<span class="value">"8080"</span> /&gt;</span> 
+    <span class="tag">&lt;<span class="title">socket-binding</span> <span class="attribute">name</span>=<span class="value">"https"</span> <span class="attribute">port</span>=<span class="value">"8443"</span> /&gt;</span>
+    <span class="tag">&lt;<span class="title">socket-binding</span> <span class="attribute">name</span>=<span class="value">"osgi-http"</span> <span class="attribute">interface</span>=<span class="value">"management"</span> <span class="attribute">port</span>=<span class="value">"8090"</span> /&gt;</span>
+    <span class="tag">&lt;<span class="title">socket-binding</span> <span class="attribute">name</span>=<span class="value">"remoting"</span> <span class="attribute">port</span>=<span class="value">"4447"</span> /&gt;</span>
+    <span class="tag">&lt;<span class="title">socket-binding</span> <span class="attribute">name</span>=<span class="value">"txn-recovery-environment"</span> <span class="attribute">port</span>=<span class="value">"4712"</span> /&gt;</span>
+    <span class="tag">&lt;<span class="title">socket-binding</span> <span class="attribute">name</span>=<span class="value">"txn-status-manager"</span> <span class="attribute">port</span>=<span class="value">"4713"</span> /&gt;</span>
+    <span class="tag">&lt;<span class="title">outbound-socket-binding</span> <span class="attribute">name</span>=<span class="value">"mail-smtp"</span>&gt;</span>
+        <span class="tag">&lt;<span class="title">remote-destination</span> <span class="attribute">host</span>=<span class="value">"localhost"</span> <span class="attribute">port</span>=<span class="value">"25"</span> /&gt;</span>
+    <span class="tag">&lt;/<span class="title">outbound-socket-binding</span>&gt;</span>
+<span class="tag">&lt;/<span class="title">socket-binding-group</span>&gt;</span>
+</code></pre><p>以上这种设置方法是设置本机上所有的ip都可以进行访问（本机网卡配置的ip）</p>
+<h3 id="第二种方式：直接修改ip地址">第二种方式：直接修改ip地址</h3><p>对上面<jboss_home>/standalone/configuration/standalone.xml中接口的配置文件进行修改：</jboss_home></p>
+<pre><code><span class="tag">&lt;<span class="title">interface</span> <span class="attribute">name</span>=<span class="value">"public"</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">inet-address</span> <span class="attribute">value</span>=<span class="value">"${jboss.bind.address:192.168.0.120}"</span> /&gt;</span>
+<span class="tag">&lt;/<span class="title">interface</span>&gt;</span>
+</code></pre><p>也可以修改此处的ip，修改此处的ip，下面部分就不需要修改，如果是在采用的是在此处修改ip的方法，在启动jboss之前，本机必须有网卡上配置该ip，否则在jboss启动之后，再配置ip也不能进行访问，在启动的时候会抛异常，不存在该ip</p>
+<pre><code>MSC00001: Failed to start service jboss<span class="class">.network</span><span class="class">.public</span>: org<span class="class">.jboss</span><span class="class">.msc</span><span class="class">.service</span><span class="class">.StartException</span> <span class="keyword">in</span> service jboss<span class="class">.network</span><span class="class">.public</span>: JBAS015810: failed to resolve interface public
+at org<span class="class">.jboss</span><span class="class">.as</span><span class="class">.server</span><span class="class">.services</span><span class="class">.net</span><span class="class">.NetworkInterfaceService</span><span class="class">.start</span>(NetworkInterfaceService<span class="class">.java</span>:<span class="number">97</span>) [jboss-as-server-<span class="number">7.1</span>.<span class="number">1</span><span class="class">.Final</span><span class="class">.jar</span>:<span class="number">7.1</span>.<span class="number">1</span>.Final]
+at org<span class="class">.jboss</span><span class="class">.msc</span><span class="class">.service</span><span class="class">.ServiceControllerImpl</span><span class="variable">$StartTask</span>.<span class="function"><span class="title">startService</span><span class="params">(ServiceControllerImpl.java:<span class="number">1811</span>)</span></span> [jboss-msc-<span class="number">1.0</span>.<span class="number">2</span><span class="class">.GA</span><span class="class">.jar</span>:<span class="number">1.0</span>.<span class="number">2</span>.GA]
+at org<span class="class">.jboss</span><span class="class">.msc</span><span class="class">.service</span><span class="class">.ServiceControllerImpl</span><span class="variable">$StartTask</span>.<span class="function"><span class="title">run</span><span class="params">(ServiceControllerImpl.java:<span class="number">1746</span>)</span></span> [jboss-msc-<span class="number">1.0</span>.<span class="number">2</span><span class="class">.GA</span><span class="class">.jar</span>:<span class="number">1.0</span>.<span class="number">2</span>.GA]
+at java<span class="class">.util</span><span class="class">.concurrent</span><span class="class">.ThreadPoolExecutor</span><span class="class">.runWorker</span>(Unknown Source) [rt<span class="class">.jar</span>:<span class="number">1.7</span>.<span class="number">0</span>_09]
+at java<span class="class">.util</span><span class="class">.concurrent</span><span class="class">.ThreadPoolExecutor</span><span class="variable">$Worker</span>.<span class="function"><span class="title">run</span><span class="params">(Unknown Source)</span></span> [rt<span class="class">.jar</span>:<span class="number">1.7</span>.<span class="number">0</span>_09]
+at java<span class="class">.lang</span><span class="class">.Thread</span><span class="class">.run</span>(Unknown Source) [rt<span class="class">.jar</span>:<span class="number">1.7</span>.<span class="number">0</span>_09]
+</code></pre><h2 id="修改访问端口">修改访问端口</h2><h3 id="第一种方式：修改偏移量">第一种方式：修改偏移量</h3><p>在<jboss_home>/standalone/configuration/standalone.xml文件中</jboss_home></p>
+<pre><code>&lt;socket-binding-<span class="keyword">group</span> name=<span class="string">"standard-sockets"</span> <span class="keyword">default</span>-<span class="keyword">interface</span>=<span class="string">"public"</span> port-offset=<span class="string">"${jboss.socket.binding.port-offset:0}"</span>&gt;
+</code></pre><p>其中<code>jboss.socket.binding.port-offset</code>的值默认是0，端口是根据设置的基准值+偏移量得到的，JBoss默认的访问的端口是8080，默认的偏移量是0，所以访问的端口是8080</p>
+<p>修改偏移量为100的话，这样就可以得到新的访问端口，在浏览器访问<a href="http://192.168.0.120:8180" target="_blank" rel="external">http://192.168.0.120:8180</a></p>
+<pre><code>&lt;socket-binding-<span class="keyword">group</span> name=<span class="string">"standard-sockets"</span> <span class="keyword">default</span>-<span class="keyword">interface</span>=<span class="string">"public"</span> port-offset=<span class="string">"${jboss.socket.binding.port-offset:100}"</span>&gt;
+</code></pre><h3 id="第二种方式：_直接修改port">第二种方式： 直接修改port</h3><p>如果我们想改成80端口，显然只需要将 port=”8080” 改为 port=”80” 并重启JBoss即可。</p>
+<pre><code><span class="comment">&lt;!-- 将这个http端口设置为80端口 --&gt;</span>
+<span class="tag">&lt;<span class="title">socket-binding</span> <span class="attribute">name</span>=<span class="value">"http"</span> <span class="attribute">port</span>=<span class="value">"8080"</span> /&gt;</span>
+</code></pre><h1 id="参考">参考</h1><p><a href="http://www.baidu.com/s?wd=Jboss7%BF%EC%CB%D9%C8%EB%C3%C5%CA%D6%B2%E1" target="_blank" rel="external">Jboss7快速入门手册</a></p>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/JBoss/" rel="tag">#JBoss</a>
+          
+            <a href="/tags/服务器/" rel="tag">#服务器</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/12/27/spring4配置websocket的简单Demo/" rel="prev">spring4配置websocket的简单Demo</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/12/22/Java使用WebSocket/" rel="next">Java使用WebSocket</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+ </div>
+
+        
+
+        
+          <div class="comments" id="comments">
+            
+              <div class="ds-thread" data-thread-key="2015/12/25/Jboss快速入门/"
+                   data-title="JBoss快速入门" data-url="http://kuku940.github.io/2015/12/25/Jboss快速入门/">
+              </div>
+            
+          </div>
+        
+      </div>
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点简介
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="http://7xljab.com1.z0.glb.clouddn.com/博客|个人博客|不卜个人博客|不卜" alt="不卜" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">不卜</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description">善易者不卜</p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">27</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            <a href="/categories">
+              <span class="site-state-item-count">16</span>
+              <span class="site-state-item-name">分类</span>
+              </a>
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">51</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/kuku940" target="_blank">GitHub</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.zhihu.com/people/roingeek" target="_blank">ZhiHu</a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+            <p class="site-author-name">友情链接</p>
+            
+              <span class="links-of-author-item">
+              <a href="http://zhumang.top/" target="_blank">竹芒</a>
+              </span>
+            
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#安装JBoss服务器"><span class="nav-number">1.</span> <span class="nav-text">安装JBoss服务器</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#目录结构"><span class="nav-number">2.</span> <span class="nav-text">目录结构</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#主目录结构"><span class="nav-number">2.1.</span> <span class="nav-text">主目录结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#standalone目录结构"><span class="nav-number">2.2.</span> <span class="nav-text">standalone目录结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Domain目录结构"><span class="nav-number">2.3.</span> <span class="nav-text">Domain目录结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#其他目录"><span class="nav-number">2.4.</span> <span class="nav-text">其他目录</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#添加用户"><span class="nav-number">3.</span> <span class="nav-text">添加用户</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#两种模式的启动"><span class="nav-number">4.</span> <span class="nav-text">两种模式的启动</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#修改访问IP和端口"><span class="nav-number">5.</span> <span class="nav-text">修改访问IP和端口</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#取消访问限制"><span class="nav-number">5.1.</span> <span class="nav-text">取消访问限制</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#第一种方式：配置所有外网都可以访问"><span class="nav-number">5.1.1.</span> <span class="nav-text">第一种方式：配置所有外网都可以访问</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#第二种方式：直接修改ip地址"><span class="nav-number">5.1.2.</span> <span class="nav-text">第二种方式：直接修改ip地址</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#修改访问端口"><span class="nav-number">5.2.</span> <span class="nav-text">修改访问端口</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#第一种方式：修改偏移量"><span class="nav-number">5.2.1.</span> <span class="nav-text">第一种方式：修改偏移量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#第二种方式：_直接修改port"><span class="nav-number">5.2.2.</span> <span class="nav-text">第二种方式： 直接修改port</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考"><span class="nav-number">6.</span> <span class="nav-text">参考</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner"> <div class="copyright" >
+  
+  &copy; &nbsp;  2015 - 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="icon-next-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">不卜</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 搭建
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+ </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"roingeek"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+    
+     
+
+    
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.5.1"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.5.1"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.5.1" id="motion.global"></script>
+
+
+
+
+  <script type="text/javascript" src="/js/nav-toggle.js?v=0.4.5.1"></script>
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.5.1" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      var $indicator = $(indicator);
+      var opacity = action === 'show' ? 0.4 : 0;
+      $indicator.velocity ?
+        $indicator.velocity('stop').velocity({
+          opacity: opacity
+        }, { duration: 100 }) :
+        $indicator.stop().animate({
+          opacity: opacity
+        }, 100);
+    }
+
+  });
+</script>
+
+<script type="text/javascript" id="sidebar.nav">
+  $(document).ready(function () {
+    var html = $('html');
+    var TAB_ANIMATE_DURATION = 200;
+    var hasVelocity = $.isFunction(html.velocity);
+
+    $('.sidebar-nav li').on('click', function () {
+      var item = $(this);
+      var activeTabClassName = 'sidebar-nav-active';
+      var activePanelClassName = 'sidebar-panel-active';
+      if (item.hasClass(activeTabClassName)) {
+        return;
+      }
+
+      var currentTarget = $('.' + activePanelClassName);
+      var target = $('.' + item.data('target'));
+
+      hasVelocity ?
+        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
+            .addClass(activePanelClassName);
+        }) :
+        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
+          currentTarget.hide();
+          target
+            .stop()
+            .css({'opacity': 0, 'display': 'block'})
+            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
+              currentTarget.removeClass(activePanelClassName);
+              target.addClass(activePanelClassName);
+            });
+        });
+
+      item.siblings().removeClass(activeTabClassName);
+      item.addClass(activeTabClassName);
+    });
+
+    $('.post-toc a').on('click', function (e) {
+      e.preventDefault();
+      var targetSelector = escapeSelector(this.getAttribute('href'));
+      var offset = $(targetSelector).offset().top;
+      hasVelocity ?
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        }) :
+        $('html, body').stop().animate({
+          scrollTop: offset
+        }, 500);
+    });
+
+    // Expand sidebar on post detail page by default, when post has a toc.
+    var $tocContent = $('.post-toc-content');
+    if (isDesktop() && CONFIG.sidebar === 'post') {
+      if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+        displaySidebar();
+      }
+    }
+  });
+</script>
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+      if (isMobile()) {
+        FastClick.attach(document.body);
+      }
+    });
+  </script>
+
+  
+
+  
+  
+
+<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"1","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"16"},"slide":{"type":"slide","bdImg":"3","bdPos":"left","bdTop":"250"}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+
+
+
+  
+  <script type="text/javascript" src="/js/lazyload.js"></script>
+  <script type="text/javascript">
+    $(function () {
+      $("#posts").find('img').lazyload({
+        placeholder: "/images/loading.gif",
+        effect: "fadeIn"
+      });
+    });
+  </script>
+</body>
+</html>
