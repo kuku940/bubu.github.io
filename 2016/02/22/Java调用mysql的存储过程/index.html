@@ -20,20 +20,19 @@
 
 <link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.5.1"/>
 
-  <meta name="keywords" content="RPC,不卜" />
+  <meta name="keywords" content="mysql,存储过程,不卜" />
 
 
-<meta name="description" content="RPC介绍 RPC的全称是Remote Procedure Call，即远程过程调用，实现方式有很多，如RMI，WebService等。RPC的实现包括两方，一方称作服务端(server)，一方称作客户端(client)。客户端发送RPC请求到服务端，服务端通过客户端提供的参数执行对应的请求方法，将执行结果返回给客户端，一次RPC调用结束。">
+<meta name="description" content="MySQL5存储过程，用得人好像不多。按照数据库设计原理来讲，存储过程是在db server上预编译的，所以查询速度会比较起纯SQL语句快很多。可能是现在流行OO，导至存储过程使用的余地大打折扣。但如果从效果上来讲，用存储过程来实现业务规则所带得DB SERVER压力，比用JAVA类实现业务规则所带来的WebServer压力要小。当然存储过程也不应滥用，象普通的insert、update之类的语句">
 <meta property="og:type" content="article">
-<meta property="og:title" content="RPC远程过程调用">
-<meta property="og:url" content="http://kuku940.github.io/2015/10/09/RPC远程过程调用/index.html">
+<meta property="og:title" content="Java调用mysql的存储过程">
+<meta property="og:url" content="http://kuku940.github.io/2016/02/22/Java调用mysql的存储过程/index.html">
 <meta property="og:site_name" content="不卜博客 - 不卜的个人博客站点">
-<meta property="og:description" content="RPC介绍 RPC的全称是Remote Procedure Call，即远程过程调用，实现方式有很多，如RMI，WebService等。RPC的实现包括两方，一方称作服务端(server)，一方称作客户端(client)。客户端发送RPC请求到服务端，服务端通过客户端提供的参数执行对应的请求方法，将执行结果返回给客户端，一次RPC调用结束。">
-<meta property="og:image" content="http://7xljab.com1.z0.glb.clouddn.com/不卜个人博客/image/tcp-rpc.png">
-<meta property="og:updated_time" content="2015-11-26T22:21:44.646Z">
+<meta property="og:description" content="MySQL5存储过程，用得人好像不多。按照数据库设计原理来讲，存储过程是在db server上预编译的，所以查询速度会比较起纯SQL语句快很多。可能是现在流行OO，导至存储过程使用的余地大打折扣。但如果从效果上来讲，用存储过程来实现业务规则所带得DB SERVER压力，比用JAVA类实现业务规则所带来的WebServer压力要小。当然存储过程也不应滥用，象普通的insert、update之类的语句">
+<meta property="og:updated_time" content="2016-02-29T11:01:23.751Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="RPC远程过程调用">
-<meta name="twitter:description" content="RPC介绍 RPC的全称是Remote Procedure Call，即远程过程调用，实现方式有很多，如RMI，WebService等。RPC的实现包括两方，一方称作服务端(server)，一方称作客户端(client)。客户端发送RPC请求到服务端，服务端通过客户端提供的参数执行对应的请求方法，将执行结果返回给客户端，一次RPC调用结束。">
+<meta name="twitter:title" content="Java调用mysql的存储过程">
+<meta name="twitter:description" content="MySQL5存储过程，用得人好像不多。按照数据库设计原理来讲，存储过程是在db server上预编译的，所以查询速度会比较起纯SQL语句快很多。可能是现在流行OO，导至存储过程使用的余地大打折扣。但如果从效果上来讲，用存储过程来实现业务规则所带得DB SERVER压力，比用JAVA类实现业务规则所带来的WebServer压力要小。当然存储过程也不应滥用，象普通的insert、update之类的语句">
 
 <script type="text/javascript" id="hexo.configuration">
   var CONFIG = {
@@ -42,7 +41,7 @@
   };
 </script>
 
-  <title> RPC远程过程调用 | 不卜博客 - 不卜的个人博客站点 </title>
+  <title> Java调用mysql的存储过程 | 不卜博客 - 不卜的个人博客站点 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -188,7 +187,7 @@
           
           
             
-              RPC远程过程调用
+              Java调用mysql的存储过程
             
           
         </h1>
@@ -197,8 +196,8 @@
       <div class="post-meta">
         <span class="post-time">
           发表于
-          <time itemprop="dateCreated" datetime="2015-10-09T02:10:15+08:00" content="2015-10-09">
-            2015-10-09
+          <time itemprop="dateCreated" datetime="2016-02-22T20:22:18+08:00" content="2016-02-22">
+            2016-02-22
           </time>
         </span>
 
@@ -207,8 +206,8 @@
             &nbsp; | &nbsp; 分类于
             
               <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                <a href="/categories/Java/" itemprop="url" rel="index">
-                  <span itemprop="name">Java</span>
+                <a href="/categories/mysql/" itemprop="url" rel="index">
+                  <span itemprop="name">mysql</span>
                 </a>
               </span>
 
@@ -223,8 +222,8 @@
           
             <span class="post-comments-count">
               &nbsp; | &nbsp;
-              <a href="/2015/10/09/RPC远程过程调用/#comments" itemprop="discussionUrl">
-                <span class="post-comments-count ds-thread-count" data-thread-key="2015/10/09/RPC远程过程调用/" itemprop="commentsCount"></span>
+              <a href="/2016/02/22/Java调用mysql的存储过程/#comments" itemprop="discussionUrl">
+                <span class="post-comments-count ds-thread-count" data-thread-key="2016/02/22/Java调用mysql的存储过程/" itemprop="commentsCount"></span>
               </a>
             </span>
           
@@ -238,99 +237,109 @@
       
 
       
-        <span itemprop="articleBody"><h1 id="RPC介绍">RPC介绍</h1><p> RPC的全称是Remote Procedure Call，即远程过程调用，实现方式有很多，如RMI，WebService等。<br>RPC的实现包括两方，一方称作服务端(server)，一方称作客户端(client)。客户端发送RPC请求到服务端，服务端通过客户端提供的参数执行对应的请求方法，将执行结果返回给客户端，一次RPC调用结束。<br><a id="more"></a></p>
-<h1 id="基于TCP协议实现的RPC">基于TCP协议实现的RPC</h1><p>基于Java的Socket API,我们能够实现一个简单的RPC调用，具体示例如下：包括服务端接口及接口的实现，客户端接口以及远程调用。</p>
-<h2 id="代码实现结构图">代码实现结构图</h2><p><img src="http://7xljab.com1.z0.glb.clouddn.com/不卜个人博客/image/tcp-rpc.png" alt="基于TCP协议实现的RPC的结构图"></p>
-<h2 id="客户端和服务端接口HelloService">客户端和服务端接口HelloService</h2><pre><code><span class="keyword">package</span> cn.xiaoyu.rpc.service;
+        <span itemprop="articleBody"><p>MySQL5存储过程，用得人好像不多。按照数据库设计原理来讲，存储过程是在db server上预编译的，所以查询速度会比较起纯SQL语句快很多。可能是现在流行OO，导至存储过程使用的余地大打折扣。但如果从效果上来讲，用存储过程来实现业务规则所带得DB SERVER压力，比用JAVA类实现业务规则所带来的WebServer压力要小。当然存储过程也不应滥用，象普通的insert、update之类的语句就不需要使用存储过程了。</p>
+<a id="more"></a>
+<h1 id="存储过程的作用">存储过程的作用</h1><p>数据库存储过程：简单滴说，存储过程就是存储在数据库中的一个程序。</p>
+<pre><code>第一：存储过程因为SQL语句已经预编绎过了，因此运行的速度比较快。   
+第二：存储过程可以接受参数、输出参数、返回单个或多个结果集以及返回值。可以向程序返回错误原因。       
+第三：存储过程运行比较稳定，不会有太多的错误。只要一次成功，以后都会按这个程序运行。       
+第四：存储过程主要是在服务器上运行，减少对客户机的压力。     
+第五：存储过程可以包含程序流、逻辑以及对数据库的查询。同时可以实体封装和隐藏了数据逻辑。     
+第六：存储过程可以在单个存储过程中执行一系列SQL语句。     
+第七：存储过程可以从自己的存储过程内引用其它存储过程，这可以简化一系列复杂语句。  
 
-<span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">HelloService</span> </span>{
-    <span class="function"><span class="keyword">public</span> String <span class="title">sayHello</span><span class="params">(String name)</span></span>;
-}
-</code></pre><h2 id="服务端接口的实现HelloServiceImpl">服务端接口的实现HelloServiceImpl</h2><pre><code><span class="keyword">package</span> cn.xiaoyu.rpc.service;
-
-<span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HelloServiceImpl</span> <span class="keyword">implements</span> <span class="title">HelloService</span></span>{
-    <span class="annotation">@Override</span>
-    <span class="function"><span class="keyword">public</span> String <span class="title">sayHello</span><span class="params">(String name)</span> </span>{
-        <span class="keyword">return</span> <span class="string">"Hello "</span> + name;
+此外，如果多条SQL语句执行过程中，过程环节返回了数据作为后面环节的输入数据，如果直接通过SQL语句执行，势必导致大量的数据通过网络返回到客户机，并在客户机运算；如果封装在存储过程中，则将运算放在服务器进行，不但减少了客户机的压力，同时也减少了网络流量，提高了执行的效率。
+</code></pre><h1 id="书写procedure语句">书写procedure语句</h1><p>言归正传，MySQL创建procudure的语法与sql server/Oracle差别较大。</p>
+<p>例1：传入参数的procedure</p>
+<pre><code><span class="keyword">create</span> <span class="function"><span class="keyword">procedure</span> <span class="title">usp_test</span><span class="params">(param varchar(20)</span>
+  <span class="title">select</span> * <span class="title">from</span> <span class="title">talbeName</span> <span class="title">where</span> <span class="title">column</span>=<span class="title">param</span> </span>
+</code></pre><p>例2：更新表的procedure</p>
+<pre><code><span class="keyword">create</span> <span class="function"><span class="keyword">procedure</span> <span class="title">usp_test2</span> <span class="params">(t varchar(20)</span>)
+  <span class="title">begin</span>
+    <span class="title">set</span> <span class="title">xname</span> = '<span class="title">test</span>';</span>
+    update table <span class="keyword">set</span> column = xname <span class="keyword">where</span> column1=t;
+  <span class="keyword">end</span>
+</code></pre><p>MySQL创建存储过程时不带as，而且()不能省略，即便是没有传入参数。这一点象sql server或是oracle那样直观，而且声明变量时直接用declare，不用加的@或@@(in out变量除外)。还有一点是很怪的语法，<strong>如果是以“select”为开头的存储过程，是不能加”begin end”的。”begin end”表示多条SQL语句的复合体</strong>。</p>
+<p>当然，事实上几乎没有哪款数据库是完全符合SQL3标准的，多少都含有自己的一些成份里面，这也造成使用存储过程会使程序的可移性降低。</p>
+<h1 id="调用procedure方法">调用procedure方法</h1><p>MySQL使用call关键字。例：call usp_test(‘test’)；而不是execute，同样()是不能省略的。<br>创建完procedure后，再看看java是如何调用procedure的。</p>
+<pre><code>Connection conn = <span class="keyword">null</span>;
+CallableStatement cstmt = <span class="keyword">null</span>;
+ResultSet rs = <span class="keyword">null</span>;
+<span class="keyword">try</span> {
+    conn = DbConn.getDbConn();<span class="comment">// get pool conn</span>
+    CallableStatement cstmt = conn.prepareCall(<span class="string">"{call usp_test(?)}"</span>);
+    <span class="keyword">call</span>.setString(<span class="number">1</span>, <span class="string">"test"</span>);
+    rs = <span class="keyword">call</span>.executeQuery();
+    <span class="keyword">while</span> (rs.<span class="keyword">next</span>()) {
+        String te = rs.getString(<span class="number">1</span>);
+        System.out.<span class="keyword">println</span>(<span class="string">"te:"</span> + te);
+    }
+} <span class="keyword">catch</span> (Exception e) {
+    System.out.<span class="keyword">println</span>(<span class="string">"e: "</span> + e);
+} <span class="keyword">finally</span> {
+    <span class="keyword">try</span> {
+        rs.close();
+        cstmt.close();
+        conn.close();
+    } <span class="keyword">catch</span> (Exception ex) {
+        System.out.<span class="keyword">println</span>(<span class="string">"ex:"</span> + ex);
     }
 }
-</code></pre><h2 id="服务端主程序MainServer">服务端主程序MainServer</h2><pre><code><span class="keyword">package</span> cn.xiaoyu.rpc.main;
-
-<span class="keyword">import</span> java.io.ObjectInputStream;
-<span class="keyword">import</span> java.io.ObjectOutputStream;
-<span class="keyword">import</span> java.lang.reflect.Method;
-<span class="keyword">import</span> java.net.ServerSocket;
-<span class="keyword">import</span> java.net.Socket;
-<span class="keyword">import</span> java.util.<span class="keyword">HashMap</span>;
-
-<span class="keyword">import</span> cn.xiaoyu.rpc.service.HelloServiceImpl;
-
-<span class="keyword">public</span> class MainServer {
-    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> main(<span class="keyword">String</span>[] args) <span class="keyword">throws</span> Exception {
-        <span class="comment">//将服务接口的示例先初始化，这儿应该还有更好的方法来实现！</span>
-        <span class="keyword">HashMap</span>&lt;<span class="keyword">String</span>, <span class="keyword">Object</span>&gt; <span class="built_in">map</span> = <span class="keyword">new</span> <span class="keyword">HashMap</span>&lt;&gt;();
-        <span class="built_in">map</span>.put(<span class="string">"cn.xiaoyu.rpc.service.HelloService"</span>,<span class="keyword">new</span> HelloServiceImpl());
-
-        ServerSocket server = <span class="keyword">new</span> ServerSocket(<span class="number">1234</span>);
-
-        <span class="keyword">while</span>(<span class="keyword">true</span>){
-            Socket socket = server.accept();
-
-            <span class="comment">// 读取传递过来的信息</span>
-            ObjectInputStream inputStream = <span class="keyword">new</span> ObjectInputStream(socket.getInputStream());
-            <span class="keyword">String</span> interfacename = inputStream.readUTF(); <span class="comment">// 接口名称</span>
-            <span class="keyword">String</span> methodName = inputStream.readUTF(); <span class="comment">// 方法名称</span>
-            Class&lt;?&gt;[] parameterTypes = (Class&lt;?&gt;[]) inputStream.readObject(); <span class="comment">// 参数类型</span>
-            <span class="keyword">Object</span>[] params = (<span class="keyword">Object</span>[]) inputStream.readObject();
-
-            <span class="comment">// 执行调用过程</span>
-            Class clazz = Class.forName(interfacename); <span class="comment">//获取接口的class</span>
-            <span class="keyword">Object</span> service = <span class="built_in">map</span>.<span class="built_in">get</span>(interfacename); <span class="comment">//获取接口的实现对象</span>
-            Method method = clazz.getMethod(methodName, parameterTypes); <span class="comment">//获取需要的调用的方法</span>
-            <span class="keyword">Object</span> result = method.invoke(service, params); 
-
-            <span class="comment">// 将执行结果输出到客户端</span>
-            ObjectOutputStream outputStream = <span class="keyword">new</span> ObjectOutputStream(socket.getOutputStream());
-            outputStream.writeObject(result);
-
-        }
-    }
-}
-</code></pre><h2 id="客户端主程序MainClient">客户端主程序MainClient</h2><pre><code>package cn.xiaoyu.rpc.main;
-
-<span class="keyword">import</span> java.io.<span class="type">ObjectInputStream</span>;
-<span class="keyword">import</span> java.io.<span class="type">ObjectOutputStream</span>;
-<span class="keyword">import</span> java.lang.reflect.<span class="type">Method</span>;
-<span class="keyword">import</span> java.net.<span class="type">Socket</span>;
-
-<span class="keyword">import</span> cn.xiaoyu.rpc.service.<span class="type">HelloService</span>;
-
-public class <span class="type">MainClient</span> {
-    public <span class="keyword">static</span> <span class="type">void</span> main(<span class="type">String</span>[] args) throws <span class="type">Exception</span>{
-        // 接口名稱
-        <span class="type">String</span> interfacename = <span class="type">HelloService</span>.class.getName();
-        // 需要遠程執行的方法
-        <span class="type">Method</span> <span class="keyword">method</span> = <span class="type">HelloService</span>.class.getMethod(<span class="string">"sayHello"</span>,<span class="type">String</span>.class);
-        //需要传递参数
-        <span class="type">Object</span>[] params = {<span class="string">"bubu"</span>};
-
-        <span class="type">Socket</span> socket = new <span class="type">Socket</span>(<span class="string">"127.0.0.1"</span>,<span class="number">1234</span>);
-
-        //将方法名称和参数传递到服务端
-        <span class="type">ObjectOutputStream</span> outputStream = new <span class="type">ObjectOutputStream</span>(socket.getOutputStream());
-        outputStream.writeUTF(interfacename); //调用的接口名称
-        outputStream.writeUTF(<span class="keyword">method</span>.getName()); //调用的方法的名称
-        outputStream.writeObject(<span class="keyword">method</span>.getParameterTypes());
-        outputStream.writeObject(params);
-
-        //从服务端读取方法的执行结果
-        <span class="type">ObjectInputStream</span> inputStream = new <span class="type">ObjectInputStream</span>(socket.getInputStream());
-        <span class="type">Object</span> <span class="literal">result</span> = inputStream.readObject();
-
-        <span class="type">System</span>.<span class="keyword">out</span>.println(<span class="literal">result</span>);
-    }
-}
-</code></pre><p>#</p>
+</code></pre><p>这里使用的是”{call usp_test()}”来调用存储过程。同时也可以编程传入参数，进行查询。<br>上述方法有个致命的缺点，就是传入的参数是由编写存储过程决定的。也就是说不支持象PreparedStatement那样的多参数动态查询。</p>
+<p>下面先讲解MySQL存储过程的输入输出参数应用。MySQL调用存储过程的语法总结一下就是三个参数关键值IN、OUT、INOUT，分别代表输入参数、输出参数、输入输出参数。</p>
+<h2 id="输入参数(in)">输入参数(in)</h2><p>存储过程sql：</p>
+<pre><code><span class="keyword">CREATE</span> <span class="function"><span class="keyword">PROCEDURE</span> <span class="title">usp1</span><span class="params">(<span class="keyword">IN</span> p INT)</span>
+<span class="title">BEGIN</span>
+    <span class="title">SET</span> @<span class="title">x</span> = <span class="title">p</span>；
+<span class="title">END</span>;</span>
+</code></pre><p>sql调用方法：</p>
+<pre><code><span class="built_in">call</span> usp1(<span class="number">123456</span>)<span class="comment">;</span>
+ <span class="keyword">select</span> <span class="constant">@x</span>
+</code></pre><p>java调用方法：</p>
+<pre><code>CallableStatement callStatement = conn.prepareCall(<span class="string">"{call usp1(?)}"</span>); <span class="comment">// 调用存储过程</span>
+callStatement.setInt(<span class="number">1</span>,<span class="number">123456</span>); <span class="comment">// 设置参数</span>
+callStatement.execute(); <span class="comment">// 执行</span>
+conn.close(); <span class="comment">// 关闭连接</span>
+</code></pre><p>返回结果：</p>
+<pre><code>返回结果为 <span class="number">123456</span>
+</code></pre><h2 id="输出参数(out)">输出参数(out)</h2><p>存储过程sql：</p>
+<pre><code><span class="keyword">CREATE</span> <span class="function"><span class="keyword">PROCEDURE</span> <span class="title">usp2</span> <span class="params">(<span class="keyword">OUT</span> p int,)</span>
+<span class="title">BEGIN</span>
+    <span class="title">SET</span> <span class="title">p</span> = 5 ;</span>
+<span class="keyword">END</span>
+</code></pre><p>sql调用方法：</p>
+<pre><code><span class="built_in">call</span> p6(<span class="constant">@y</span>)  // <span class="constant">@y</span>表示输出，<span class="number">10</span>表示输入
+<span class="keyword">select</span> <span class="constant">@y</span>
+</code></pre><p>java调用方法：</p>
+<pre><code>CallableStatement callStatement = conn.prepareCall(<span class="string">"{call usp2(?)}"</span>); <span class="comment">// 调用存储过程</span>
+<span class="comment">// 注册存储过程的out型参数类型，使用之前必须要先注册</span>
+callStatement.registerOutParameter(<span class="number">1</span>,java.sql.Types.INTEGER);    
+callStatement.execute(); <span class="comment">// 执行</span>
+System.out.println(callStatement.getInt(<span class="number">1</span>)); <span class="comment">//获取存储过程的输出参数</span>
+conn.close(); <span class="comment">// 关闭连接</span>
+</code></pre><p>返回结果：</p>
+<pre><code>返回结果为 <span class="number">5</span>
+</code></pre><h2 id="输入输出参数(in_out)">输入输出参数(in out)</h2><p>存储过程sql：</p>
+<pre><code><span class="keyword">CREATE</span> <span class="function"><span class="keyword">PROCEDURE</span> <span class="title">demoSp</span><span class="params">(<span class="keyword">IN</span> inputParam VARCHAR(255)</span>, <span class="title">INOUT</span> <span class="title">inOutParam</span> <span class="title">INT</span>)
+<span class="title">BEGIN</span>
+    <span class="title">SET</span> <span class="title">inOutParam</span> = 1000;</span>
+    <span class="keyword">SELECT</span> inOutParam;
+    <span class="keyword">SELECT</span> <span class="keyword">CONCAT</span>(<span class="string">'zyxw '</span>, inputParam);
+<span class="keyword">END</span>
+</code></pre><p>sql调用方法：</p>
+<pre><code>call <span class="function"><span class="title">demoSP</span><span class="params">(<span class="string">' test'</span>,@q)</span></span>
+</code></pre><p>java调用方法：</p>
+<pre><code>CallableStatement callStatement = conn.prepareCall(<span class="string">"{call demoSp(?,?)}"</span>); <span class="comment">// 调用存储过程</span>
+<span class="comment">// 注册存储过程的out型参数类型，使用之前必须要先注册</span>
+callStatement.registerOutParameter(<span class="number">1</span>,java.sql.Types.STRING);
+callStatement.setString(<span class="string">" test"</span>); <span class="comment">//设置参数    </span>
+boolean flag = callStatement.execute(); <span class="comment">// 执行</span>
+System.out.println(callStatement.getString(<span class="number">1</span>)); <span class="comment">//获取存储过程的输出参数</span>
+conn.close(); <span class="comment">// 关闭连接</span>
+</code></pre><p>返回结果：</p>
+<pre><code>返回结果<span class="string">"zyxw  test"</span>。
+</code></pre><p>与没有输出参数的存储过程相比，多一个registerOutParameter。也就是说要先注册输出参数的类型，再执行execute(),最后取回车出参数的值。这个过程是不能颠倒的。</p>
+<h1 id="参考">参考</h1><p><a href="http://blog.csdn.net/caiwenfeng_for_23/article/details/8472559" target="_blank" rel="external">java调用mysql的存储过程（简单示例）</a><br><a href="http://lcy0202.iteye.com/blog/1556132" target="_blank" rel="external">java 调用MySQL存储过程（转载）</a>  </p>
 </span>
       
     </div>
@@ -339,7 +348,9 @@ public class <span class="type">MainClient</span> {
       
         <div class="post-tags">
           
-            <a href="/tags/RPC/" rel="tag">#RPC</a>
+            <a href="/tags/mysql/" rel="tag">#mysql</a>
+          
+            <a href="/tags/存储过程/" rel="tag">#存储过程</a>
           
         </div>
       
@@ -348,13 +359,11 @@ public class <span class="type">MainClient</span> {
         <div class="post-nav">
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2015/10/09/jackson解析和序列化json串/" rel="prev">jackson解析和序列化json串</a>
-            
           </div>
 
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2015/09/20/Ajax请求的几种类型/" rel="next">Ajax请求的几种类型</a>
+              <a href="/2016/02/15/Jboss快速入门/" rel="next">JBoss快速入门</a>
             
           </div>
         </div>
@@ -379,8 +388,8 @@ public class <span class="type">MainClient</span> {
         
           <div class="comments" id="comments">
             
-              <div class="ds-thread" data-thread-key="2015/10/09/RPC远程过程调用/"
-                   data-title="RPC远程过程调用" data-url="http://kuku940.github.io/2015/10/09/RPC远程过程调用/">
+              <div class="ds-thread" data-thread-key="2016/02/22/Java调用mysql的存储过程/"
+                   data-title="Java调用mysql的存储过程" data-url="http://kuku940.github.io/2016/02/22/Java调用mysql的存储过程/">
               </div>
             
           </div>
@@ -479,7 +488,7 @@ public class <span class="type">MainClient</span> {
           <div class="post-toc">
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#RPC介绍"><span class="nav-number">1.</span> <span class="nav-text">RPC介绍</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#基于TCP协议实现的RPC"><span class="nav-number">2.</span> <span class="nav-text">基于TCP协议实现的RPC</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#代码实现结构图"><span class="nav-number">2.1.</span> <span class="nav-text">代码实现结构图</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#客户端和服务端接口HelloService"><span class="nav-number">2.2.</span> <span class="nav-text">客户端和服务端接口HelloService</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#服务端接口的实现HelloServiceImpl"><span class="nav-number">2.3.</span> <span class="nav-text">服务端接口的实现HelloServiceImpl</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#服务端主程序MainServer"><span class="nav-number">2.4.</span> <span class="nav-text">服务端主程序MainServer</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#客户端主程序MainClient"><span class="nav-number">2.5.</span> <span class="nav-text">客户端主程序MainClient</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#存储过程的作用"><span class="nav-number">1.</span> <span class="nav-text">存储过程的作用</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#书写procedure语句"><span class="nav-number">2.</span> <span class="nav-text">书写procedure语句</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#调用procedure方法"><span class="nav-number">3.</span> <span class="nav-text">调用procedure方法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#输入参数(in)"><span class="nav-number">3.1.</span> <span class="nav-text">输入参数(in)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#输出参数(out)"><span class="nav-number">3.2.</span> <span class="nav-text">输出参数(out)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#输入输出参数(in_out)"><span class="nav-number">3.3.</span> <span class="nav-text">输入输出参数(in out)</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考"><span class="nav-number">4.</span> <span class="nav-text">参考</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>
